@@ -1,0 +1,110 @@
+﻿<Window x:Class="BanCaPhe.Views.W_NhanVienModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Nhân viên"
+        Height="560"
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- FORM -->
+            <GroupBox Header="Thông tin nhân viên" Margin="0,0,10,0">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- HỌ TÊN -->
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Họ tên"/>
+                        <TextBox x:Name="txtHoTen"/>
+                    </StackPanel>
+
+                    <!-- EMAIL -->
+                    <StackPanel Grid.Row="1" Margin="0,0,0,10">
+                        <TextBlock Text="Email"/>
+                        <TextBox x:Name="txtEmail"/>
+                    </StackPanel>
+
+                    <!-- SĐT -->
+                    <StackPanel Grid.Row="2" Margin="0,0,0,10">
+                        <TextBlock Text="Số điện thoại"/>
+                        <TextBox x:Name="txtSoDienThoai"/>
+                    </StackPanel>
+
+                    <!-- MẬT KHẨU (CHỈ HIỆN KHI THÊM) -->
+                    <StackPanel Grid.Row="3"
+                                Margin="0,0,0,10"
+                                x:Name="pnlMatKhau">
+                        <TextBlock Text="Mật khẩu"/>
+                        <PasswordBox x:Name="txtMatKhau"/>
+                    </StackPanel>
+
+                    <!-- VAI TRÒ -->
+                    <StackPanel Grid.Row="4" Margin="0,0,0,10">
+                        <TextBlock Text="Vai trò"/>
+                        <ComboBox x:Name="cbVaiTro">
+                            <ComboBoxItem Content="Admin"/>
+                            <ComboBoxItem Content="Employee"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- TRẠNG THÁI -->
+                    <CheckBox x:Name="chkTrangThai"
+                              Grid.Row="5"
+                              Content="Đang hoạt động"
+                              IsChecked="True"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- HÌNH -->
+            <GroupBox Grid.Column="1" Header="Ảnh đại diện">
+                <StackPanel Margin="10" HorizontalAlignment="Center">
+                    <Border BorderThickness="1"
+                            BorderBrush="Gray"
+                            Width="150"
+                            Height="150"
+                            CornerRadius="6">
+                        <Image x:Name="imgPreview" Stretch="Uniform"/>
+                    </Border>
+
+                    <Button Content="Chọn ảnh"
+                            Width="120"
+                            Margin="0,10,0,0"
+                            Click="BtnChonAnh_Click"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+        <!-- BUTTON -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,15,0,0">
+            <Button Content="Lưu"
+                    Width="90"
+                    Margin="0,0,8,0"
+                    Click="BtnLuu_Click"/>
+            <Button Content="Hủy"
+                    Width="90"
+                    Click="BtnHuy_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

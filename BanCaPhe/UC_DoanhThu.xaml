@@ -1,0 +1,377 @@
+﻿<UserControl x:Class="BanCaPhe.UC_DoanhThu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:BanCaPhe.ViewModel"
+              xmlns:conv="clr-namespace:BanCaPhe.Converters"
+             Background="Transparent">
+
+    <UserControl.Resources>
+        <conv:RowNumberConverter x:Key="RowNumberConverter"/>
+        <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
+    
+    <UserControl.DataContext>
+        <vm:DoanhThuViewModel/>
+    </UserControl.DataContext>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Margin="10">
+
+            <!-- Header với nút Refresh -->
+            <Grid Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="📊 BÁO CÁO DOANH THU" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="#2C3E50"/>
+                    <TextBlock Text="{Binding ThangNamHienTai}" 
+                               FontSize="18" 
+                               Foreground="#7F8C8D"
+                               Margin="10,5,0,0"/>
+                </StackPanel>
+
+                <Button Content="🔄 Làm mới" 
+                        Command="{Binding RefreshCommand}"
+                        HorizontalAlignment="Right"
+                        Padding="15,8"
+                        Background="#3498DB"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        FontWeight="SemiBold">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                CornerRadius="8"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" 
+                                                              VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2980B9"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+
+            <!-- Cards thống kê tổng quan -->
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Card 1: Tổng Doanh Thu -->
+                <Border Grid.Column="0" 
+                        Background="#E8F5E9" 
+                        CornerRadius="12" 
+                        Margin="5" 
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="💰" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="TỔNG DOANH THU" 
+                                   FontWeight="Bold" 
+                                   FontSize="12"
+                                   Foreground="#2E7D32"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,5"/>
+                        <TextBlock Text="{Binding TongDoanhThuDisplay}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#1B5E20"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 2: Tổng Đơn Hàng -->
+                <Border Grid.Column="1" 
+                        Background="#E3F2FD" 
+                        CornerRadius="12" 
+                        Margin="5" 
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="📦" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="TỔNG ĐơN HÀNG" 
+                                   FontWeight="Bold" 
+                                   FontSize="12"
+                                   Foreground="#1565C0"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,5"/>
+                        <TextBlock Text="{Binding TongDonHang}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#0D47A1"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 3: Đơn Trung Bình -->
+                <Border Grid.Column="2" 
+                        Background="#FFF3E0" 
+                        CornerRadius="12" 
+                        Margin="5" 
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="📊" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="ĐƠN TRUNG BÌNH" 
+                                   FontWeight="Bold" 
+                                   FontSize="12"
+                                   Foreground="#E65100"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,5"/>
+                        <TextBlock Text="{Binding DoanhThuTrungBinhDisplay}" 
+                                   FontSize="18" 
+                                   FontWeight="Bold"
+                                   Foreground="#BF360C"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Card 4: Đơn Lớn Nhất -->
+                <Border Grid.Column="3" 
+                        Background="#FCE4EC" 
+                        CornerRadius="12" 
+                        Margin="5" 
+                        Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="🏆" FontSize="32" HorizontalAlignment="Center"/>
+                        <TextBlock Text="ĐƠN LỚN NHẤT" 
+                                   FontWeight="Bold" 
+                                   FontSize="12"
+                                   Foreground="#C2185B"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,5"/>
+                        <TextBlock Text="{Binding DonHangLonNhatDisplay}" 
+                                   FontSize="18" 
+                                   FontWeight="Bold"
+                                   Foreground="#880E4F"
+                                   HorizontalAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Hai cột: Sản phẩm bán chạy & Topping phổ biến -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Sản phẩm bán chạy nhất -->
+                <Border Grid.Column="0" 
+                        Background="White" 
+                        CornerRadius="12" 
+                        Margin="5" 
+                        Padding="20"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="🔥 SẢN PHẨM BÁN CHẠY NHẤT" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#E74C3C"
+                                   Margin="0,0,0,15"/>
+
+                        <!-- DataGrid cho sản phẩm bán chạy -->
+                        <DataGrid ItemsSource="{Binding SanPhamBanChay}"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  GridLinesVisibility="None"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  RowBackground="White"
+                                  AlternatingRowBackground="#F9F9F9"
+                                  CanUserAddRows="False"
+                                  CanUserDeleteRows="False"
+                                  SelectionMode="Single"
+                                  Height="300">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="#" 
+                                                    Width="40"
+                                                    Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={StaticResource RowNumberConverter}}">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Tên Sản Phẩm" 
+                                                    Width="*"
+                                                    Binding="{Binding TenHienThi}">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Số Lượng" 
+                                                    Width="80"
+                                                    Binding="{Binding TongSoLuongBan}">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                            <Setter Property="Foreground" Value="#E74C3C"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+
+                                <DataGridTextColumn Header="Doanh Thu" 
+                                                    Width="120"
+                                                    Binding="{Binding DoanhThuDisplay}">
+                                    <DataGridTextColumn.HeaderStyle>
+                                        <Style TargetType="DataGridColumnHeader">
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Padding" Value="10"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                                        </Style>
+                                    </DataGridTextColumn.HeaderStyle>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="HorizontalAlignment" Value="Right"/>
+                                            <Setter Property="Foreground" Value="#27AE60"/>
+                                            <Setter Property="FontWeight" Value="Bold"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+
+                            <DataGrid.RowStyle>
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Height" Value="35"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#E3F2FD"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </DataGrid.RowStyle>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
+
+                <!-- Topping phổ biến -->
+                <Border Grid.Column="1" 
+                        Background="White" 
+                        CornerRadius="12" 
+                        Margin="5" 
+                        Padding="20"
+                        BorderBrush="#E0E0E0"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="🌟 TOPPING PHỔ BIẾN" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="#9B59B6"
+                                   Margin="0,0,0,15"/>
+
+                        <!-- ListView cho topping -->
+                        <ListView ItemsSource="{Binding ToppingPhoBien}"
+                                  Background="Transparent"
+                                  BorderThickness="0"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  Height="300">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#F8F9FA" 
+                                            CornerRadius="8" 
+                                            Padding="12" 
+                                            Margin="0,5">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Grid.Row="0" 
+                                                       Text="{Binding TenTopping}" 
+                                                       FontWeight="Bold"
+                                                       FontSize="14"
+                                                       Foreground="#2C3E50"/>
+
+                                            <StackPanel Grid.Row="1" 
+                                                        Orientation="Horizontal" 
+                                                        Margin="0,8,0,0">
+                                                <Border Background="#E8F5E9" 
+                                                        CornerRadius="4" 
+                                                        Padding="6,3"
+                                                        Margin="0,0,8,0">
+                                                    <TextBlock Text="{Binding TongSoLuong, StringFormat='SL: {0}'}" 
+                                                               FontSize="11"
+                                                               Foreground="#27AE60"
+                                                               FontWeight="SemiBold"/>
+                                                </Border>
+
+                                                <Border Background="#FFF3E0" 
+                                                        CornerRadius="4" 
+                                                        Padding="6,3">
+                                                    <TextBlock Text="{Binding DoanhThuDisplay}" 
+                                                               FontSize="11"
+                                                               Foreground="#F39C12"
+                                                               FontWeight="SemiBold"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Loading Indicator -->
+            <Border Background="#80000000" 
+                    CornerRadius="8"
+                    Padding="20"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="⏳" FontSize="24" Margin="0,0,10,0"/>
+                    <TextBlock Text="{Binding StatusMessage}" 
+                               Foreground="White"
+                               FontSize="16"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

@@ -1,0 +1,87 @@
+﻿<Window x:Class="BanCaPhe.Views.W_ToppingModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Topping"
+        Height="420"
+        Width="520"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1.3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- FORM -->
+            <GroupBox Header="Thông tin topping" Margin="0,0,10,0">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="Tên topping"/>
+                        <TextBox x:Name="txtTen"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Margin="0,0,0,10">
+                        <TextBlock Text="Giá"/>
+                        <TextBox x:Name="txtGia"/>
+                    </StackPanel>
+
+                    <CheckBox x:Name="chkBanRieng"
+                              Grid.Row="2"
+                              Content="Có thể bán riêng"/>
+
+                    <CheckBox x:Name="chkConBan"
+                              Grid.Row="3"
+                              Content="Còn bán"
+                              IsChecked="True"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- HÌNH -->
+            <GroupBox Grid.Column="1" Header="Hình ảnh">
+                <StackPanel Margin="10" HorizontalAlignment="Center">
+                    <Border Width="140"
+                            Height="140"
+                            BorderBrush="Gray"
+                            BorderThickness="1"
+                            CornerRadius="70">
+                        <Image x:Name="imgPreview"
+                               Stretch="UniformToFill"/>
+                    </Border>
+
+                    <Button Content="Chọn ảnh"
+                            Width="110"
+                            Margin="0,10,0,0"
+                            Click="BtnChonAnh_Click"/>
+                </StackPanel>
+            </GroupBox>
+        </Grid>
+
+        <!-- BUTTON -->
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,15,0,0">
+            <Button Content="Lưu"
+                    Width="90"
+                    Margin="0,0,8,0"
+                    Click="BtnLuu_Click"/>
+            <Button Content="Hủy"
+                    Width="90"
+                    Click="BtnHuy_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
