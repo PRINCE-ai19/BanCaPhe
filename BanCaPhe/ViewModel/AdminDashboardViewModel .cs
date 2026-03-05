@@ -18,6 +18,8 @@ namespace BanCaPhe.ViewModel
         private readonly NhanVienService _nhanVienService;
 
 
+        //
+
         // doanh thu
         private string _doanhThuDisplay;
         public string DoanhThuDisplay
