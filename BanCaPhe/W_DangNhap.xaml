@@ -1,71 +1,123 @@
-﻿<Window x:Class="BanCaPhe.W_DangNhap"
+<Window x:Class="BanCaPhe.W_DangNhap"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Title="Đăng ký tài khoản"
-    Height="437"
-    Width="799"
+    Title="Modtra — Xác thực"
+    Height="660"
+    Width="880"
     WindowStartupLocation="CenterScreen"
     ResizeMode="NoResize"
-    Background="#F2F3F5">
+    WindowStyle="None"
+    AllowsTransparency="True"
+    Background="Transparent">
 
-    <Border Background="White"
-        CornerRadius="12"
-        Padding="25"
-        Margin="20,20,20,20">
+    <Border CornerRadius="18" ClipToBounds="True">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.1*"/>
+            </Grid.ColumnDefinitions>
 
-        <StackPanel>
+            <!-- ── LEFT PANEL (decoration) ── -->
+            <Border Grid.Column="0" Background="{StaticResource PrimaryBrush}">
+                <Grid>
+                    <!-- Hình khối trang trí -->
+                    <Ellipse Width="300" Height="300"
+                             Fill="#339B7460"
+                             HorizontalAlignment="Right"
+                             VerticalAlignment="Top"
+                             Margin="0,-80,-80,0"/>
+                    <Ellipse Width="200" Height="200"
+                             Fill="#33A8D5BA"
+                             HorizontalAlignment="Left"
+                             VerticalAlignment="Bottom"
+                             Margin="-50,0,0,50"/>
+
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
+                        <TextBlock Text="☕" FontSize="60" HorizontalAlignment="Center" Margin="0,0,0,16"/>
+                        <TextBlock Text="Modtra" FontSize="36" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Quản lý quán thông minh" FontSize="14" Foreground="#CCFFFFFF" HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ── RIGHT PANEL (Auth Container) ── -->
+            <Border Grid.Column="1" Background="White" ClipToBounds="True">
+                <Grid>
+                    
+                    <!-- ============================================== -->
+                    <!-- FORM 1: ĐĂNG NHẬP -->
+                    <!-- ============================================== -->
+                    <Border x:Name="pnlLogin" Padding="40" Visibility="Visible" Opacity="1">
+                        <StackPanel VerticalAlignment="Center">
+
+                            <TextBlock Text="Chào mừng trở lại 👋" FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+                            <TextBlock Text="Đăng nhập để vào hệ thống" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,30"/>
+
+                            <!-- Email -->
+                            <TextBlock Text="Email" Style="{StaticResource FormLabel}"/>
+                            <TextBox x:Name="txtEmail" Style="{StaticResource ModtraTextBox}" Margin="0,0,0,16"/>
+
+                            <!-- Mật khẩu -->
+                            <TextBlock Text="Mật khẩu" Style="{StaticResource FormLabel}"/>
+                            <PasswordBox x:Name="txtMatKhau" Style="{StaticResource ModtraPasswordBox}" Margin="0,0,0,24"/>
+
+                            <!-- Button Đăng nhập -->
+                            <Button Content="Đăng Nhập" Style="{StaticResource BtnPrimary}" Height="46" FontSize="15" Click="BtnDangNhap_Click" Margin="0,0,0,20"/>
+
+                            <!-- Cấu hình Links -->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,6,0,0">
+                                <TextBlock Text="Chưa có tài khoản? " FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                <TextBlock Text="Đăng ký ngay" FontSize="13" Foreground="{StaticResource PrimaryBrush}" FontWeight="SemiBold" Cursor="Hand" MouseDown="SwitchToRegister"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Quên mật khẩu?" FontSize="13" Foreground="{StaticResource PrimaryBrush}" HorizontalAlignment="Center" Margin="0,12,0,0" Cursor="Hand" MouseDown="TextQuyenmatkhau_Click"/>
+                        </StackPanel>
+                    </Border>
 
 
-            <TextBlock Text="ĐĂNG NHẬP TÀI KHOẢN"
-                   FontSize="20"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,20"/>
+                    <!-- ============================================== -->
+                    <!-- FORM 2: ĐĂNG KÝ -->
+                    <!-- ============================================== -->
+                    <Border x:Name="pnlRegister" Padding="40,24" Visibility="Collapsed" Opacity="0">
+                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                            <StackPanel VerticalAlignment="Center">
 
+                                <TextBlock Text="Tạo tài khoản 🌿" FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" Margin="0,0,0,4"/>
+                                <TextBlock Text="Điền đầy đủ thông tin bên dưới" FontSize="14" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,0,0,26"/>
 
-            
+                                <!-- Họ tên -->
+                                <TextBlock Text="Họ tên" Style="{StaticResource FormLabel}"/>
+                                <TextBox x:Name="txtHoTen" Style="{StaticResource ModtraTextBox}" Margin="0,0,0,14"/>
 
+                                <!-- Email -->
+                                <TextBlock Text="Email" Style="{StaticResource FormLabel}"/>
+                                <TextBox x:Name="txtRegEmail" Style="{StaticResource ModtraTextBox}" Margin="0,0,0,14"/>
 
-            <TextBlock Text="Email"/>
-            <TextBox x:Name="txtEmail"
-                 Height="35"
-                 Margin="0,5,0,10"/>
+                                <!-- Mật khẩu -->
+                                <TextBlock Text="Mật khẩu" Style="{StaticResource FormLabel}"/>
+                                <PasswordBox x:Name="txtRegMatKhau" Style="{StaticResource ModtraPasswordBox}" Margin="0,0,0,14"/>
 
+                                <!-- Xác nhận -->
+                                <TextBlock Text="Xác nhận mật khẩu" Style="{StaticResource FormLabel}"/>
+                                <PasswordBox x:Name="txtXacNhan" Style="{StaticResource ModtraPasswordBox}" Margin="0,0,0,14"/>
 
-            <TextBlock Text="Mật khẩu"/>
-            <PasswordBox x:Name="txtMatKhau"
-                     Height="35"
-                     Margin="0,5,0,10"/>
+                                <!-- SĐT -->
+                                <TextBlock Text="Số điện thoại" Style="{StaticResource FormLabel}"/>
+                                <TextBox x:Name="txtSoDienThoai" Style="{StaticResource ModtraTextBox}" Margin="0,0,0,26"/>
 
+                                <!-- Register button -->
+                                <Button Content="Đăng Ký Tài Khoản" Style="{StaticResource BtnPrimary}" Height="46" FontSize="15" Click="BtnDangKy_Click" Margin="0,0,0,16"/>
 
-          
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="Đã có tài khoản? " FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    <TextBlock Text="Đăng nhập" FontSize="13" Foreground="{StaticResource PrimaryBrush}" FontWeight="SemiBold" Cursor="Hand" MouseDown="SwitchToLogin"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
 
-            <Button Content="Đăng Nhập"
-                Height="40"
-                Background="#6F4E37"
-                Foreground="White"
-                FontWeight="Bold"
-                Click="BtnDangNhap_Click"/>
-
-
-            <TextBlock Text="Chưa có tài khoản? Đăng ký"
-                   Foreground="#007ACC"
-                   HorizontalAlignment="Center"
-                   Margin="0,15,0,0"
-                   Cursor="Hand"
-                   MouseDown="TextDagKy_Click"/>
-
-
-            <TextBlock Text="Quên mật khẩu"
-          Foreground="#007ACC"
-          HorizontalAlignment="Center"
-          Margin="0,15,0,0"
-          Cursor="Hand"
-          MouseDown="TextQuyenmatkhau_Click"/>
-
-        </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Border>
 </Window>

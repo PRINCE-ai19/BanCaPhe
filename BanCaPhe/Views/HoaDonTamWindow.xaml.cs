@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +22,12 @@ namespace BanCaPhe.Views
         public HoaDonTamWindow()
         {
             InitializeComponent();
+        }
+
+        // TODO: Thêm logic xuất PDF vào đây
+        private void BtnXuatPDF_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic xuất PDF — sẽ triển khai sau
         }
     }
 }
