@@ -1,4 +1,4 @@
-﻿using BanCaPhe.Models;
+using BanCaPhe.Models;
 using BanCaPhe.Services;
 using System;
 using System.Collections.Generic;
@@ -171,8 +171,7 @@ namespace BanCaPhe.ViewModel
         {
             if (SelectedTopping == null)
             {
-                MessageBox.Show("Vui lòng chọn topping!", "Thông báo",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                DialogService.ShowError("Vui lòng chọn topping!");
                 return;
             }
 
@@ -216,10 +215,7 @@ namespace BanCaPhe.ViewModel
 
             if (KichThuocDuocChon == null)
             {
-                MessageBox.Show("Vui lòng chọn size!",
-                    "Thiếu thông tin",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
+                DialogService.ShowError("Vui lòng chọn size!");
                 return;
             }
 
@@ -247,8 +243,7 @@ namespace BanCaPhe.ViewModel
 
             CartService.Instance.Items.Add(orderItem);
 
-            MessageBox.Show("Đã thêm vào giỏ hàng!", "Thành công",
-                MessageBoxButton.OK, MessageBoxImage.Information);
+            DialogService.ShowMessage("Đã thêm vào giỏ hàng!");
         }
     }
 }

@@ -41,7 +41,7 @@ namespace BanCaPhe
 
         private void BtnThem_Click(object sender, RoutedEventArgs e)
         {
-            var modal = new W_ToppingModal(); // thêm
+            var modal = new W_ToppingModal(); 
             if (modal.ShowDialog() == true)
             {
                 LoadData();

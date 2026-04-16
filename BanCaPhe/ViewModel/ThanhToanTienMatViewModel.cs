@@ -1,4 +1,4 @@
-﻿using BanCaPhe.Models;
+using BanCaPhe.Models;
 using BanCaPhe.Services;
 using System;
 using System.Collections.Generic;
@@ -132,15 +132,13 @@ namespace BanCaPhe.ViewModel
         {
             if (TienKhachDua <= 0)
             {
-                MessageBox.Show("Vui lòng nhập tiền khách đưa",
-                    "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                DialogService.ShowError("Vui lòng nhập tiền khách đưa");
                 return;
             }
 
             if (TienKhachDua < TongTien)
             {
-                MessageBox.Show("Tiền khách đưa không đủ!",
-                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                DialogService.ShowError("Tiền khách đưa không đủ!");
                 return;
             }
 
@@ -151,12 +149,7 @@ namespace BanCaPhe.ViewModel
 
                 if (currentUser == null)
                 {
-                    MessageBox.Show(
-                        "Không tìm thấy thông tin nhân viên đăng nhập!",
-                        "Lỗi",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
+                    DialogService.ShowError("Không tìm thấy thông tin nhân viên đăng nhập!");
                     return;
                 }
 
@@ -174,8 +167,7 @@ namespace BanCaPhe.ViewModel
 
                 if (!items.Any())
                 {
-                    MessageBox.Show("Giỏ hàng trống!",
-                        "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    DialogService.ShowError("Giỏ hàng trống!");
                     return;
                 }
 
@@ -184,23 +176,13 @@ namespace BanCaPhe.ViewModel
                 {
                     if (item.SanPhamKichThuocID <= 0)
                     {
-                        MessageBox.Show(
-                            $"Sản phẩm '{item.Ten}' chưa có size hợp lệ!",
-                            "Lỗi dữ liệu",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error
-                        );
+                        DialogService.ShowError($"Sản phẩm '{item.Ten}' chưa có size hợp lệ!");
                         return;
                     }
 
                     if (item.DonGia <= 0)
                     {
-                        MessageBox.Show(
-                            $"Sản phẩm '{item.Ten}' có đơn giá không hợp lệ!",
-                            "Lỗi dữ liệu",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Error
-                        );
+                        DialogService.ShowError($"Sản phẩm '{item.Ten}' có đơn giá không hợp lệ!");
                         return;
                     }
 
@@ -211,12 +193,7 @@ namespace BanCaPhe.ViewModel
                         {
                             if (tp.ToppingID <= 0 || tp.Gia < 0)
                             {
-                                MessageBox.Show(
-                                    $"Topping của '{item.Ten}' không hợp lệ!",
-                                    "Lỗi dữ liệu",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Error
-                                );
+                                DialogService.ShowError($"Topping của '{item.Ten}' không hợp lệ!");
                                 return;
                             }
                         }
@@ -227,12 +204,7 @@ namespace BanCaPhe.ViewModel
                 _donHangService.ThanhToan(donHang, items);
 
                 // 6️⃣ THÀNH CÔNG
-                MessageBox.Show(
-                    $"Thanh toán thành công!\nTiền thối: {TienThoi:N0} đ",
-                    "Thành công",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Information
-                );
+                DialogService.ShowMessage($"Thanh toán thành công!\nTiền thối: {TienThoi:N0} đ");
 
                 // 7️⃣ CLEAR GIỎ
                 CartService.Instance.Items.Clear();
@@ -242,11 +214,7 @@ namespace BanCaPhe.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Lỗi thanh toán!\n" + ex.Message,
-                    "Lỗi",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                DialogService.ShowError("Lỗi thanh toán!\n" + ex.Message);
             }
         }
 

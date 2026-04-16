@@ -1,4 +1,4 @@
-﻿using BanCaPhe.Models;
+using BanCaPhe.Models;
 using BanCaPhe.Services;
 using BanCaPhe.Views;
 using System.Windows;
@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace BanCaPhe.ViewModel
 {

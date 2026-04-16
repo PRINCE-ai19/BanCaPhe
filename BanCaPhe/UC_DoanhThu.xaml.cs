@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace BanCaPhe
 {
-    /// <summary>
-    /// Interaction logic for Uc_doanhthu.xaml
-    /// </summary>
     public partial class UC_DoanhThu : UserControl
     {
         public UC_DoanhThu()

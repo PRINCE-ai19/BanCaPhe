@@ -19,9 +19,6 @@ using System.Windows.Shapes;
 
 namespace BanCaPhe
 {
-    /// <summary>
-    /// Interaction logic for UC_NhanVien.xaml
-    /// </summary>
     public partial class UC_NhanVien : UserControl
     {
 
@@ -64,8 +61,6 @@ namespace BanCaPhe
                 MessageBox.Show("Vui lòng chọn nhân viên cần sửa");
             }
         }
-
-        // NÚT XÓA (MỚI)
         private void BtnXoa_Click(object sender, RoutedEventArgs e)
         {
             if (dgNhanVien.SelectedItem is NhanVien nv)
@@ -96,9 +91,6 @@ namespace BanCaPhe
                 MessageBox.Show("Vui lòng chọn nhân viên cần xóa");
             }
         }
-
-
-        // NÚT ĐỔI MẬT KHẨU (MỚI)
         private void BtnDoiMatKhau_Click(object sender, RoutedEventArgs e)
         {
             if (dgNhanVien.SelectedItem is NhanVien nv)

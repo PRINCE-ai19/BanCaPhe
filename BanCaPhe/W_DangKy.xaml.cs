@@ -1,4 +1,4 @@
-﻿using BanCaPhe.Helpers;
+using BanCaPhe.Helpers;
 using BanCaPhe.Models;
 using BanCaPhe.Services;
 using System;
@@ -26,71 +26,6 @@ namespace BanCaPhe
         public DangKy()
         {
             InitializeComponent();
- 
-        }
-
-        private void BtnDangKy_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var nhanVien = new NhanVien
-                {
-                    HoTen = txtHoTen.Text,
-                    Email = txtEmail.Text,
-                    MatKhau = txtMatKhau.Password, 
-                    SoDienThoai = txtSoDienThoai.Text,
-                    VaiTro = "Employee"
-                };
-
-                var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
-                bool isValid = Validator.TryValidateObject(
-                    nhanVien,
-                    new ValidationContext(nhanVien),
-                    results,
-                    true
-                );
-
-                if (!isValid)
-                {
-                    MessageBox.Show(
-                        string.Join("\n", results.Select(x => x.ErrorMessage)),
-                        "Lỗi dữ liệu"
-                    );
-                    return;
-                }
-
-                var service = new NhanVienService();
-
-                nhanVien.MatKhau = PasswordHelper.HashPassword(nhanVien.MatKhau);
-
-                service.DangKy(nhanVien);
-
-                MessageBox.Show("Đăng ký thành công");
-                W_DangNhap dangNhap = new W_DangNhap();
-                dangNhap.Show();
-                this.Close();
-
-            }
-            catch (SqlException ex)
-            {
-                if (ex.Number == 2627 || ex.Number == 2601)
-                {
-                    MessageBox.Show("Email hoặc số điện thoại đã tồn tại");
-                }
-                else
-                {
-                    MessageBox.Show("Lỗi hệ thống");
-                }
-            }
-
-         
-        }
-
-        private void TextDangNhap_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            W_DangNhap dangNhap = new W_DangNhap();
-            dangNhap.Show();
-            this.Close();
         }
     }
 }

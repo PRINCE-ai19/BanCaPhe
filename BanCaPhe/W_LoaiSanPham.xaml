@@ -1,6 +1,12 @@
-﻿<UserControl x:Class="BanCaPhe.W_LoaiSanPham"
+<UserControl x:Class="BanCaPhe.W_LoaiSanPham"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BanCaPhe"
+             xmlns:vm="clr-namespace:BanCaPhe.ViewModel">
+
+    <UserControl.DataContext>
+        <vm:LoaiSanPhamViewModel/>
+    </UserControl.DataContext>
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -33,6 +39,7 @@
                 <StackPanel>
                     <TextBlock Text="Tên loại" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtTenLoai"
+                             Text="{Binding TenLoai, UpdateSourceTrigger=PropertyChanged}"
                              Height="30"
                              Margin="0 5 10 0"/>
                 </StackPanel>
@@ -41,6 +48,7 @@
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Vị trí" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtViTri"
+                             Text="{Binding ViTri, UpdateSourceTrigger=PropertyChanged}"
                              Height="30"
                              Margin="0 5 0 0"/>
                 </StackPanel>
@@ -55,20 +63,20 @@
                             Width="80"
                             Height="30"
                             Margin="0 0 5 0"
-                            Click="BtnThem_Click"/>
+                            Command="{Binding ThemCommand}"/>
 
                     <Button Content="Sửa"
                             Width="80"
                             Height="30"
                             Margin="0 0 5 0"
-                            Click="BtnSua_Click"/>
+                            Command="{Binding SuaCommand}"/>
 
                     <Button Content="Xóa"
                             Width="80"
                             Height="30"
                             Background="#E57373"
                             Foreground="White"
-                            Click="BtnXoa_Click"/>
+                            Command="{Binding XoaCommand}"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -81,7 +89,8 @@
                   IsReadOnly="True"
                   RowHeight="35"
                   SelectionMode="Single"
-                  SelectionChanged="dgLoaiDoUong_SelectionChanged">
+                  ItemsSource="{Binding DanhMucList}"
+                  SelectedItem="{Binding SelectedDanhMuc}">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tên loại"

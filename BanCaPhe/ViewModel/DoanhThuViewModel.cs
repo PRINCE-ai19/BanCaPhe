@@ -1,4 +1,4 @@
-﻿using BanCaPhe.Models;
+using BanCaPhe.Models;
 using BanCaPhe.Services;
 using System;
 using System.Collections.Generic;
@@ -224,8 +224,7 @@ namespace BanCaPhe.ViewModel
             catch (Exception ex)
             {
                 StatusMessage = $"Lỗi: {ex.Message}";
-                MessageBox.Show($"Không thể tải dữ liệu: {ex.Message}",
-                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                DialogService.ShowError($"Không thể tải dữ liệu: {ex.Message}");
             }
             finally
             {

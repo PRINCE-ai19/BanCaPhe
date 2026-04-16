@@ -1,4 +1,6 @@
-﻿using BanCaPhe.Models;
+using BanCaPhe.Helpers;
+using BanCaPhe.Models;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,16 +15,6 @@ namespace BanCaPhe.Services
     {
         public void ThanhToan(DonHang donHang, List<OrderItem> items)
         {
-            using SqlConnection conn = DoUongDbConnection.GetConnection();
-            using SqlCommand cmd = new SqlCommand("sp_ThanhToan", conn);
-
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.AddWithValue("@NgayLap", donHang.NgayLap);
-            cmd.Parameters.AddWithValue("@NhanVienID", donHang.NhanVienID);
-            cmd.Parameters.AddWithValue("@TongTien", donHang.TongTien);
-            cmd.Parameters.AddWithValue("@HinhThucThanhToan", donHang.HinhThucThanhToan);
-
             // CHI TIẾT ĐƠN HÀNG 
             DataTable tbChiTiet = new DataTable();
             tbChiTiet.Columns.Add("SanPhamKichThuocID", typeof(int));
@@ -37,10 +29,6 @@ namespace BanCaPhe.Services
                     item.DonGia
                 );
             }
-
-            var p1 = cmd.Parameters.AddWithValue("@ChiTietDonHang", tbChiTiet);
-            p1.SqlDbType = SqlDbType.Structured;
-            p1.TypeName = "dbo.TVP_ChiTietDonHang";
 
             // CHI TIẾT TOPPING 
             DataTable tbTopping = new DataTable();
@@ -62,12 +50,19 @@ namespace BanCaPhe.Services
                 }
             }
 
-            var p2 = cmd.Parameters.AddWithValue("@ChiTietTopping", tbTopping);
-            p2.SqlDbType = SqlDbType.Structured;
-            p2.TypeName = "dbo.TVP_ChiTietTopping";
+            // Sử dụng DynamicParameters để truyền TVP
+            var parameters = new DynamicParameters();
+            parameters.Add("@NgayLap", donHang.NgayLap);
+            parameters.Add("@NhanVienID", donHang.NhanVienID);
+            parameters.Add("@TongTien", donHang.TongTien);
+            parameters.Add("@HinhThucThanhToan", donHang.HinhThucThanhToan);
+                
+            // Truyền Table-Valued Parameters
+            parameters.Add("@ChiTietDonHang", tbChiTiet.AsTableValuedParameter("dbo.TVP_ChiTietDonHang"));
+            parameters.Add("@ChiTietTopping", tbTopping.AsTableValuedParameter("dbo.TVP_ChiTietTopping"));
 
-            conn.Open();
-            cmd.ExecuteNonQuery();
+            // Gọi qua StoreHelper
+            StoreHelper.Execute("sp_ThanhToan", parameters);
         }
     }
 }

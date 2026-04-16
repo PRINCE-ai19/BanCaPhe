@@ -1,4 +1,5 @@
-﻿using BanCaPhe.Models;
+using BanCaPhe.Helpers;
+using BanCaPhe.Models;
 using BanCaPhe.Services;
 using Microsoft.Win32;
 using System;
@@ -74,27 +75,17 @@ namespace BanCaPhe.Views
 
         private void BtnLuu_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtTen.Text))
-            {
-                MessageBox.Show("Tên topping không được để trống");
-                return;
-            }
-
-            if (!decimal.TryParse(txtGia.Text, out decimal gia) || gia < 0)
-            {
-                MessageBox.Show("Giá không hợp lệ");
-                return;
-            }
-
             var topping = new Topping
             {
                 ID = _id ?? 0,
-                TenTopping = txtTen.Text,
-                Gia = gia,
+                TenTopping = txtTen.Text.Trim(),
+                Gia = decimal.TryParse(txtGia.Text, out decimal g) ? g : -1,
                 CoTheBanRieng = chkBanRieng.IsChecked == true,
                 ConBan = chkConBan.IsChecked == true,
                 HinhAnh = _hinhAnh
             };
+
+            if (!ValidationHelper.ValidateWithReport(topping)) return;
 
             bool result = _id == null
                 ? _service.Insert(topping)

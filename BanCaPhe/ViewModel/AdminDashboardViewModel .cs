@@ -1,4 +1,4 @@
-﻿using BanCaPhe.Services;
+using BanCaPhe.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +9,20 @@ using System.Windows.Input;
 
 namespace BanCaPhe.ViewModel
 {
-    class AdminDashboardViewModel : BaseViewModel
+    public class AdminDashboardViewModel : BaseViewModel
     {
         private readonly DoanhThuService _doanhThuService;
         private readonly DoUongService _doUongService;
         private readonly LoaiDoUongService _loaiDoUongService;
         private readonly ToppingService _toppingService;
         private readonly NhanVienService _nhanVienService;
+
+        private object _currentContent;
+        public object CurrentContent
+        {
+            get => _currentContent;
+            set { _currentContent = value; OnPropertyChanged(); }
+        }
 
 
         //
@@ -81,6 +88,8 @@ namespace BanCaPhe.ViewModel
         }
 
         public ICommand RefreshDataCommand { get; }
+        public ICommand NavigateCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public AdminDashboardViewModel()
         {
@@ -91,9 +100,39 @@ namespace BanCaPhe.ViewModel
             _nhanVienService = new NhanVienService();
 
             RefreshDataCommand = new RelayCommand(_ => LoadAllData());
+            NavigateCommand = new RelayCommand(ExecuteNavigate);
+            LogoutCommand = new RelayCommand(ExecuteLogout);
+
+            // Mặc định hiển thị Doanh thu
+            ExecuteNavigate("DoanhThu");
 
             // Load dữ liệu ban đầu
             LoadAllData();
+        }
+
+        private void ExecuteNavigate(object param)
+        {
+            string viewName = param as string;
+            switch (viewName)
+            {
+                case "DoanhThu": CurrentContent = new UC_DoanhThu(); break;
+                case "SanPham": CurrentContent = new UC_SanPham(); break;
+                case "LoaiSanPham": CurrentContent = new W_LoaiSanPham(); break;
+                case "Topping": CurrentContent = new UC_AdminTopping(); break;
+                case "NhanVien": CurrentContent = new UC_NhanVien(); break;
+            }
+            // Refresh stats whenever we switch views
+            LoadAllData();
+        }
+
+        private void ExecuteLogout(object obj)
+        {
+            if (DialogService.ShowConfirm("Bạn có chắc muốn đăng xuất?"))
+            {
+                WindowService.ShowLoginWindow();
+                // Đóng dashboard hiện tại
+                Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w is AdminDashboard)?.Close();
+            }
         }
 
         public void LoadAllData()
@@ -117,8 +156,7 @@ namespace BanCaPhe.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}",
-                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                DialogService.ShowError($"Lỗi khi tải dữ liệu: {ex.Message}");
             }
         }
 

@@ -1,4 +1,4 @@
-﻿<Window x:Class="BanCaPhe.AdminDashboard"
+<Window x:Class="BanCaPhe.AdminDashboard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:BanCaPhe.ViewModel"
@@ -21,8 +21,10 @@
         <UniformGrid Columns="4" Margin="0,0,0,20">
             <!-- Doanh thu -->
             <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand"
-                    MouseLeftButtonUp="DoanhThu_Click">
+                    Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="DoanhThu"/>
+                </Border.InputBindings>
                 <StackPanel>
                     <TextBlock Text="DOANH THU" FontWeight="Bold" Foreground="#666"/>
                     <TextBlock Text="{Binding DoanhThuDisplay}" 
@@ -34,8 +36,10 @@
 
             <!-- Sản phẩm -->
             <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand"
-                    MouseLeftButtonUp="SanPham_Click">
+                    Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="SanPham"/>
+                </Border.InputBindings>
                 <StackPanel>
                     <TextBlock Text="SẢN PHẨM" FontWeight="Bold" Foreground="#666"/>
                     <TextBlock Text="{Binding SoLuongSanPham}" 
@@ -47,8 +51,10 @@
 
             <!-- Loại sản phẩm -->
             <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand"
-                    MouseLeftButtonUp="LoaiSanPham_Click">
+                    Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="LoaiSanPham"/>
+                </Border.InputBindings>
                 <StackPanel>
                     <TextBlock Text="LOẠI SẢN PHẨM" FontWeight="Bold" Foreground="#666"/>
                     <TextBlock Text="{Binding SoLuongLoaiSanPham}" 
@@ -60,8 +66,10 @@
 
             <!-- Topping -->
             <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand"
-                    MouseLeftButtonUp="Topping_Click">
+                    Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="Topping"/>
+                </Border.InputBindings>
                 <StackPanel>
                     <TextBlock Text="TOPPING" FontWeight="Bold" Foreground="#666"/>
                     <TextBlock Text="{Binding SoLuongTopping}" 
@@ -73,8 +81,10 @@
 
             <!-- Nhân viên -->
             <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand"
-                    MouseLeftButtonUp="NhanVien_Click">
+                    Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="NhanVien"/>
+                </Border.InputBindings>
                 <StackPanel>
                     <TextBlock Text="NHÂN VIÊN" FontWeight="Bold" Foreground="#666"/>
                     <TextBlock Text="{Binding SoLuongNhanVien}" 
@@ -90,10 +100,10 @@
                     CornerRadius="12"
                     Margin="10"
                     Padding="15"
-                    Cursor="Hand"
-                    MouseLeftButtonUp="Logout_Click"
-                    MouseEnter="Logout_MouseEnter"
-                    MouseLeave="Logout_MouseLeave">
+                    Cursor="Hand">
+                <Border.InputBindings>
+                    <MouseBinding MouseAction="LeftClick" Command="{Binding LogoutCommand}"/>
+                </Border.InputBindings>
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <!-- Icon -->
                     <TextBlock Text="⏻"
@@ -117,7 +127,7 @@
                 Background="White"
                 CornerRadius="12"
                 Padding="15">
-            <ContentControl x:Name="AdimMainContent"/>
+            <ContentControl Content="{Binding CurrentContent}"/>
         </Border>
     </Grid>
 </Window>

@@ -1,4 +1,4 @@
-﻿using BanCaPhe.Models;
+using BanCaPhe.Models;
 using BanCaPhe.Views;
 using System;
 using System.Collections.Generic;
@@ -55,21 +55,13 @@ namespace BanCaPhe.ViewModel
         //  CHUYỂN KHOẢN 
         private void ThanhToanChuyenKhoan()
         {
-            MessageBox.Show(
-                "Thanh toán chuyển khoản (sẽ làm sau)",
-                "Thông báo",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            DialogService.ShowMessage("Thanh toán chuyển khoản (sẽ làm sau)");
         }
 
         // VNPAY
         private void ThanhToanVnpay()
         {
-            MessageBox.Show(
-                "Thanh toán VNPay QR (sẽ tích hợp sau)",
-                "Thông báo",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            DialogService.ShowMessage("Thanh toán VNPay QR (sẽ tích hợp sau)");
         }
 
         private void Dong()

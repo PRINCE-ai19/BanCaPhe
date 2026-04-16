@@ -14,7 +14,6 @@ namespace BanCaPhe.Models
         public string HoTen { get; set; }
 
         [Required(ErrorMessage = "Email không được để trống")]
-        [StringLength(100, ErrorMessage = "Email tối đa 100 ký tự")]
         [EmailAddress(ErrorMessage = "Định dạng email không hợp lệ")]
         public string Email { get; set; }
 

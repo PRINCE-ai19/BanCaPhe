@@ -1,4 +1,4 @@
-﻿<Window x:Class="BanCaPhe.Views.W_SanPhamModal"
+<Window x:Class="BanCaPhe.Views.W_SanPhamModal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:conv="clr-namespace:BanCaPhe.Converters"
@@ -38,19 +38,21 @@
                     <!-- TÊN -->
                     <StackPanel Margin="0,0,0,10">
                         <TextBlock Text="Tên đồ uống"/>
-                        <TextBox x:Name="txtTen"/>
+                        <TextBox x:Name="txtTen" Text="{Binding TenDoUong, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
 
                     <!-- GIÁ -->
                     <StackPanel Grid.Row="1" Margin="0,0,0,10">
                         <TextBlock Text="Giá"/>
-                        <TextBox x:Name="txtGia"/>
+                        <TextBox x:Name="txtGia" Text="{Binding Gia, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
 
                     <!-- LOẠI -->
                     <StackPanel Grid.Row="2" Margin="0,0,0,10">
                         <TextBlock Text="Loại đồ uống"/>
                         <ComboBox x:Name="cbLoai"
+                                  ItemsSource="{Binding DanhMucList}"
+                                  SelectedItem="{Binding SelectedDanhMuc}"
                                   DisplayMemberPath="TenLoai"
                                   SelectedValuePath="ID"/>
                     </StackPanel>
@@ -59,6 +61,7 @@
                     <StackPanel Grid.Row="3" Margin="0,0,0,10">
                         <TextBlock Text="Mô tả"/>
                         <TextBox x:Name="txtMoTa"
+                                 Text="{Binding Mota, UpdateSourceTrigger=PropertyChanged}"
                                  Height="80"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True"/>
@@ -67,6 +70,7 @@
                     <!-- CÒN BÁN -->
                     <CheckBox x:Name="chkConBan"
                               Grid.Row="4"
+                              IsChecked="{Binding ConBan}"
                               Content="Còn bán"/>
                 </Grid>
             </GroupBox>
@@ -79,13 +83,13 @@
                             CornerRadius="6"
                             Width="160"
                             Height="160">
-                        <Image x:Name="imgPreview" Stretch="Uniform"/>
+                        <Image x:Name="imgPreview" Source="{Binding ImagePreview}" Stretch="Uniform"/>
                     </Border>
 
                     <Button Content="Chọn hình"
                             Width="120"
                             Margin="0,10,0,0"
-                            Click="BtnChonHinh_Click"/>
+                            Command="{Binding ChonHinhCommand}"/>
                 </StackPanel>
             </GroupBox>
         </Grid>
@@ -98,10 +102,12 @@
             <Button Content="Lưu"
                     Width="90"
                     Margin="0,0,8,0"
-                    Click="BtnLuu_Click"/>
+                    Command="{Binding LuuCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
             <Button Content="Hủy"
                     Width="90"
-                    Click="BtnHuy_Click"/>
+                    Command="{Binding HuyCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
         </StackPanel>
     </Grid>
 </Window>
