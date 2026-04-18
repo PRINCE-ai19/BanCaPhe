@@ -17,6 +17,8 @@ namespace BanCaPhe.Models
 
         private static DynamicParameters MapParameters(string storeName, object? param)
         {
+            if (param is DynamicParameters dp) return dp;
+            
             var dynamicParams = new DynamicParameters();
             if (param == null) return dynamicParams;
 
