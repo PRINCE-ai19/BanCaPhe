@@ -18,6 +18,11 @@ namespace BanCaPhe.Services
             return StoreHelper.QueryList<Topping>("sp_Topping_GetAll");
         }
 
+        public List<Topping> GetAllAdmin()
+        {
+            return StoreHelper.QueryList<Topping>("sp_Topping_GetAllAdmin");
+        }
+
         public Topping? GetById(int id)
         {
             return StoreHelper.QueryFirstOrDefault<Topping>("sp_Topping_GetById", new { ID = id });

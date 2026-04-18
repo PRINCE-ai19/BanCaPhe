@@ -4,6 +4,7 @@ using BanCaPhe.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,20 +94,25 @@ namespace BanCaPhe.ViewModel
 
             if (!ValidationHelper.ValidateWithReport(loai)) return;
 
-            if (_service.IsTenLoaiExists(loai.TenLoai, loai.ViTri))
+            try
             {
-                DialogService.ShowError("Tên loại hoặc vị trí đã tồn tại");
-                return;
+                if (_service.Insert(loai))
+                {
+                    DialogService.ShowMessage("Thêm danh mục thành công");
+                    LoadDanhMuc();
+                }
+                else
+                {
+                    DialogService.ShowError("Thêm thất bại");
+                }
             }
-
-            if (_service.Insert(loai))
+            catch (SqlException ex)
             {
-                DialogService.ShowMessage("Thêm danh mục thành công");
-                LoadDanhMuc();
+                DialogService.ShowError(ex.Message);
             }
-            else
+            catch (Exception ex)
             {
-                DialogService.ShowError("Thêm thất bại");
+                DialogService.ShowError("Có lỗi xảy ra: " + ex.Message);
             }
         }
 
@@ -123,14 +129,25 @@ namespace BanCaPhe.ViewModel
 
             if (!ValidationHelper.ValidateWithReport(SelectedDanhMuc)) return;
 
-            if (_service.Update(SelectedDanhMuc))
+            try
             {
-                DialogService.ShowMessage("Cập nhật thành công");
-                LoadDanhMuc();
+                if (_service.Update(SelectedDanhMuc))
+                {
+                    DialogService.ShowMessage("Cập nhật thành công");
+                    LoadDanhMuc();
+                }
+                else
+                {
+                    DialogService.ShowError("Cập nhật thất bại");
+                }
             }
-            else
+            catch (SqlException ex)
             {
-                DialogService.ShowError("Cập nhật thất bại");
+                DialogService.ShowError(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                DialogService.ShowError("Có lỗi xảy ra: " + ex.Message);
             }
         }
 
@@ -144,14 +161,25 @@ namespace BanCaPhe.ViewModel
 
             if (DialogService.ShowConfirm($"Bạn có chắc muốn xóa '{SelectedDanhMuc.TenLoai}'?"))
             {
-                if (_service.Delete(SelectedDanhMuc.ID))
+                try
                 {
-                    DialogService.ShowMessage("Xóa thành công");
-                    LoadDanhMuc();
+                    if (_service.Delete(SelectedDanhMuc.ID))
+                    {
+                        DialogService.ShowMessage("Xóa thành công");
+                        LoadDanhMuc();
+                    }
+                    else
+                    {
+                        DialogService.ShowError("Xóa thất bại");
+                    }
                 }
-                else
+                catch (SqlException ex)
                 {
-                    DialogService.ShowError("Xóa thất bại");
+                    DialogService.ShowError(ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    DialogService.ShowError("Có lỗi xảy ra: " + ex.Message);
                 }
             }
         }

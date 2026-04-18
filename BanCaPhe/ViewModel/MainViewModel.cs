@@ -19,7 +19,6 @@ namespace BanCaPhe.ViewModel
         private readonly LoaiDoUongService _loaiService;
         private readonly ToppingService _toppingService;
 
-        //  DANH MỤC 
         public ObservableCollection<DanhMucDouong> DanhMuc { get; set; }
 
         private DanhMucDouong _selectedDanhMuc;
@@ -30,15 +29,12 @@ namespace BanCaPhe.ViewModel
             {
                 _selectedDanhMuc = value;
                 OnPropertyChanged();
-
                 KieuHienThi = KieuHienThi.DoUong;
                 LocSanPhamTheoDanhMuc();
             }
         }
 
-        //  ĐỒ UỐNG
         private ObservableCollection<DoUong> _allSanPham;
-
         private ObservableCollection<DoUong> _tatCaSanPham;
         public ObservableCollection<DoUong> TatCaSanPham
         {
@@ -51,79 +47,51 @@ namespace BanCaPhe.ViewModel
             }
         }
 
-        // TOPPING 
         private ObservableCollection<Topping> _allTopping;
         public ObservableCollection<Topping> DanhSachTopping
         {
             get => _allTopping;
-            set
-            {
-                _allTopping = value;
-                OnPropertyChanged();
-            }
+            set { _allTopping = value; OnPropertyChanged(); }
         }
 
         private Topping _selectedTopping;
         public Topping SelectedTopping
         {
             get => _selectedTopping;
-            set
-            {
-                _selectedTopping = value;
-                OnPropertyChanged();
-            }
+            set { _selectedTopping = value; OnPropertyChanged(); }
         }
 
-        //  TRẠNG THÁI HIỂN THỊ 
         private KieuHienThi _kieuHienThi;
         public KieuHienThi KieuHienThi
         {
             get => _kieuHienThi;
-            set
-            {
-                _kieuHienThi = value;
-                OnPropertyChanged();
-                CapNhatDanhSachHienThi();
-            }
+            set { _kieuHienThi = value; OnPropertyChanged(); CapNhatDanhSachHienThi(); }
         }
 
-        // DANH SÁCH HIỂN THỊ CHUNG 
         private ObservableCollection<object> _danhSachHienThi;
         public ObservableCollection<object> DanhSachHienThi
         {
             get => _danhSachHienThi;
-            set
-            {
-                _danhSachHienThi = value;
-                OnPropertyChanged();
-            }
+            set { _danhSachHienThi = value; OnPropertyChanged(); }
         }
 
-        // GIỎ HÀNG
         public ObservableCollection<OrderItem> DonHang => CartService.Instance.Items;
-
         public decimal TongTien => CartService.Instance.TongTien;
 
-        // ĐƠN HÀNG ĐƯỢC CHỌN
         private OrderItem _selectedItem;
         public OrderItem SelectedItem
         {
             get => _selectedItem;
-            set
-            {
-                _selectedItem = value;
-                OnPropertyChanged();
-            }
+            set { _selectedItem = value; OnPropertyChanged(); }
         }
 
         public ICommand MoGhiChuCommand { get; }
-
         public ICommand InHoaDonTamCommand { get; }
-
         public ICommand MoThanhToanCommand { get; }
-
-      
-
+        public ICommand ChonSanPhamCommand { get; }
+        public ICommand ChonToppingCommand { get; }
+        public ICommand HienThiToppingCommand { get; }
+        public ICommand LogoutCommand { get; }
 
         public MainViewModel()
         {
@@ -131,127 +99,92 @@ namespace BanCaPhe.ViewModel
             _loaiService = new LoaiDoUongService();
             _toppingService = new ToppingService();
 
-            // Danh mục
             DanhMuc = _loaiService.GetAllND();
-
-            // Đồ uống
             _allSanPham = _sanPhamService.GetAllNV();
             TatCaSanPham = new ObservableCollection<DoUong>(_allSanPham);
-
-            // Topping
             _allTopping = new ObservableCollection<Topping>(_toppingService.GetAll());
 
-            // Mặc định
             KieuHienThi = KieuHienThi.DoUong;
             DanhSachHienThi = new ObservableCollection<object>(TatCaSanPham);
 
-            DonHang.CollectionChanged += (s, e) =>
-            {
-                OnPropertyChanged(nameof(TongTien));
-            };
+            DonHang.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TongTien));
 
-          
-
-            //    ghi chú
             MoGhiChuCommand = new RelayCommand(OpenGhiChu);
-
-            // in hóa đơn tạm
             InHoaDonTamCommand = new RelayCommand(_ => MoHoaDonTam());
-
-            // mở thanh toán
             MoThanhToanCommand = new RelayCommand(_ => MoThanhToan());
-
-           
-
-
+            ChonSanPhamCommand = new RelayCommand<DoUong>(OpenProductDetail);
+            ChonToppingCommand = new RelayCommand<Topping>(OpenToppingDetail);
+            HienThiToppingCommand = new RelayCommand(_ => HienThiTopping());
+            LogoutCommand = new RelayCommand(_ => Logout());
         }
 
-        // LỌC ĐỒ UỐNG 
         private void LocSanPhamTheoDanhMuc()
         {
-            if (SelectedDanhMuc == null)
-            { 
-                return;
-            }
-
+            if (SelectedDanhMuc == null) return;
             if (SelectedDanhMuc.TenLoai == "Tất cả đồ uống")
             {
                 TatCaSanPham = new ObservableCollection<DoUong>(_allSanPham);
                 CapNhatDanhSachHienThi();
                 return;
             }
-
-            var filtered = _allSanPham
-                .Where(sp => sp.LoaiID == SelectedDanhMuc.ID)
-                .ToList();
-
+            var filtered = _allSanPham.Where(sp => sp.LoaiID == SelectedDanhMuc.ID).ToList();
             TatCaSanPham = new ObservableCollection<DoUong>(filtered);
             CapNhatDanhSachHienThi();
         }
 
-        //  CẬP NHẬT DANH SÁCH HIỂN THỊ
         private void CapNhatDanhSachHienThi()
         {
-            if (KieuHienThi == KieuHienThi.DoUong)
-            {
-                DanhSachHienThi = new ObservableCollection<object>(TatCaSanPham);
-            }
-            else
-            {
-                DanhSachHienThi = new ObservableCollection<object>(_allTopping);
-            }
+            if (KieuHienThi == KieuHienThi.DoUong) DanhSachHienThi = new ObservableCollection<object>(TatCaSanPham);
+            else DanhSachHienThi = new ObservableCollection<object>(_allTopping);
         }
 
-        //  GỌI KHI CLICK "TOPPING" 
-        public void HienThiTopping()
-        {
-            KieuHienThi = KieuHienThi.Topping;
-        }
+        public void HienThiTopping() { KieuHienThi = KieuHienThi.Topping; }
 
-        // MỞ GHI CHÚ
         private void OpenGhiChu(object obj)
         {
             if (SelectedItem == null) return;
-
             var vm = new GhiChuViewModel(SelectedItem);
-            var view = new GhiChuWindow
-            {
-                DataContext = vm,
-            
-            };
-
+            var view = new GhiChuWindow { DataContext = vm };
             view.ShowDialog();
         }
 
         private void MoHoaDonTam()
         {
-            var vm = new HoaDonTamViewModel(
-                CartService.Instance.Items,
-                CartService.Instance.TongTien
-            );
-
-            var view = new HoaDonTamWindow
-            {
-                DataContext = vm
-            };
-
+            var vm = new HoaDonTamViewModel(CartService.Instance.Items, CartService.Instance.TongTien);
+            var view = new HoaDonTamWindow { DataContext = vm };
             view.ShowDialog();
         }
 
         private void MoThanhToan()
         {
             var vm = new ThanhToanViewModel(TongTien, DonHang);
-
-            var view = new ThanhToanWindow
-            {
-                DataContext = vm,
-                Owner = System.Windows.Application.Current.MainWindow
-            };
-
+            var view = new ThanhToanWindow { DataContext = vm, Owner = Application.Current.MainWindow };
             view.ShowDialog();
         }
 
-       
+        private void OpenProductDetail(DoUong sp)
+        {
+            if (sp == null) return;
+            var sizes = new KichThuocService().GetBySanPhamId(sp.ID);
+            var vm = new ProductDetailViewModel(sp, sizes);
+            var window = new ProductDetailWindow { DataContext = vm, Owner = Application.Current.MainWindow };
+            window.ShowDialog();
+        }
 
+        private void OpenToppingDetail(Topping topping)
+        {
+            if (topping == null) return;
+            var vm = new ToppingDetailViewModel(topping);
+            var window = new ToppingDetailWindow { DataContext = vm, Owner = Application.Current.MainWindow };
+            window.ShowDialog();
+        }
+
+        private void Logout()
+        {
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w is MainWindow);
+            W_DangNhap login = new W_DangNhap();
+            login.Show();
+            currentWindow?.Close();
+        }
     }
 }

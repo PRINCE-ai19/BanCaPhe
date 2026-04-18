@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BanCaPhe.Models
 {
     internal class DoUongDbConnection
     {
-        public static SqlConnection GetConnection()
-        {
-            string connStr = ConfigurationManager
-                            .ConnectionStrings["DefaultConnection"].ConnectionString;
+        private static readonly string _connectionString = ConfigurationManager
+                                .ConnectionStrings["DefaultConnection"].ConnectionString;
 
-            return new SqlConnection(connStr);
+        public static IDbConnection GetConnection()
+        {
+            return new SqlConnection(_connectionString);
         }
     }
 }

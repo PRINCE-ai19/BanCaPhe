@@ -28,10 +28,9 @@ namespace BanCaPhe.Models
 
         public string? TenLoai { get; set; }
 
-        [StringLength(500, ErrorMessage = "Mô tả tối đa 500 ký tự")]
+        [StringLength(50, ErrorMessage = "Mô tả tối đa 500 ký tự")]
         public string? Mota { get; set; }
 
-        [Required(ErrorMessage = "Vui lòng chọn hình ảnh")]
         public string? HinhAnh { get; set; }
     }
 }

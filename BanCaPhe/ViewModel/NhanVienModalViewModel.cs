@@ -174,7 +174,16 @@ namespace BanCaPhe.ViewModel
 
             if (!ValidationHelper.ValidateWithReport(nv)) return;
 
-            bool result = _id == null ? _service.Insert(nv) : _service.Update(nv);
+            bool result = false;
+            try
+            {
+                result = _id == null ? _service.Insert(nv) : _service.Update(nv);
+            }
+            catch (Exception ex)
+            {
+                DialogService.ShowError(ex.Message);
+                return;
+            }
 
             if (result)
             {

@@ -19,6 +19,11 @@ namespace BanCaPhe.Services
             return StoreHelper.QueryList<DoUong>("sp_DoUong_GetAll");
         }
 
+        public List<DoUong> GetAllAdmin()
+        {
+            return StoreHelper.QueryList<DoUong>("sp_DoUong_GetAllAdmin");
+        }
+
         public bool CheckTen(string tenDoUong, int loaiId, int? id = null)
         {
             int count = StoreHelper.ExecuteScalar<int>(

@@ -70,11 +70,10 @@ namespace BanCaPhe.ViewModel
             try
             {
                 var service = new NhanVienService();
-                
-                // 2. Hash mật khẩu trước khi gửi xuống database
+              
                 nhanVien.MatKhau = PasswordHelper.HashPassword(nhanVien.MatKhau);
 
-                // 3. Gọi Store (Logic check trùng Email/SĐT đã nằm trong Store)
+              
                 service.DangKy(nhanVien);
 
                 DialogService.ShowMessage("Đăng ký thành công! Vui lòng đăng nhập.");
@@ -83,7 +82,6 @@ namespace BanCaPhe.ViewModel
             }
             catch (Exception ex)
             {
-                // Hiển thị lỗi từ SQL (ví dụ lỗi RAISERROR Email đã tồn tại)
                 DialogService.ShowError(ex.Message);
             }
         }
@@ -96,7 +94,7 @@ namespace BanCaPhe.ViewModel
 
         private void CloseCurrentWindow()
         {
-            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.IsActive);
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.DataContext == this);
             currentWindow?.Close();
         }
     }

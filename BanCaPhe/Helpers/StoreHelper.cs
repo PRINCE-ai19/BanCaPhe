@@ -47,8 +47,10 @@ namespace BanCaPhe.Models
             var paramsList = new List<string>();
             try
             {
-                using (var conn = DoUongDbConnection.GetConnection())
+                using (var conn = DoUongDbConnection.GetConnection() as SqlConnection)
                 {
+                    if (conn == null) return paramsList;
+
                     using (var cmd = new SqlCommand(storeName, conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -67,7 +69,7 @@ namespace BanCaPhe.Models
 
         public static int Execute(string storeName, object? param = null)
         {
-            using (SqlConnection conn = DoUongDbConnection.GetConnection())
+            using (IDbConnection conn = DoUongDbConnection.GetConnection())
             {
                 var processedParam = MapParameters(storeName, param);
                 return conn.Execute(storeName, processedParam, commandType: CommandType.StoredProcedure);
@@ -76,7 +78,7 @@ namespace BanCaPhe.Models
 
         public static List<T> QueryList<T>(string storeName, object? param = null)
         {
-            using (SqlConnection conn = DoUongDbConnection.GetConnection())
+            using (IDbConnection conn = DoUongDbConnection.GetConnection())
             {
                 var processedParam = MapParameters(storeName, param);
                 return conn.Query<T>(storeName, processedParam, commandType: CommandType.StoredProcedure).ToList();
@@ -85,7 +87,7 @@ namespace BanCaPhe.Models
 
         public static T? QueryFirstOrDefault<T>(string storeName, object? param = null)
         {
-            using (SqlConnection conn = DoUongDbConnection.GetConnection())
+            using (IDbConnection conn = DoUongDbConnection.GetConnection())
             {
                 var processedParam = MapParameters(storeName, param);
                 return conn.QueryFirstOrDefault<T>(storeName, processedParam, commandType: CommandType.StoredProcedure);
@@ -94,7 +96,7 @@ namespace BanCaPhe.Models
 
         public static T ExecuteScalar<T>(string storeName, object? param = null)
         {
-            using (SqlConnection conn = DoUongDbConnection.GetConnection())
+            using (IDbConnection conn = DoUongDbConnection.GetConnection())
             {
                 var processedParam = MapParameters(storeName, param);
                 return conn.ExecuteScalar<T>(storeName, processedParam, commandType: CommandType.StoredProcedure);

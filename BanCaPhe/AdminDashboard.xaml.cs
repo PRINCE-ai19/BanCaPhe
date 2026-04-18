@@ -24,9 +24,7 @@ namespace BanCaPhe
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Override OnActivated để refresh dữ liệu khi cửa sổ được focus lại (sau khi đóng modal)
-        /// </summary>
+ 
         protected override void OnActivated(EventArgs e)
         {
             base.OnActivated(e);

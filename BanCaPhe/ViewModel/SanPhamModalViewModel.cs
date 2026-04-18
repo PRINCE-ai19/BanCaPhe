@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -148,26 +149,36 @@ namespace BanCaPhe.ViewModel
 
             if (!ValidationHelper.ValidateWithReport(sp)) return;
 
-            bool success;
-            if (_id == 0)
-                success = _service.Insert(sp);
-            else
-                success = _service.Update(sp);
-
-            if (success)
+            try
             {
-                DialogService.ShowMessage("Lưu sản phẩm thành công");
-                // Đóng Window (passed via obj if needed, or find it)
-                var window = obj as Window;
-                if (window != null)
+                bool success;
+                if (_id == 0)
+                    success = _service.Insert(sp);
+                else
+                    success = _service.Update(sp);
+
+                if (success)
                 {
-                    window.DialogResult = true;
-                    window.Close();
+                    DialogService.ShowMessage("Lưu sản phẩm thành công");
+                    var window = obj as Window;
+                    if (window != null)
+                    {
+                        window.DialogResult = true;
+                        window.Close();
+                    }
+                }
+                else
+                {
+                    DialogService.ShowError("Lưu thất bại");
                 }
             }
-            else
+            catch (SqlException ex)
             {
-                DialogService.ShowError("Lưu thất bại");
+                DialogService.ShowError(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                DialogService.ShowError("Có lỗi xảy ra: " + ex.Message);
             }
         }
 

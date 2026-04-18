@@ -39,7 +39,6 @@ namespace BanCaPhe.ViewModel
 
         private void ExecuteDangNhap(object obj)
         {
-            // Lấy mật khẩu từ PasswordBox (truyền qua CommandParameter)
             var passwordBox = obj as System.Windows.Controls.PasswordBox;
             string rawPassword = passwordBox?.Password;
 
@@ -49,7 +48,7 @@ namespace BanCaPhe.ViewModel
                 MatKhau = !string.IsNullOrEmpty(rawPassword) ? PasswordHelper.HashPassword(rawPassword) : ""
             };
 
-            // Validate
+        
             var results = new List<ValidationResult>();
             bool isValid = Validator.TryValidateObject(model, new ValidationContext(model), results, true);
 
@@ -81,15 +80,14 @@ namespace BanCaPhe.ViewModel
                 WindowService.ShowMainWindow();
             }
 
-            // Đóng cửa sổ hiện tại
-            var currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.DataContext == this);
             currentWindow?.Close();
         }
 
         private void ExecuteMoDangKy(object obj)
         {
             WindowService.ShowRegisterWindow();
-            var currentWindow = Application.Current.Windows.OfType<Window>().SingleOrDefault(x => x.IsActive);
+            var currentWindow = Application.Current.Windows.OfType<Window>().FirstOrDefault(x => x.DataContext == this);
             currentWindow?.Close();
         }
     }

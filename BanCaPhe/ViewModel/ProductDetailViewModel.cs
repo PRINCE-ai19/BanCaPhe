@@ -1,3 +1,4 @@
+using BanCaPhe.Helpers;
 using BanCaPhe.Models;
 using BanCaPhe.Services;
 using System;
@@ -13,32 +14,19 @@ namespace BanCaPhe.ViewModel
 {
     public class ProductDetailViewModel : BaseViewModel
     {
-
         public DoUong SanPham { get; set; }
-
         public ObservableCollection<KichThuoc> DanhSachKichThuoc { get; }
-
         public ObservableCollection<Topping> DanhSachTopping { get; }
-
 
         public bool LaTraSua
         {
             get
             {
-                // Kiểm tra theo tên loại từ database
                 var loaiService = new LoaiDoUongService();
                 var loai = loaiService.GetAllND().FirstOrDefault(l => l.ID == SanPham.LoaiID);
-
-                if (loai != null)
-                {
-                    return loai.TenLoai.ToLower().Contains("trà sữa");
-                }
-
-                // Fallback: kiểm tra theo tên sản phẩm
-                return SanPham.TenDoUong.ToLower().Contains("trà sữa");
+                return loai != null ? loai.TenLoai.ToLower().Contains("trà sữa") : SanPham.TenDoUong.ToLower().Contains("trà sữa");
             }
         }
-
 
         private KichThuoc _kichThuocDuocChon;
         public KichThuoc KichThuocDuocChon
@@ -53,26 +41,18 @@ namespace BanCaPhe.ViewModel
             }
         }
 
-        // GIÁ 
         public decimal GiaGoc => SanPham.Gia;
-
-        public decimal GiaHienTai =>
-            GiaGoc + (KichThuocDuocChon?.Gia ?? 0);
-
+        public decimal GiaHienTai => GiaGoc + (KichThuocDuocChon?.Gia ?? 0);
         public decimal TongTien
         {
             get
             {
                 decimal tong = GiaHienTai * SoLuong;
-                // Cộng thêm giá topping
-                foreach (var topping in DanhSachToppingDaChon)
-                {
-                    tong += topping.Gia * topping.SoLuong;
-                }
+                foreach (var topping in DanhSachToppingDaChon) tong += topping.Gia * topping.SoLuong;
                 return tong;
             }
         }
-        //  SỐ LƯỢNG 
+
         private int _soLuong = 1;
         public int SoLuong
         {
@@ -85,165 +65,84 @@ namespace BanCaPhe.ViewModel
             }
         }
 
-
-        // DANH SÁCH TOPPING ĐÃ CHỌN
-        public ObservableCollection<ToppingItem> DanhSachToppingDaChon { get; set; }
-            = new ObservableCollection<ToppingItem>();
+        public ObservableCollection<ToppingItem> DanhSachToppingDaChon { get; set; } = new ObservableCollection<ToppingItem>();
 
         private Topping _selectedTopping;
         public Topping SelectedTopping
         {
             get => _selectedTopping;
-            set
-            {
-                _selectedTopping = value;
-                OnPropertyChanged();
-            }
+            set { _selectedTopping = value; OnPropertyChanged(); }
         }
 
         private int _soLuongTopping = 1;
         public int SoLuongTopping
         {
             get => _soLuongTopping;
-            set
-            {
-                _soLuongTopping = value < 1 ? 1 : value;
-                OnPropertyChanged();
-            }
+            set { _soLuongTopping = value < 1 ? 1 : value; OnPropertyChanged(); }
         }
-
-
 
         public ICommand ChonSizeCommand { get; }
         public ICommand TangSoLuongCommand { get; }
         public ICommand GiamSoLuongCommand { get; }
         public ICommand ThemVaoGioCommand { get; }
-
         public ICommand ThemToppingCommand { get; }
         public ICommand XoaToppingCommand { get; }
-
-
+        public ICommand CloseCommand { get; }
 
         public ProductDetailViewModel(DoUong sp, List<KichThuoc> sizes)
         {
             SanPham = sp;
             DanhSachKichThuoc = new ObservableCollection<KichThuoc>(sizes);
+            DanhSachTopping = new ObservableCollection<Topping>(new ToppingService().GetAll());
 
-            // Load danh sách topping
-            var toppingService = new ToppingService();
-            DanhSachTopping = new ObservableCollection<Topping>(toppingService.GetAll());
-
-
-            // Mặc định chọn size đầu tiên (S)
             var sizeMacDinh = DanhSachKichThuoc.FirstOrDefault();
-            if (sizeMacDinh != null)
-            {
-                sizeMacDinh.IsSelected = true;
-                KichThuocDuocChon = sizeMacDinh;
-            }
+            if (sizeMacDinh != null) { sizeMacDinh.IsSelected = true; KichThuocDuocChon = sizeMacDinh; }
 
-            ChonSizeCommand = new RelayCommand<KichThuoc>(size =>
-            {
-                foreach (var s in DanhSachKichThuoc)
-                    s.IsSelected = false;
-
+            ChonSizeCommand = new RelayCommand<KichThuoc>(size => {
+                foreach (var s in DanhSachKichThuoc) s.IsSelected = false;
                 size.IsSelected = true;
                 KichThuocDuocChon = size;
             });
 
             TangSoLuongCommand = new RelayCommand(_ => SoLuong++);
             GiamSoLuongCommand = new RelayCommand(_ => SoLuong--);
-
             ThemVaoGioCommand = new RelayCommand(_ => ThemVaoGio());
-
             ThemToppingCommand = new RelayCommand(_ => ThemTopping());
             XoaToppingCommand = new RelayCommand<ToppingItem>(topping => XoaTopping(topping));
+            CloseCommand = new RelayCommand(_ => CloseWindow(false));
 
-            // Cập nhật tổng tiền khi danh sách topping thay đổi
-            DanhSachToppingDaChon.CollectionChanged += (s, e) =>
-            {
-                OnPropertyChanged(nameof(TongTien));
-            };
+            DanhSachToppingDaChon.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TongTien));
         }
 
-        // THÊM TOPPING
         private void ThemTopping()
         {
-            if (SelectedTopping == null)
-            {
-                DialogService.ShowError("Vui lòng chọn topping!");
-                return;
-            }
-
-            var exist = DanhSachToppingDaChon
-                .FirstOrDefault(x => x.ToppingID == SelectedTopping.ID);
-
-            if (exist != null)
-            {
-                exist.SoLuong += SoLuongTopping;
-            }
-            else
-            {
-                DanhSachToppingDaChon.Add(new ToppingItem
-                {
-                    ToppingID = SelectedTopping.ID,
-                    Ten = SelectedTopping.TenTopping,
-                    Gia = SelectedTopping.Gia,
-                    SoLuong = SoLuongTopping
-                });
-            }
-
-            // Reset số lượng topping về 1
+            if (SelectedTopping == null) { DialogService.ShowError("Vui lòng chọn topping!"); return; }
+            var exist = DanhSachToppingDaChon.FirstOrDefault(x => x.ToppingID == SelectedTopping.ID);
+            if (exist != null) exist.SoLuong += SoLuongTopping;
+            else DanhSachToppingDaChon.Add(new ToppingItem { ToppingID = SelectedTopping.ID, Ten = SelectedTopping.TenTopping, Gia = SelectedTopping.Gia, SoLuong = SoLuongTopping });
             SoLuongTopping = 1;
             OnPropertyChanged(nameof(TongTien));
         }
 
-
-        // XÓA TOPPING
         private void XoaTopping(ToppingItem topping)
         {
-            if (topping != null)
-            {
-                DanhSachToppingDaChon.Remove(topping);
-                OnPropertyChanged(nameof(TongTien));
-            }
+            if (topping != null) { DanhSachToppingDaChon.Remove(topping); OnPropertyChanged(nameof(TongTien)); }
         }
 
-        // THÊM VÀO GIỎ 
         private void ThemVaoGio()
         {
-
-            if (KichThuocDuocChon == null)
-            {
-                DialogService.ShowError("Vui lòng chọn size!");
-                return;
-            }
-
-            var orderItem = new OrderItem
-            {
-                SanPhamKichThuocID = KichThuocDuocChon.ID,
-                Ten = SanPham.TenDoUong,
-                Size = KichThuocDuocChon.TenKichThuoc,
-                SoLuong = SoLuong,
-                DonGia = GiaHienTai,
-                LaTraSua = LaTraSua
-            };
-
-            // Thêm các topping đã chọn vào đơn hàng
-            foreach (var topping in DanhSachToppingDaChon)
-            {
-                orderItem.Toppings.Add(new ToppingItem
-                {
-                    ToppingID = topping.ToppingID,
-                    Ten = topping.Ten,
-                    Gia = topping.Gia,
-                    SoLuong = topping.SoLuong
-                });
-            }
-
+            if (KichThuocDuocChon == null) { DialogService.ShowError("Vui lòng chọn size!"); return; }
+            var orderItem = new OrderItem { SanPhamKichThuocID = KichThuocDuocChon.ID, Ten = SanPham.TenDoUong, Size = KichThuocDuocChon.TenKichThuoc, SoLuong = SoLuong, DonGia = GiaHienTai, LaTraSua = LaTraSua };
+            foreach (var topping in DanhSachToppingDaChon) orderItem.Toppings.Add(new ToppingItem { ToppingID = topping.ToppingID, Ten = topping.Ten, Gia = topping.Gia, SoLuong = topping.SoLuong });
             CartService.Instance.Items.Add(orderItem);
-
             DialogService.ShowMessage("Đã thêm vào giỏ hàng!");
+            CloseWindow(true);
+        }
+
+        private void CloseWindow(bool result)
+        {
+            var window = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.DataContext == this);
+            if (window != null) { window.DialogResult = result; window.Close(); }
         }
     }
 }

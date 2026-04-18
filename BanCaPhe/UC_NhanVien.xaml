@@ -1,9 +1,14 @@
-﻿<UserControl x:Class="BanCaPhe.UC_NhanVien"
+<UserControl x:Class="BanCaPhe.UC_NhanVien"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:conv="clr-namespace:BanCaPhe.Converters"
-             Height="Auto"
-             Width="Auto">
+              xmlns:vm="clr-namespace:BanCaPhe.ViewModel"
+              Height="Auto"
+              Width="Auto">
+
+    <UserControl.DataContext>
+        <vm:NhanVienViewModel/>
+    </UserControl.DataContext>
 
     <UserControl.Resources>
         <conv:ImagePathConverter x:Key="ImagePathConverter"/>
@@ -26,7 +31,7 @@
             <Button Content="+ Thêm nhân viên"
                     Width="140"
                     DockPanel.Dock="Right"
-                    Click="BtnThem_Click"/>
+                    Command="{Binding ThemCommand}"/>
         </DockPanel>
 
         <!-- DATAGRID -->
@@ -36,7 +41,9 @@
                   CanUserAddRows="False"
                   IsReadOnly="True"
                   RowHeight="60"
-                  SelectionMode="Single">
+                  SelectionMode="Single"
+                  ItemsSource="{Binding ListNhanVien}"
+                  SelectedItem="{Binding SelectedNhanVien}">
 
             <DataGrid.Columns>
 
@@ -95,7 +102,7 @@
                                 <Button Content="Sửa"
                         Width="60"
                         Margin="0,0,5,0"
-                        Click="BtnSua_Click"/>
+                        Command="{Binding DataContext.SuaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
 
                                 <!-- NÚT XÓA -->
                                 <Button Content="Xóa"
@@ -103,12 +110,12 @@
                         Margin="0,0,5,0"
                         Background="#E74C3C"
                         Foreground="White"
-                        Click="BtnXoa_Click"/>
+                        Command="{Binding DataContext.XoaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
 
                                 <!-- (TUỲ CHỌN) NÚT ĐỔI MẬT KHẨU -->
                                 <Button Content="Đổi MK"
                         Width="70"
-                        Click="BtnDoiMatKhau_Click"/>
+                        Command="{Binding DataContext.DoiMatKhauCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
 
                             </StackPanel>
                         </DataTemplate>

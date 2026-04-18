@@ -44,7 +44,7 @@ namespace BanCaPhe.Services
 
         public ObservableCollection<DanhMucDouong> GetAllND()
         {
-            using (SqlConnection conn = DoUongDbConnection.GetConnection())
+            using (IDbConnection conn = DoUongDbConnection.GetConnection())
             {
                 string sql = "SELECT ID, TenLoai, ViTri FROM LoaiDoUong ORDER BY ViTri";
                 return new ObservableCollection<DanhMucDouong>(conn.Query<DanhMucDouong>(sql));
