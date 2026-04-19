@@ -58,6 +58,7 @@ namespace BanCaPhe.Services
         {
             var list = StoreHelper.QueryList<DoUong>("sp_DoUong_GetAll");
             return new ObservableCollection<DoUong>(list);
+            ///
         }
     }
 }
