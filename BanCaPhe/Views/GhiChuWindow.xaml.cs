@@ -14,9 +14,7 @@ using System.Windows.Shapes;
 
 namespace BanCaPhe.Views
 {
-    /// <summary>
-    /// Interaction logic for GhiChuWindow.xaml
-    /// </summary>
+  
     public partial class GhiChuWindow : Window
     {
         public GhiChuWindow()
