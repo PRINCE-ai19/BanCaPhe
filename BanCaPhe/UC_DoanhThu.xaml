@@ -15,7 +15,7 @@
     </UserControl.DataContext>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="10">
+        <StackPanel Margin="10" Background="{StaticResource BackgroundBrush}">
 
             <!-- Header với nút Refresh -->
             <Grid Margin="0,0,0,20">
@@ -23,44 +23,17 @@
                     <TextBlock Text="📊 BÁO CÁO DOANH THU" 
                                FontSize="24" 
                                FontWeight="Bold" 
-                               Foreground="#2C3E50"/>
+                               Foreground="{StaticResource OnSurfaceBrush}"/>
                     <TextBlock Text="{Binding ThangNamHienTai}" 
                                FontSize="18" 
-                               Foreground="#7F8C8D"
+                               Foreground="{StaticResource SecondaryBrush}"
                                Margin="10,5,0,0"/>
                 </StackPanel>
 
                 <Button Content="🔄 Làm mới" 
                         Command="{Binding RefreshCommand}"
                         HorizontalAlignment="Right"
-                        Padding="15,8"
-                        Background="#3498DB"
-                        Foreground="White"
-                        BorderThickness="0"
-                        Cursor="Hand"
-                        FontWeight="SemiBold">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                CornerRadius="8"
-                                                Padding="{TemplateBinding Padding}">
-                                            <ContentPresenter HorizontalAlignment="Center" 
-                                                              VerticalAlignment="Center"/>
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#2980B9"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
+                        Style="{StaticResource PrimaryButtonStyle}"/>
             </Grid>
 
             <!-- Cards thống kê tổng quan -->
@@ -74,7 +47,9 @@
 
                 <!-- Card 1: Tổng Doanh Thu -->
                 <Border Grid.Column="0" 
-                        Background="#E8F5E9" 
+                        Background="{StaticResource SurfaceContainerLowestBrush}"
+                        BorderBrush="{StaticResource TertiaryFixedBrush}"
+                        BorderThickness="2"
                         CornerRadius="12" 
                         Margin="5" 
                         Padding="20">
@@ -83,13 +58,13 @@
                         <TextBlock Text="TỔNG DOANH THU" 
                                    FontWeight="Bold" 
                                    FontSize="12"
-                                   Foreground="#2E7D32"
+                                   Foreground="{StaticResource TertiaryBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,10,0,5"/>
                         <TextBlock Text="{Binding TongDoanhThuDisplay}" 
                                    FontSize="20" 
                                    FontWeight="Bold"
-                                   Foreground="#1B5E20"
+                                   Foreground="{StaticResource TertiaryBrush}"
                                    HorizontalAlignment="Center"
                                    TextWrapping="Wrap"/>
                     </StackPanel>
@@ -97,7 +72,9 @@
 
                 <!-- Card 2: Tổng Đơn Hàng -->
                 <Border Grid.Column="1" 
-                        Background="#E3F2FD" 
+                        Background="{StaticResource SurfaceContainerLowestBrush}"
+                        BorderBrush="{StaticResource PrimaryFixedBrush}"
+                        BorderThickness="2"
                         CornerRadius="12" 
                         Margin="5" 
                         Padding="20">
@@ -106,20 +83,22 @@
                         <TextBlock Text="TỔNG ĐơN HÀNG" 
                                    FontWeight="Bold" 
                                    FontSize="12"
-                                   Foreground="#1565C0"
+                                   Foreground="{StaticResource PrimaryBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,10,0,5"/>
                         <TextBlock Text="{Binding TongDonHang}" 
                                    FontSize="20" 
                                    FontWeight="Bold"
-                                   Foreground="#0D47A1"
+                                   Foreground="{StaticResource PrimaryBrush}"
                                    HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
                 <!-- Card 3: Đơn Trung Bình -->
                 <Border Grid.Column="2" 
-                        Background="#FFF3E0" 
+                        Background="{StaticResource SurfaceContainerLowestBrush}"
+                        BorderBrush="{StaticResource OutlineVariantBrush}"
+                        BorderThickness="2"
                         CornerRadius="12" 
                         Margin="5" 
                         Padding="20">
@@ -128,13 +107,13 @@
                         <TextBlock Text="ĐƠN TRUNG BÌNH" 
                                    FontWeight="Bold" 
                                    FontSize="12"
-                                   Foreground="#E65100"
+                                   Foreground="{StaticResource OutlineBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,10,0,5"/>
                         <TextBlock Text="{Binding DoanhThuTrungBinhDisplay}" 
                                    FontSize="18" 
                                    FontWeight="Bold"
-                                   Foreground="#BF360C"
+                                   Foreground="{StaticResource OutlineBrush}"
                                    HorizontalAlignment="Center"
                                    TextWrapping="Wrap"/>
                     </StackPanel>
@@ -142,7 +121,9 @@
 
                 <!-- Card 4: Đơn Lớn Nhất -->
                 <Border Grid.Column="3" 
-                        Background="#FCE4EC" 
+                        Background="{StaticResource SurfaceContainerLowestBrush}"
+                        BorderBrush="{StaticResource ErrorBrush}"
+                        BorderThickness="2"
                         CornerRadius="12" 
                         Margin="5" 
                         Padding="20">
@@ -151,13 +132,13 @@
                         <TextBlock Text="ĐƠN LỚN NHẤT" 
                                    FontWeight="Bold" 
                                    FontSize="12"
-                                   Foreground="#C2185B"
+                                   Foreground="{StaticResource ErrorBrush}"
                                    HorizontalAlignment="Center"
                                    Margin="0,10,0,5"/>
                         <TextBlock Text="{Binding DonHangLonNhatDisplay}" 
                                    FontSize="18" 
                                    FontWeight="Bold"
-                                   Foreground="#880E4F"
+                                   Foreground="{StaticResource ErrorBrush}"
                                    HorizontalAlignment="Center"
                                    TextWrapping="Wrap"/>
                     </StackPanel>
@@ -173,17 +154,17 @@
 
                 <!-- Sản phẩm bán chạy nhất -->
                 <Border Grid.Column="0" 
-                        Background="White" 
+                        Background="{StaticResource SurfaceContainerLowestBrush}"
                         CornerRadius="12" 
                         Margin="5" 
                         Padding="20"
-                        BorderBrush="#E0E0E0"
+                        BorderBrush="{StaticResource OutlineVariantBrush}"
                         BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="🔥 SẢN PHẨM BÁN CHẠY NHẤT" 
                                    FontSize="16" 
                                    FontWeight="Bold" 
-                                   Foreground="#E74C3C"
+                                   Foreground="{StaticResource ErrorBrush}"
                                    Margin="0,0,0,15"/>
 
                         <!-- DataGrid cho sản phẩm bán chạy -->
@@ -194,12 +175,13 @@
                                   GridLinesVisibility="None"
                                   Background="Transparent"
                                   BorderThickness="0"
-                                  RowBackground="White"
-                                  AlternatingRowBackground="#F9F9F9"
+                                  RowBackground="{StaticResource SurfaceContainerLowestBrush}"
+                                  AlternatingRowBackground="{StaticResource SurfaceContainerBrush}"
                                   CanUserAddRows="False"
                                   CanUserDeleteRows="False"
                                   SelectionMode="Single"
-                                  Height="300">
+                                  Height="300"
+                                  Foreground="{StaticResource OnSurfaceBrush}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="#" 
@@ -208,7 +190,7 @@
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Background" Value="{StaticResource SurfaceContainerBrush}"/>
                                             <Setter Property="Padding" Value="10"/>
                                         </Style>
                                     </DataGridTextColumn.HeaderStyle>
@@ -220,7 +202,7 @@
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Background" Value="{StaticResource SurfaceContainerBrush}"/>
                                             <Setter Property="Padding" Value="10"/>
                                         </Style>
                                     </DataGridTextColumn.HeaderStyle>
@@ -237,7 +219,7 @@
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Background" Value="{StaticResource SurfaceContainerBrush}"/>
                                             <Setter Property="Padding" Value="10"/>
                                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                                         </Style>
@@ -245,7 +227,7 @@
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            <Setter Property="Foreground" Value="#E74C3C"/>
+                                            <Setter Property="Foreground" Value="{StaticResource ErrorBrush}"/>
                                             <Setter Property="FontWeight" Value="Bold"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
@@ -257,7 +239,7 @@
                                     <DataGridTextColumn.HeaderStyle>
                                         <Style TargetType="DataGridColumnHeader">
                                             <Setter Property="FontWeight" Value="Bold"/>
-                                            <Setter Property="Background" Value="#F5F5F5"/>
+                                            <Setter Property="Background" Value="{StaticResource SurfaceContainerBrush}"/>
                                             <Setter Property="Padding" Value="10"/>
                                             <Setter Property="HorizontalContentAlignment" Value="Right"/>
                                         </Style>
@@ -265,7 +247,7 @@
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="HorizontalAlignment" Value="Right"/>
-                                            <Setter Property="Foreground" Value="#27AE60"/>
+                                            <Setter Property="Foreground" Value="{StaticResource TertiaryBrush}"/>
                                             <Setter Property="FontWeight" Value="Bold"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
@@ -288,17 +270,17 @@
 
                 <!-- Topping phổ biến -->
                 <Border Grid.Column="1" 
-                        Background="White" 
+                        Background="{StaticResource SurfaceContainerLowestBrush}" 
                         CornerRadius="12" 
                         Margin="5" 
                         Padding="20"
-                        BorderBrush="#E0E0E0"
+                        BorderBrush="{StaticResource OutlineVariantBrush}"
                         BorderThickness="1">
                     <StackPanel>
                         <TextBlock Text="🌟 TOPPING PHỔ BIẾN" 
                                    FontSize="16" 
                                    FontWeight="Bold" 
-                                   Foreground="#9B59B6"
+                                   Foreground="{StaticResource SecondaryBrush}"
                                    Margin="0,0,0,15"/>
 
                         <!-- ListView cho topping -->
@@ -309,7 +291,7 @@
                                   Height="300">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Background="#F8F9FA" 
+                                    <Border Background="{StaticResource SurfaceContainerBrush}" 
                                             CornerRadius="8" 
                                             Padding="12" 
                                             Margin="0,5">
@@ -323,27 +305,27 @@
                                                        Text="{Binding TenTopping}" 
                                                        FontWeight="Bold"
                                                        FontSize="14"
-                                                       Foreground="#2C3E50"/>
+                                                       Foreground="{StaticResource OnSurfaceBrush}"/>
 
                                             <StackPanel Grid.Row="1" 
                                                         Orientation="Horizontal" 
                                                         Margin="0,8,0,0">
-                                                <Border Background="#E8F5E9" 
+                                                <Border Background="{StaticResource SurfaceContainerBrush}" 
                                                         CornerRadius="4" 
                                                         Padding="6,3"
                                                         Margin="0,0,8,0">
                                                     <TextBlock Text="{Binding TongSoLuong, StringFormat='SL: {0}'}" 
                                                                FontSize="11"
-                                                               Foreground="#27AE60"
+                                                               Foreground="{StaticResource TertiaryBrush}"
                                                                FontWeight="SemiBold"/>
                                                 </Border>
 
-                                                <Border Background="#FFF3E0" 
+                                                <Border Background="{StaticResource SurfaceContainerBrush}" 
                                                         CornerRadius="4" 
                                                         Padding="6,3">
                                                     <TextBlock Text="{Binding DoanhThuDisplay}" 
                                                                FontSize="11"
-                                                               Foreground="#F39C12"
+                                                               Foreground="{StaticResource OutlineBrush}"
                                                                FontWeight="SemiBold"/>
                                                 </Border>
                                             </StackPanel>
@@ -357,7 +339,7 @@
             </Grid>
 
             <!-- Loading Indicator -->
-            <Border Background="#80000000" 
+            <Border Background="{StaticResource OverlayBrush}" 
                     CornerRadius="8"
                     Padding="20"
                     HorizontalAlignment="Center"

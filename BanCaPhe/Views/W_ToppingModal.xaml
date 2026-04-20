@@ -6,7 +6,8 @@
         Height="450"
         Width="520"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -22,7 +23,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- FORM -->
-            <GroupBox Header="Thông tin topping" Margin="0,0,10,0">
+            <GroupBox Header="Thông tin topping" Margin="0,0,10,0" Foreground="{StaticResource OnSurfaceBrush}">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -32,33 +33,36 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Margin="0,0,0,10">
-                        <TextBlock Text="Tên topping"/>
-                        <TextBox Text="{Binding Topping.TenTopping, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Tên topping" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <TextBox Text="{Binding Topping.TenTopping, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Margin="0,0,0,10">
-                        <TextBlock Text="Giá"/>
-                        <TextBox Text="{Binding Topping.Gia, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Giá" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <TextBox Text="{Binding Topping.Gia, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <CheckBox Grid.Row="2"
                               Content="Có thể bán riêng"
-                              IsChecked="{Binding Topping.CoTheBanRieng}"/>
+                              IsChecked="{Binding Topping.CoTheBanRieng}"
+                              Foreground="{StaticResource OnSurfaceBrush}"/>
 
                     <CheckBox Grid.Row="3"
                               Content="Còn bán"
-                              IsChecked="{Binding Topping.ConBan}"/>
+                              IsChecked="{Binding Topping.ConBan}"
+                              Foreground="{StaticResource OnSurfaceBrush}"/>
                 </Grid>
             </GroupBox>
 
             <!-- HÌNH -->
-            <GroupBox Grid.Column="1" Header="Hình ảnh">
+            <GroupBox Grid.Column="1" Header="Hình ảnh" Foreground="{StaticResource OnSurfaceBrush}">
                 <StackPanel Margin="10" HorizontalAlignment="Center">
                     <Border Width="140"
                             Height="140"
-                            BorderBrush="Gray"
+                            BorderBrush="{StaticResource OutlineBrush}"
                             BorderThickness="1"
-                            CornerRadius="70">
+                            CornerRadius="70"
+                            Background="{StaticResource SurfaceContainerLowestBrush}">
                         <Image Source="{Binding ImagePreview}"
                                Stretch="UniformToFill"/>
                     </Border>
@@ -66,6 +70,7 @@
                     <Button Content="Chọn ảnh"
                             Width="110"
                             Margin="0,10,0,0"
+                            Style="{StaticResource SecondaryButtonStyle}"
                             Command="{Binding ChonAnhCommand}"/>
                 </StackPanel>
             </GroupBox>
@@ -74,7 +79,7 @@
         <!-- ERROR MESSAGE -->
         <TextBlock Grid.Row="1"
                    Text="{Binding ErrorMessage}"
-                   Foreground="Red"
+                   Foreground="{StaticResource ErrorBrush}"
                    TextWrapping="Wrap"
                    Margin="5,10,5,0"
                    FontWeight="SemiBold"
@@ -88,9 +93,11 @@
             <Button Content="Lưu"
                     Width="90"
                     Margin="0,0,8,0"
+                    Style="{StaticResource SuccessButtonStyle}"
                     Command="{Binding LuuCommand}"/>
             <Button Content="Hủy"
                     Width="90"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Command="{Binding HuyCommand}"/>
         </StackPanel>
     </Grid>

@@ -3,214 +3,267 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:conv="clr-namespace:BanCaPhe.Converters"
         Title="Chi tiết sản phẩm"
-        Width="400"
-        Height="600"
+        Width="450"
+        Height="650"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Background="#FAFAF8">
 
     <Window.Resources>
         <conv:ImagePathConverter x:Key="ImagePathConverter"/>
         <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
 
-    <Border Padding="15" Background="White">
-        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                      HorizontalScrollBarVisibility="Disabled">
+    <Grid Background="#FAFAF8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="#2D5F3F" Padding="16,12,16,12">
+            <TextBlock Text="Chi tiết sản phẩm" FontSize="14" FontWeight="Bold" Foreground="#FFFFFF"/>
+        </Border>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="16">
             <StackPanel>
 
-                <!-- HÌNH ẢNH -->
-                <Image Source="{Binding SanPham.HinhAnh, Converter={StaticResource ImagePathConverter}}"
-                       Height="180"
-                       Stretch="Uniform"
-                       Margin="0,0,0,10"/>
+                    <!-- HÌNH ẢNH -->
+                    <Border Width="240" Height="240" Background="#FFFFFF" CornerRadius="12" Padding="8" Margin="0,0,0,14" BorderBrush="#D0E8DC" BorderThickness="1">
+                        <Image Source="{Binding SanPham.HinhAnh, Converter={StaticResource ImagePathConverter}}"
+                               Stretch="UniformToFill"/>
+                    </Border>
 
-                <!-- TÊN SẢN PHẨM -->
-                <TextBlock Text="{Binding SanPham.TenDoUong}"
-                           FontSize="18"
-                           FontWeight="Bold"
-                           TextAlignment="Center"
-                           Margin="0,0,0,15"/>
-
-                <!-- CHỌN SIZE -->
-                <TextBlock Text="Chọn size"
-                           FontWeight="Bold"
-                           Margin="0,0,0,5"/>
-
-                <ItemsControl ItemsSource="{Binding DanhSachKichThuoc}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <RadioButton Content="{Binding TenKichThuoc}"
-                                         GroupName="Size"
-                                         Margin="5"
-                                         Padding="10,5"
-                                         FontWeight="Bold"
-                                         IsChecked="{Binding IsSelected, Mode=TwoWay}"
-                                         Command="{Binding DataContext.ChonSizeCommand,
-                                                           RelativeSource={RelativeSource AncestorType=Window}}"
-                                         CommandParameter="{Binding}">
-                                <RadioButton.Style>
-                                    <Style TargetType="RadioButton">
-                                        <Setter Property="BorderThickness" Value="1"/>
-                                        <Setter Property="BorderBrush" Value="#CCC"/>
-                                        <Setter Property="Background" Value="White"/>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="RadioButton">
-                                                    <Border CornerRadius="20"
-                                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                                            Background="{TemplateBinding Background}"
-                                                            Padding="{TemplateBinding Padding}">
-                                                        <ContentPresenter HorizontalAlignment="Center"
-                                                                          VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Background" Value="#FF007ACC"/>
-                                                <Setter Property="Foreground" Value="White"/>
-                                                <Setter Property="BorderBrush" Value="#FF007ACC"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </RadioButton.Style>
-                            </RadioButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <!-- PHẦN TOPPING (CHỈ HIỂN THỊ CHO TRÀ SỮA) -->
-                <StackPanel Visibility="{Binding LaTraSua, Converter={StaticResource BoolToVis}}"
-                            Margin="0,15,0,0">
-
-                    <TextBlock Text="🧋 Thêm topping"
+                    <!-- TÊN SẢN PHẨM -->
+                    <TextBlock Text="{Binding SanPham.TenDoUong}"
+                               FontSize="15"
                                FontWeight="Bold"
-                               Margin="0,0,0,5"/>
+                               TextAlignment="Center"
+                               Foreground="#1F4D3D"
+                               Margin="0,0,0,14"/>
 
-                    <!-- CHỌN TOPPING -->
-                    <ComboBox ItemsSource="{Binding DanhSachTopping}"
-                              SelectedItem="{Binding SelectedTopping}"
-                              DisplayMemberPath="TenTopping"
-                              Height="35"
-                              Margin="0,0,0,10"/>
+                    <!-- CHỌN SIZE -->
+                    <TextBlock Text="Chọn size"
+                               FontWeight="Bold"
+                               Foreground="#1F4D3D"
+                               FontSize="11"
+                               Margin="0,0,0,8"/>
 
-                    <!-- SỐ LƯỢNG TOPPING VÀ NÚT THÊM -->
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                    <ItemsControl ItemsSource="{Binding DanhSachKichThuoc}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
 
-                      
-                        <!-- NÚT THÊM TOPPING -->
-                        <Button Grid.Column="1"
-                                Content="Thêm"
-                                Width="80"
-                                Height="30"
-                                Background="#4CAF50"
-                                Foreground="White"
-                                Command="{Binding ThemToppingCommand}"/>
-                    </Grid>
-
-                    <!-- DANH SÁCH TOPPING ĐÃ CHỌN -->
-                    <ItemsControl ItemsSource="{Binding DanhSachToppingDaChon}"
-                                  Margin="0,5,0,0">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Margin="0,3"
-                                        Padding="8"
-                                        Background="#F5F5F5"
-                                        CornerRadius="5"
-                                        BorderBrush="#E0E0E0"
-                                        BorderThickness="1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0"
-                                                   VerticalAlignment="Center">
-                                            <Run Text="{Binding Ten}" FontWeight="SemiBold"/>
-                                            <Run Text=" x"/>
-                                            <Run Text="{Binding SoLuong}"/>
-                                        </TextBlock>
-
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding ThanhTien, StringFormat={}{0:N0} đ}"
-                                                   FontWeight="Bold"
-                                                   Foreground="#FF5722"
-                                                   VerticalAlignment="Center"
-                                                   Margin="10,0"/>
-
-                                        <Button Grid.Column="2"
-                                                Content="✕"
-                                                Width="25"
-                                                Height="25"
-                                                FontSize="12"
-                                                Background="#FFCDD2"
-                                                Command="{Binding DataContext.XoaToppingCommand,
-                                                          RelativeSource={RelativeSource AncestorType=Window}}"
-                                                CommandParameter="{Binding}"/>
-                                    </Grid>
-                                </Border>
+                                <RadioButton Content="{Binding TenKichThuoc}"
+                                             GroupName="Size"
+                                             Margin="5"
+                                             Padding="12,6"
+                                             FontWeight="Bold"
+                                             FontSize="10"
+                                             IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                             Command="{Binding DataContext.ChonSizeCommand,
+                                                               RelativeSource={RelativeSource AncestorType=Window}}"
+                                             CommandParameter="{Binding}">
+                                    <RadioButton.Style>
+                                        <Style TargetType="RadioButton">
+                                            <Setter Property="BorderThickness" Value="1.5"/>
+                                            <Setter Property="BorderBrush" Value="#D0E8DC"/>
+                                            <Setter Property="Background" Value="#FFFFFF"/>
+                                            <Setter Property="Foreground" Value="#1F4D3D"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="RadioButton">
+                                                        <Border CornerRadius="6"
+                                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Padding="{TemplateBinding Padding}">
+                                                            <ContentPresenter HorizontalAlignment="Center"
+                                                                              VerticalAlignment="Center"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter Property="Background" Value="#2D7A5C"/>
+                                                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                                                    <Setter Property="BorderBrush" Value="#2D7A5C"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </RadioButton.Style>
+                                </RadioButton>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
 
-                    <!-- ĐƯỜNG PHÂN CÁCH -->
-                    <Separator Margin="0,10"/>
+                    <!-- PHẦN TOPPING (CHỈ HIỂN THỊ CHO TRÀ SỮA) -->
+                    <StackPanel Visibility="{Binding LaTraSua, Converter={StaticResource BoolToVis}}"
+                                Margin="0,12,0,0">
+
+                        <TextBlock Text="🧋 Thêm topping"
+                                   FontWeight="Bold"
+                                   Foreground="#1F4D3D"
+                                   FontSize="11"
+                                   Margin="0,0,0,6"/>
+
+                        <!-- CHỌN TOPPING - DROPDOWN -->
+                        <ComboBox ItemsSource="{Binding DanhSachTopping}"
+                                  SelectedItem="{Binding SelectedTopping}"
+                                  DisplayMemberPath="TenTopping"
+                                  Height="34"
+                                  Margin="0,0,0,8"
+                                  Padding="9,7"
+                                  FontSize="10"
+                                  Background="#FFFFFF"
+                                  Foreground="#1F4D3D"
+                                  BorderBrush="#D0E8DC"
+                                  BorderThickness="1"/>
+
+                        <!-- SỐ LƯỢNG TOPPING VÀ NÚT THÊM -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- NÚT THÊM TOPPING -->
+                            <Button Grid.Column="1"
+                                    Content="Thêm"
+                                    Width="72"
+                                    Height="34"
+                                    Background="#2D7A5C"
+                                    Foreground="#FFFFFF"
+                                    FontWeight="Bold"
+                                    FontSize="10"
+                                    BorderThickness="0"
+                                    Command="{Binding ThemToppingCommand}"/>
+                        </Grid>
+
+                        <!-- DANH SÁCH TOPPING ĐÃ CHỌN -->
+                        <ItemsControl ItemsSource="{Binding DanhSachToppingDaChon}"
+                                      Margin="0,0,0,8">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,3"
+                                            Padding="8"
+                                            Background="#FFFFFF"
+                                            CornerRadius="6"
+                                            BorderBrush="#D0E8DC"
+                                            BorderThickness="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                                <TextBlock Foreground="#1F4D3D" FontSize="10">
+                                                    <Run Text="{Binding Ten}" FontWeight="Bold"/>
+                                                    <Run Text=" x"/>
+                                                    <Run Text="{Binding SoLuong}" FontWeight="Bold"/>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                            <TextBlock Grid.Column="1"
+                                                       Text="{Binding ThanhTien, StringFormat={}{0:N0} đ}"
+                                                       FontWeight="Bold"
+                                                       Foreground="#2D7A5C"
+                                                       VerticalAlignment="Center"
+                                                       Margin="8,0"
+                                                       FontSize="9"/>
+
+                                            <Button Grid.Column="2"
+                                                    Content="✕"
+                                                    Width="22"
+                                                    Height="22"
+                                                    FontSize="10"
+                                                    FontWeight="Bold"
+                                                    Background="#FFCDD2"
+                                                    Foreground="#C62828"
+                                                    BorderThickness="0"
+                                                    Command="{Binding DataContext.XoaToppingCommand,
+                                                              RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!-- ĐƯỜNG PHÂN CÁCH -->
+                        <Border Height="1" Background="#D0E8DC" Margin="0,6,0,6"/>
+                    </StackPanel>
+
+                    <!-- GIÁ -->
+                    <TextBlock Text="Giá"
+                               FontWeight="Bold"
+                               Foreground="#1F4D3D"
+                               FontSize="11"
+                               Margin="0,0,0,4"/>
+
+                    <TextBlock FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="#2D7A5C"
+                               HorizontalAlignment="Center"
+                               Text="{Binding TongTien, StringFormat={}{0:N0} đ}"
+                               Margin="0,0,0,12"/>
+
+                    <!-- SỐ LƯỢNG -->
+                    <TextBlock Text="Số lượng"
+                               FontWeight="Bold"
+                               Foreground="#1F4D3D"
+                               FontSize="11"
+                               Margin="0,0,0,6"/>
+
+                    <StackPanel Orientation="Horizontal" 
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,14">
+                        <Button Content="−" 
+                                Width="32"
+                                Height="32"
+                                Background="#D0E8DC"
+                                Foreground="#1F4D3D"
+                                FontWeight="Bold"
+                                FontSize="12"
+                                BorderThickness="0"
+                                Command="{Binding GiamSoLuongCommand}"/>
+                        <TextBlock Text="{Binding SoLuong}"
+                                   Width="40"
+                                   FontSize="12"
+                                   TextAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="#1F4D3D"
+                                   FontWeight="Bold"/>
+                        <Button Content="+" 
+                                Width="32"
+                                Height="32"
+                                Background="#D0E8DC"
+                                Foreground="#1F4D3D"
+                                FontWeight="Bold"
+                                FontSize="12"
+                                BorderThickness="0"
+                                Command="{Binding TangSoLuongCommand}"/>
+                    </StackPanel>
+
+                    <!-- THÊM VÀO GIỎ -->
+                    <Button Content="Thêm vào giỏ hàng"
+                            Height="40"
+                            Margin="0,0,0,0"
+                            Background="#2D7A5C"
+                            Foreground="#FFFFFF"
+                            FontWeight="Bold"
+                            FontSize="11"
+                            BorderThickness="0"
+                            Command="{Binding ThemVaoGioCommand}"/>
+
                 </StackPanel>
-
-                <!-- GIÁ -->
-                <TextBlock Text="Giá"
-                           FontWeight="Bold"
-                           Margin="0,15,0,5"/>
-
-                <TextBlock FontSize="20"
-                           FontWeight="Bold"
-                           Foreground="Red"
-                           HorizontalAlignment="Center"
-                           Text="{Binding TongTien, StringFormat={}{0:N0} đ}"/>
-
-                <!-- SỐ LƯỢNG -->
-                <TextBlock Text="Số lượng"
-                           FontWeight="Bold"
-                           Margin="0,15,0,5"/>
-
-                <StackPanel Orientation="Horizontal" 
-                            HorizontalAlignment="Center">
-                    <Button Content="-" 
-                            Width="40"
-                            Command="{Binding GiamSoLuongCommand}"/>
-                    <TextBlock Text="{Binding SoLuong}"
-                               Width="50"
-                               FontSize="16"
-                               TextAlignment="Center"
-                               VerticalAlignment="Center"/>
-                    <Button Content="+" 
-                            Width="40"
-                            Command="{Binding TangSoLuongCommand}"/>
-                </StackPanel>
-
-                <!-- THÊM VÀO GIỎ -->
-                <Button Content="Thêm vào giỏ hàng"
-                        Height="45"
-                        Margin="0,20,0,0"
-                        Background="#FF4CAF50"
-                        Foreground="White"
-                        Command="{Binding ThemVaoGioCommand}"/>
-
-            </StackPanel>
-        </ScrollViewer>
-    </Border>
-</Window>
+            </ScrollViewer>
+        </Grid>
+    </Window>

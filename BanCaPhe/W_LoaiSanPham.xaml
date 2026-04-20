@@ -8,25 +8,62 @@
         <vm:LoaiSanPhamViewModel/>
     </UserControl.DataContext>
 
-    <Grid Margin="15">
+    <Grid Margin="0" Background="#FAFAF8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- TIÊU ĐỀ -->
-        <TextBlock Text="QUẢN LÝ DANH MỤC ĐỒ UỐNG"
-                   FontSize="22"
-                   FontWeight="Bold"
-                   Margin="0 0 0 15"/>
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="#2D5F3F" Padding="20,12,20,12" Margin="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="📂 Quản lý danh mục"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="#FFFFFF"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding DanhMucList.Count, StringFormat=({0} danh mục)}"
+                               FontSize="12"
+                               Foreground="#D0E8DC"
+                               VerticalAlignment="Center"
+                               Margin="12,0,0,0"/>
+                </StackPanel>
+
+                <!-- ADD BUTTON -->
+                <Button Grid.Column="1"
+                        Content="+ Thêm danh mục"
+                        Height="36"
+                        Padding="16,8"
+                        Background="#A8D5BA"
+                        Foreground="#1F4D3D"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Command="{Binding ThemCommand}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="18"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
 
         <!-- FORM NHẬP -->
         <Border Grid.Row="1"
-                Padding="15"
-                CornerRadius="8"
-                Background="#F5F5F5"
-                Margin="0 0 0 15">
+                Padding="20"
+                Background="#FFFFFF"
+                BorderBrush="#D0E8DC"
+                BorderThickness="0,0,0,1"
+                Margin="0">
 
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -37,60 +74,106 @@
 
                 <!-- TÊN LOẠI -->
                 <StackPanel>
-                    <TextBlock Text="Tên loại" FontWeight="SemiBold"/>
+                    <TextBlock Text="Tên loại" FontWeight="Bold" Foreground="#2D5F3F" FontSize="12" Margin="0,0,0,6"/>
                     <TextBox x:Name="txtTenLoai"
                              Text="{Binding TenLoai, UpdateSourceTrigger=PropertyChanged}"
-                             Height="30"
-                             Margin="0 5 10 0"/>
+                             Height="36"
+                             Padding="12,9"
+                             FontSize="12"
+                             Background="#F1F8F4"
+                             Foreground="#2D5F3F"
+                             BorderBrush="#D0E8DC"
+                             BorderThickness="1"
+                             Margin="0,0,10,0"/>
                 </StackPanel>
 
                 <!-- VỊ TRÍ -->
                 <StackPanel Grid.Column="1">
-                    <TextBlock Text="Vị trí" FontWeight="SemiBold"/>
+                    <TextBlock Text="Vị trí" FontWeight="Bold" Foreground="#2D5F3F" FontSize="12" Margin="0,0,0,6"/>
                     <TextBox x:Name="txtViTri"
                              Text="{Binding ViTri, UpdateSourceTrigger=PropertyChanged}"
-                             Height="30"
-                             Margin="0 5 0 0"/>
+                             Height="36"
+                             Padding="12,9"
+                             FontSize="12"
+                             Background="#F1F8F4"
+                             Foreground="#2D5F3F"
+                             BorderBrush="#D0E8DC"
+                             BorderThickness="1"/>
                 </StackPanel>
 
-                <!-- BUTTON -->
+                <!-- BUTTONS -->
                 <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
                             VerticalAlignment="Bottom"
-                            Margin="15 0 0 0">
+                            Margin="20,0,0,0">
 
-                    <Button Content="Thêm"
-                            Width="80"
-                            Height="30"
-                            Margin="0 0 5 0"
-                            Command="{Binding ThemCommand}"/>
+                    <Button Content="✎ Sửa"
+                            Width="60"
+                            Height="36"
+                            Margin="0,0,4,0"
+                            Background="#A8D5BA"
+                            Foreground="#1F4D3D"
+                            FontWeight="Bold"
+                            FontSize="11"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Command="{Binding SuaCommand}">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="18"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-                    <Button Content="Sửa"
-                            Width="80"
-                            Height="30"
-                            Margin="0 0 5 0"
-                            Command="{Binding SuaCommand}"/>
-
-                    <Button Content="Xóa"
-                            Width="80"
-                            Height="30"
-                            Background="#E57373"
-                            Foreground="White"
-                            Command="{Binding XoaCommand}"/>
+                    <Button Content="✕ Xóa"
+                            Width="60"
+                            Height="36"
+                            Background="#FFCDD2"
+                            Foreground="#C62828"
+                            FontWeight="Bold"
+                            FontSize="11"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            Command="{Binding XoaCommand}">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="18"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>
 
-        <!-- GRID -->
+        <!-- DATAGRID -->
         <DataGrid x:Name="dgLoaiDoUong"
                   Grid.Row="2"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   IsReadOnly="True"
-                  RowHeight="35"
+                  RowHeight="40"
                   SelectionMode="Single"
                   ItemsSource="{Binding DanhMucList}"
-                  SelectedItem="{Binding SelectedDanhMuc}">
+                  SelectedItem="{Binding SelectedDanhMuc}"
+                  Background="#FFFFFF"
+                  Foreground="#1F4D3D"
+                  BorderBrush="#D0E8DC"
+                  BorderThickness="1"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#E8F0E8"
+                  Margin="0">
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#E8F0E8"/>
+                    <Setter Property="Foreground" Value="#2D5F3F"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Padding" Value="12,8"/>
+                    <Setter Property="BorderBrush" Value="#D0E8DC"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Tên loại"

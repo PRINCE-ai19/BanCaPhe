@@ -10,22 +10,53 @@
 
 
 
-    <Grid Margin="15">
+    <Grid Margin="0" Background="#FAFAF8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Toolbar -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <Button Content="Thêm" Width="80" Margin="0,0,5,0"
-                    Command="{Binding ThemCommand}"/>
-            <Button Content="Sửa" Width="80" Margin="0,0,5,0"
-                    Command="{Binding SuaCommand}"/>
-            <Button Content="Xóa" Width="80"
-                    Background="#E57373"
-                    Command="{Binding XoaCommand}"/>
-        </StackPanel>
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="#2D5F3F" Padding="20,12,20,12" Margin="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="☕ Quản lý sản phẩm"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="#FFFFFF"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding SanPhamList.Count, StringFormat=({0} sản phẩm)}"
+                               FontSize="12"
+                               Foreground="#D0E8DC"
+                               VerticalAlignment="Center"
+                               Margin="12,0,0,0"/>
+                </StackPanel>
+
+                <!-- ADD BUTTON -->
+                <Button Grid.Column="1"
+                        Content="+ Thêm sản phẩm"
+                        Height="36"
+                        Padding="16,8"
+                        Background="#A8D5BA"
+                        Foreground="#1F4D3D"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Command="{Binding ThemCommand}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="18"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
 
         <!-- DataGrid -->
         <DataGrid x:Name="dgSanPham"
@@ -34,7 +65,26 @@
                   CanUserAddRows="False"
                   ItemsSource="{Binding SanPhamList}"
                   SelectedItem="{Binding SelectedSanPham}"
-                  RowHeight="70">
+                  RowHeight="70"
+                  Background="#FFFFFF"
+                  Foreground="#1F4D3D"
+                  BorderBrush="#D0E8DC"
+                  BorderThickness="1"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#E8F0E8"
+                  Margin="0">
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#E8F0E8"/>
+                    <Setter Property="Foreground" Value="#2D5F3F"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Padding" Value="12,8"/>
+                    <Setter Property="BorderBrush" Value="#D0E8DC"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
 
             <DataGrid.Columns>
 
@@ -42,30 +92,94 @@
                 <DataGridTemplateColumn Header="Hình" Width="80">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Width="60"
-                           Height="60"
-                           Stretch="UniformToFill"
-                           Source="{Binding HinhAnh,
-                                    Converter={StaticResource ImagePathConverter}}"/>
+                            <Border Width="60" Height="60" CornerRadius="8" Padding="2" BorderBrush="#D0E8DC" BorderThickness="1" Background="#F1F8F4">
+                                <Image Stretch="UniformToFill"
+                                       Source="{Binding HinhAnh,
+                                                Converter={StaticResource ImagePathConverter}}"/>
+                            </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Tên đồ uống"
+                <!-- TÊN ĐỒ UỐNG -->
+                <DataGridTextColumn Header="Tên sản phẩm"
                             Binding="{Binding TenDoUong}"
                             Width="*"/>
 
+                <!-- GIÁ -->
                 <DataGridTextColumn Header="Giá"
-                            Binding="{Binding Gia}"
+                            Binding="{Binding Gia, StringFormat={}{0:N0} đ}"
                             Width="120"/>
 
+                <!-- LOẠI -->
                 <DataGridTextColumn Header="Loại"
                             Binding="{Binding TenLoai}"
-                            Width="150"/>
+                            Width="130"/>
 
+                <!-- CÒN BÁN -->
                 <DataGridCheckBoxColumn Header="Còn bán"
                                 Binding="{Binding ConBan}"
-                                Width="100"/>
+                                Width="90"/>
+
+                <!-- THAO TÁC -->
+                <DataGridTemplateColumn Header="Thao tác" Width="200">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4">
+                                <!-- NÚT THÊM -->
+                                <Button Content="+ Thêm"
+                                        Width="60"
+                                        Height="32"
+                                        Margin="0,0,4,0"
+                                        Background="#2D7A5C"
+                                        Foreground="#FFFFFF"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.ThemCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+
+                                <!-- NÚT SỬA -->
+                                <Button Content="✎ Sửa"
+                                        Width="60"
+                                        Height="32"
+                                        Margin="0,0,4,0"
+                                        Background="#A8D5BA"
+                                        Foreground="#1F4D3D"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.SuaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="16"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+
+                                <!-- NÚT XÓA -->
+                                <Button Content="✕ Xóa"
+                                        Width="60"
+                                        Height="32"
+                                        Background="#FFCDD2"
+                                        Foreground="#C62828"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.XoaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="16"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

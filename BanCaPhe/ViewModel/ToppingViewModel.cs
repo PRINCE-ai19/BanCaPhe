@@ -16,7 +16,7 @@ namespace BanCaPhe.ViewModel
     public class ToppingViewModel : BaseViewModel
     {
         private readonly ToppingService _service;
-        private ObservableCollection<Topping> _danhSachTopping;
+        private ObservableCollection<Topping> _danhSachTopping = new();
         public ObservableCollection<Topping> DanhSachTopping
         {
             get => _danhSachTopping;

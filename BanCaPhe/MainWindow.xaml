@@ -4,223 +4,317 @@
         xmlns:conv="clr-namespace:BanCaPhe.Converters"
         xmlns:models="clr-namespace:BanCaPhe.Models"
         xmlns:vm="clr-namespace:BanCaPhe.ViewModel"
-        Title="Bán cà phê"
-        Height="650"
-        Width="1150"
-        WindowStartupLocation="CenterScreen">
+        Title="Modtra - Matcha và Cà phê"
+        Height="750"
+        Width="1400"
+        WindowStartupLocation="CenterScreen"
+        Background="#FAFAF8">
 
     <Window.Resources>
         <conv:ImagePathConverter x:Key="ImagePathConverter"/>
     </Window.Resources>
     
-    <Grid Background="AntiqueWhite">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="230"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="320"/>
-        </Grid.ColumnDefinitions>
+    <Grid Background="#FAFAF8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-        <!-- ================= DANH MỤC ================= -->
-        <Border Grid.Column="0" Margin="10" Background="White" CornerRadius="10" Padding="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+        <!-- ================= HEADER ================= -->
+        <Border Grid.Row="0" Background="#FFFFFF" Padding="30,15,30,15" BorderThickness="0,0,0,1" BorderBrush="#E8F0E8">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="🍵" FontSize="28" Margin="0,0,12,0"/>
+                <TextBlock Text="MODTRA" FontSize="24" FontWeight="Bold" Foreground="#2D5F3F" VerticalAlignment="Center"/>
+                <TextBlock Text="Matcha và Cà phê" FontSize="12" Foreground="#6B8B7E" VerticalAlignment="Center" Margin="12,0,0,0"/>
+            </StackPanel>
+        </Border>
 
+        <!-- ================= MAIN CONTENT ================= -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1"/>
+                <ColumnDefinition Width="300"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ================= DANH MỤC (LEFT) ================= -->
+            <Border Grid.Column="0" Background="#E8F0E8" Padding="0">
                 <StackPanel>
-                    <TextBlock Text="Danh mục đồ uống" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                    <ListBox ItemsSource="{Binding DanhMuc}"
-                             SelectedItem="{Binding SelectedDanhMuc}"
-                             DisplayMemberPath="TenLoai"
-                             BorderThickness="0">
-                        <ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="Height" Value="40"/>
-                                <Setter Property="Padding" Value="10,0"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            </Style>
-                        </ListBox.ItemContainerStyle>
-                    </ListBox>
-
-                    <TextBlock Text="Danh mục khác" FontSize="18" FontWeight="Bold" Margin="0,15,0,10"/>
-                    <Border Background="#F5F5F5" CornerRadius="5" Padding="10" Cursor="Hand">
-                        <Border.InputBindings>
-                            <MouseBinding MouseAction="LeftClick" Command="{Binding HienThiToppingCommand}"/>
-                        </Border.InputBindings>
-                        <TextBlock Text="Topping (Đồ thêm)" FontSize="16" FontWeight="SemiBold"/>
+                    <!-- Header Danh mục -->
+                    <Border Background="#2D5F3F" Padding="16,12,16,12">
+                        <TextBlock Text="Danh mục" FontSize="14" FontWeight="Bold" Foreground="#FFFFFF"/>
                     </Border>
-                </StackPanel>
 
-                <Border Grid.Row="1" Margin="0,15,0,0" Padding="12" CornerRadius="10" Background="#FFF5F5" Cursor="Hand" x:Name="LogoutBorder">
-                    <Border.InputBindings>
-                        <MouseBinding MouseAction="LeftClick" Command="{Binding LogoutCommand}"/>
-                    </Border.InputBindings>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <TextBlock Text="⏻" FontSize="20" Foreground="#D32F2F" Margin="0,0,8,0"/>
-                        <TextBlock Text="ĐĂNG XUẤT" FontWeight="Bold" Foreground="#D32F2F"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-        </Border>
+                    <!-- Category List -->
+                    <Border Padding="12,12,12,12">
+                        <StackPanel>
+                            <ListBox ItemsSource="{Binding DanhMuc}"
+                                     SelectedItem="{Binding SelectedDanhMuc}"
+                                     DisplayMemberPath="TenLoai"
+                                     BorderThickness="0"
+                                     Background="Transparent"
+                                     Margin="0,0,0,12">
+                                <ListBox.ItemContainerStyle>
+                                    <Style TargetType="ListBoxItem">
+                                        <Setter Property="Height" Value="38"/>
+                                        <Setter Property="Padding" Value="12,0"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                        <Setter Property="Foreground" Value="#1F4D3D"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListBoxItem">
+                                                    <Border x:Name="Bd" Background="Transparent" CornerRadius="6" Margin="0,2">
+                                                        <ContentPresenter/>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="Bd" Property="Background" Value="#7EC9A3"/>
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="Bd" Property="Background" Value="#C8E6D7"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListBox.ItemContainerStyle>
+                            </ListBox>
 
-        <!-- ================= SẢN PHẨM ================= -->
-        <Border Grid.Column="1" Margin="10" Background="White" CornerRadius="10" Padding="10">
-            <DockPanel>
-                <TextBlock DockPanel.Dock="Top" Text="Sản phẩm" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding DanhSachHienThi}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        
-                        <ItemsControl.Resources>
-                            <!-- TEMPLATE ĐỒ UỐNG -->
-                            <DataTemplate DataType="{x:Type models:DoUong}">
-                                <Border Width="160" Height="210" Margin="8" Background="White" CornerRadius="10" 
-                                        BorderBrush="#DDD" BorderThickness="1" Cursor="Hand">
-                                    <Border.InputBindings>
-                                        <MouseBinding MouseAction="LeftClick" 
-                                                      Command="{Binding DataContext.ChonSanPhamCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                      CommandParameter="{Binding}"/>
-                                    </Border.InputBindings>
-                                    <StackPanel Margin="5">
-                                        <Image Source="{Binding HinhAnh, Converter={StaticResource ImagePathConverter}}" 
-                                               Height="110" Stretch="Uniform" Margin="0,0,0,5"/>
-                                        <TextBlock Text="{Binding TenDoUong}" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap" Height="40"/>
-                                        <TextBlock Text="{Binding Gia, StringFormat={}{0:N0} đ}" Foreground="DarkRed" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-
-                            <!-- TEMPLATE TOPPING -->
-                            <DataTemplate DataType="{x:Type models:Topping}">
-                                <Border Width="160" Height="190" Margin="8" Background="#FFFDF6" CornerRadius="10" 
-                                        BorderBrush="#FFE0C080" BorderThickness="1" Cursor="Hand">
-                                    <Border.InputBindings>
-                                        <MouseBinding MouseAction="LeftClick" 
-                                                      Command="{Binding DataContext.ChonToppingCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                                      CommandParameter="{Binding}"/>
-                                    </Border.InputBindings>
-                                    <StackPanel Margin="5">
-                                        <Image Source="{Binding HinhAnh, Converter={StaticResource ImagePathConverter}}" 
-                                               Height="100" Stretch="Uniform" Margin="0,0,0,5"/>
-                                        <TextBlock Text="{Binding TenTopping}" FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap"/>
-                                        <TextBlock Text="{Binding Gia, StringFormat={}{0:N0} đ}" Foreground="DarkGreen" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="Topping" FontSize="10" Foreground="Gray" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.Resources>
-                    </ItemsControl>
-                </ScrollViewer>
-            </DockPanel>
-        </Border>
-
-        <!-- ================= GIỎ HÀNG ================= -->
-        <Border Grid.Column="2" Margin="10" Background="White" CornerRadius="10" Padding="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Text="Đơn hàng" FontSize="18" FontWeight="Bold"/>
-
-                <ListView Grid.Row="1" Margin="0,10" ItemsSource="{Binding DonHang}" 
-                          SelectedItem="{Binding SelectedItem}" BorderThickness="0">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListViewItem">
-                                        <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderThickness="0" CornerRadius="5" Margin="0,2">
-                                            <Border.InputBindings>
-                                                <MouseBinding MouseAction="LeftDoubleClick" 
-                                                              Command="{Binding DataContext.MoGhiChuCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                                            </Border.InputBindings>
-                                            <ContentPresenter />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter TargetName="Bd" Property="Background" Value="#E3F2FD"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Padding="10" CornerRadius="8" BorderBrush="#90CAF9" BorderThickness="1" Background="White" Margin="0,0,0,5">
+                            <!-- Topping Section -->
+                            <Border Background="#FFFFFF" Padding="12" CornerRadius="8" Cursor="Hand" Margin="0,0,0,12" BorderBrush="#D0E8DC" BorderThickness="1">
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding HienThiToppingCommand}"/>
+                                </Border.InputBindings>
                                 <StackPanel>
-                                    <TextBlock FontWeight="Bold" FontSize="14" TextWrapping="Wrap">
-                                        <Run Text="{Binding Ten}" />
-                                        <Run Text=" (" />
-                                        <Run Text="{Binding Size}" />
-                                        <Run Text=")" />
-                                    </TextBlock>
-                                    
-                                    <TextBlock Text="{Binding GhiChu}" FontSize="12" Foreground="#607D8B" FontStyle="Italic"/>
-
-                                    <ItemsControl ItemsSource="{Binding Toppings}" Margin="10,5,0,0">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <TextBlock FontSize="11" Foreground="#616161">
-                                                    <TextBlock.Text>
-                                                        <MultiBinding StringFormat="• {0} x{1} ({2:N0} đ)">
-                                                            <Binding Path="Ten"/>
-                                                            <Binding Path="SoLuong"/>
-                                                            <Binding Path="Gia"/>
-                                                        </MultiBinding>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-
-                                    <Grid Margin="0,10,0,0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <StackPanel Orientation="Horizontal">
-                                            <Button Content="−" Width="25" Command="{Binding GiamCommand}"/>
-                                            <TextBlock Text="{Binding SoLuong}" Width="30" TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Center"/>
-                                            <Button Content="+" Width="25" Command="{Binding TangCommand}"/>
-                                        </StackPanel>
-
-                                        <TextBlock Grid.Column="1" Text="{Binding TongTien, StringFormat={}{0:N0} đ}" 
-                                                   Foreground="#D32F2F" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,0"/>
-
-                                        <Button Grid.Column="2" Content="🗑" Width="30" Background="#FFCDD2" Command="{Binding XoaCommand}"/>
-                                    </Grid>
+                                    <TextBlock Text="🍯 Topping" FontSize="13" FontWeight="Bold" Foreground="#1F4D3D"/>
+                                    <TextBlock Text="Đồ thêm" FontSize="11" Foreground="#4A7C6B" Margin="0,4,0,0"/>
                                 </StackPanel>
                             </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
 
-                <StackPanel Grid.Row="2" Background="#FAFAFA" Margin="0,5,0,0">
-                    <Border BorderBrush="#DDD" BorderThickness="0,1,0,0" Padding="10">
-                        <StackPanel>
-                             <TextBlock Text="{Binding TongTien, StringFormat=Tổng cộng: {0:N0} đ}" FontSize="16" FontWeight="Bold" Foreground="#2E7D32" Margin="0,0,0,10"/>
-                             <Button Content="IN HÓA ĐƠN TẠM" Height="35" Background="#81C784" Foreground="White" FontWeight="Bold" Command="{Binding InHoaDonTamCommand}" Margin="0,0,0,5"/>
-                             <Button Content="THANH TOÁN" Height="40" Background="#4CAF50" Foreground="White" FontWeight="Bold" Command="{Binding MoThanhToanCommand}"/>
+                            <!-- Logout Button -->
+                            <Border Margin="0,0,0,0" Padding="12" CornerRadius="8" Background="#FFCDD2" Cursor="Hand" BorderBrush="#EF9A9A" BorderThickness="1">
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding LogoutCommand}"/>
+                                </Border.InputBindings>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="⏻" FontSize="16" Foreground="#C62828" Margin="0,0,8,0"/>
+                                    <TextBlock Text="ĐĂNG XUẤT" FontWeight="Bold" Foreground="#C62828" FontSize="12"/>
+                                </StackPanel>
+                            </Border>
                         </StackPanel>
                     </Border>
                 </StackPanel>
-            </Grid>
-        </Border>
+            </Border>
+
+            <!-- ================= VERTICAL DIVIDER 1 ================= -->
+            <Border Grid.Column="1" Background="#A8D5BA"/>
+
+            <!-- ================= SẢN PHẨM (CENTER) ================= -->
+            <Border Grid.Column="2" Background="#FFFFFF" Padding="0">
+                <StackPanel>
+                    <!-- Header Sản phẩm -->
+                    <Border Background="#2D5F3F" Padding="20,12,20,12">
+                        <TextBlock Text="Sản phẩm" FontSize="14" FontWeight="Bold" Foreground="#FFFFFF"/>
+                    </Border>
+
+                    <!-- Products Grid -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="16" Margin="0">
+                        <ItemsControl ItemsSource="{Binding DanhSachHienThi}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.Resources>
+                                <!-- TEMPLATE ĐỒ UỐNG -->
+                                <DataTemplate DataType="{x:Type models:DoUong}">
+                                    <Border Width="140" Height="180" Margin="8" Background="#F0F7F3" CornerRadius="12" 
+                                            BorderBrush="#D0E8DC" BorderThickness="1" Cursor="Hand"
+                                            RenderTransformOrigin="0.5,0.5">
+                                        <Border.RenderTransform>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                        </Border.RenderTransform>
+                                        <Border.InputBindings>
+                                            <MouseBinding MouseAction="LeftClick" 
+                                                          Command="{Binding DataContext.ChonSanPhamCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                          CommandParameter="{Binding}"/>
+                                        </Border.InputBindings>
+                                        <Border Padding="10">
+                                            <StackPanel>
+                                                <Border Width="120" Height="120" Background="#FFFFFF" CornerRadius="10" Padding="6" Margin="0,0,0,8" BorderBrush="#E0E0E0" BorderThickness="1">
+                                                    <Image Source="{Binding HinhAnh, Converter={StaticResource ImagePathConverter}}" 
+                                                           Stretch="UniformToFill"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding TenDoUong}" FontWeight="Bold" TextAlignment="Center" 
+                                                           TextWrapping="Wrap" Height="32" Foreground="#1F4D3D" FontSize="12"/>
+                                                <TextBlock Text="{Binding Gia, StringFormat={}{0:N0} đ}" Foreground="#2D7A5C" 
+                                                           FontWeight="Bold" HorizontalAlignment="Center" FontSize="12" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Border>
+                                </DataTemplate>
+
+                                <!-- TEMPLATE TOPPING -->
+                                <DataTemplate DataType="{x:Type models:Topping}">
+                                    <Border Width="140" Height="180" Margin="8" Background="#FFF9E6" CornerRadius="12" 
+                                            BorderBrush="#F0D9A8" BorderThickness="1" Cursor="Hand"
+                                            RenderTransformOrigin="0.5,0.5">
+                                        <Border.RenderTransform>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                        </Border.RenderTransform>
+                                        <Border.InputBindings>
+                                            <MouseBinding MouseAction="LeftClick" 
+                                                          Command="{Binding DataContext.ChonToppingCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                          CommandParameter="{Binding}"/>
+                                        </Border.InputBindings>
+                                        <Border Padding="10">
+                                            <StackPanel>
+                                                <Border Width="120" Height="120" Background="#FFFFFF" CornerRadius="10" Padding="6" Margin="0,0,0,8" BorderBrush="#E0E0E0" BorderThickness="1">
+                                                    <Image Source="{Binding HinhAnh, Converter={StaticResource ImagePathConverter}}" 
+                                                           Stretch="UniformToFill"/>
+                                                </Border>
+                                                <TextBlock Text="{Binding TenTopping}" FontWeight="Bold" TextAlignment="Center" 
+                                                           TextWrapping="Wrap" Height="32" Foreground="#1F4D3D" FontSize="12"/>
+                                                <TextBlock Text="{Binding Gia, StringFormat={}{0:N0} đ}" Foreground="#B8860B" 
+                                                           FontWeight="Bold" HorizontalAlignment="Center" FontSize="12" Margin="0,4,0,0"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.Resources>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+
+            <!-- ================= VERTICAL DIVIDER 2 ================= -->
+            <Border Grid.Column="3" Background="#A8D5BA"/>
+
+            <!-- ================= GIỎ HÀNG (RIGHT) ================= -->
+            <Border Grid.Column="4" Background="#E8F0E8" Padding="0">
+                <StackPanel>
+                    <!-- Header Giỏ hàng -->
+                    <Border Background="#2D5F3F" Padding="16,12,16,12">
+                        <TextBlock Text="Đơn hàng" FontSize="14" FontWeight="Bold" Foreground="#FFFFFF"/>
+                    </Border>
+
+                    <!-- Order Items -->
+                    <Border Padding="12">
+                        <StackPanel>
+                        <ScrollViewer Height="400" VerticalScrollBarVisibility="Auto" Margin="0,0,0,12">
+                            <ListView ItemsSource="{Binding DonHang}" 
+                                      SelectedItem="{Binding SelectedItem}" 
+                                      BorderThickness="0" 
+                                      Background="Transparent">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Border x:Name="Bd" Background="{TemplateBinding Background}" 
+                                                            BorderThickness="0" CornerRadius="8" Margin="0,4">
+                                                        <Border.InputBindings>
+                                                            <MouseBinding MouseAction="LeftDoubleClick" 
+                                                                          Command="{Binding DataContext.MoGhiChuCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                                        </Border.InputBindings>
+                                                        <ContentPresenter />
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter TargetName="Bd" Property="Background" Value="#D0E8DC"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Padding="10" CornerRadius="8" Background="#FFFFFF" Margin="0,0,0,4" BorderBrush="#D0E8DC" BorderThickness="1">
+                                            <StackPanel>
+                                                <TextBlock FontWeight="Bold" FontSize="11" Foreground="#1F4D3D" Margin="0,0,0,4">
+                                                    <Run Text="{Binding Ten}" />
+                                                    <Run Text=" (" />
+                                                    <Run Text="{Binding Size}" />
+                                                    <Run Text=")" />
+                                                </TextBlock>
+                                                
+                                                <TextBlock Text="{Binding GhiChu}" FontSize="10" Foreground="#4A7C6B" FontStyle="Italic" Margin="0,0,0,4" TextWrapping="Wrap"/>
+
+                                                <ItemsControl ItemsSource="{Binding Toppings}" Margin="0,0,0,6">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock FontSize="9" Foreground="#4A7C6B">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding StringFormat="• {0} x{1}">
+                                                                        <Binding Path="Ten"/>
+                                                                        <Binding Path="SoLuong"/>
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+
+                                                <Grid Margin="0,4,0,0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Button Content="−" Width="24" Height="24" Command="{Binding GiamCommand}" 
+                                                                Background="#D0E8DC" Foreground="#1F4D3D" FontWeight="Bold" FontSize="12" Margin="0,0,4,0"/>
+                                                        <TextBlock Text="{Binding SoLuong}" Width="28" TextAlignment="Center" 
+                                                                   FontWeight="Bold" VerticalAlignment="Center" Foreground="#1F4D3D" FontSize="12"/>
+                                                        <Button Content="+" Width="24" Height="24" Command="{Binding TangCommand}" 
+                                                                Background="#D0E8DC" Foreground="#1F4D3D" FontWeight="Bold" FontSize="12" Margin="4,0,0,0"/>
+                                                    </StackPanel>
+
+                                                    <TextBlock Grid.Column="1" Text="{Binding TongTien, StringFormat={}{0:N0} đ}" 
+                                                               Foreground="#2D7A5C" FontWeight="Bold" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,8,0" FontSize="11"/>
+
+                                                    <Button Grid.Column="2" Content="✕" Width="24" Height="24" Background="#FFCDD2" 
+                                                            Foreground="#C62828" Command="{Binding XoaCommand}" FontSize="12" FontWeight="Bold"/>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </ScrollViewer>
+
+                        <!-- Order Summary -->
+                        <Border Background="#FFFFFF" Padding="12" CornerRadius="8" Margin="0,0,0,12" BorderBrush="#D0E8DC" BorderThickness="1">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,12">
+                                    <TextBlock Text="Tổng cộng:" FontWeight="Bold" Foreground="#1F4D3D" FontSize="12"/>
+                                    <TextBlock Text="{Binding TongTien, StringFormat={}{0:N0} đ}" 
+                                               Foreground="#2D7A5C" FontWeight="Bold" HorizontalAlignment="Right" FontSize="13"/>
+                                </Grid>
+
+                                <Button Content="IN HÓA ĐƠN" Height="36" Background="#D0E8DC" Foreground="#1F4D3D" 
+                                        FontWeight="Bold" FontSize="11" Command="{Binding InHoaDonTamCommand}" Margin="0,0,0,8" BorderThickness="0"/>
+                                
+                                <Button Content="THANH TOÁN" Height="40" Background="#2D7A5C" Foreground="#FFFFFF" 
+                                        FontWeight="Bold" FontSize="12" Command="{Binding MoThanhToanCommand}" BorderThickness="0"/>
+                            </StackPanel>
+                        </Border>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

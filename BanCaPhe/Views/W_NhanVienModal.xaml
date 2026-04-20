@@ -5,7 +5,8 @@
         Height="560"
         Width="600"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}">
 
     <Grid Margin="15">
         <Grid.RowDefinitions>
@@ -20,7 +21,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- FORM -->
-            <GroupBox Header="Thông tin nhân viên" Margin="0,0,10,0">
+            <GroupBox Header="Thông tin nhân viên" Margin="0,0,10,0" Foreground="{StaticResource OnSurfaceBrush}">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -33,20 +34,20 @@
 
                     <!-- HỌ TÊN -->
                     <StackPanel Margin="0,0,0,10">
-                        <TextBlock Text="Họ tên"/>
-                        <TextBox x:Name="txtHoTen" Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Họ tên" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <TextBox x:Name="txtHoTen" Text="{Binding HoTen, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <!-- EMAIL -->
                     <StackPanel Grid.Row="1" Margin="0,0,0,10">
-                        <TextBlock Text="Email"/>
-                        <TextBox x:Name="txtEmail" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Email" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <TextBox x:Name="txtEmail" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <!-- SĐT -->
                     <StackPanel Grid.Row="2" Margin="0,0,0,10">
-                        <TextBlock Text="Số điện thoại"/>
-                        <TextBox x:Name="txtSoDienThoai" Text="{Binding SoDienThoai, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Số điện thoại" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <TextBox x:Name="txtSoDienThoai" Text="{Binding SoDienThoai, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <!-- MẬT KHẨU (CHỈ HIỆN KHI THÊM) -->
@@ -54,16 +55,19 @@
                                 Margin="0,0,0,10"
                                 x:Name="pnlMatKhau"
                                 Visibility="{Binding MatKhauVisibility}">
-                        <TextBlock Text="Mật khẩu"/>
-                        <PasswordBox x:Name="txtMatKhau"/>
+                        <TextBlock Text="Mật khẩu" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <PasswordBox x:Name="txtMatKhau" 
+                                     Padding="12,10"
+                                     Height="40"/>
                     </StackPanel>
 
                     <!-- VAI TRÒ -->
                     <StackPanel Grid.Row="4" Margin="0,0,0,10">
-                        <TextBlock Text="Vai trò"/>
+                        <TextBlock Text="Vai trò" Foreground="{StaticResource OnSurfaceBrush}"/>
                         <ComboBox x:Name="cbVaiTro" 
                                   SelectedValue="{Binding VaiTro}"
-                                  SelectedValuePath="Content">
+                                  SelectedValuePath="Content"
+                                  Style="{StaticResource DefaultComboBoxStyle}">
                             <ComboBoxItem Content="Admin"/>
                             <ComboBoxItem Content="Employee"/>
                         </ComboBox>
@@ -73,24 +77,27 @@
                     <CheckBox x:Name="chkTrangThai"
                                Grid.Row="5"
                                Content="Đang hoạt động"
-                               IsChecked="{Binding TrangThai}"/>
+                               IsChecked="{Binding TrangThai}"
+                               Foreground="{StaticResource OnSurfaceBrush}"/>
                 </Grid>
             </GroupBox>
 
             <!-- HÌNH -->
-            <GroupBox Grid.Column="1" Header="Ảnh đại diện">
+            <GroupBox Grid.Column="1" Header="Ảnh đại diện" Foreground="{StaticResource OnSurfaceBrush}">
                 <StackPanel Margin="10" HorizontalAlignment="Center">
                     <Border BorderThickness="1"
-                            BorderBrush="Gray"
+                            BorderBrush="{StaticResource OutlineBrush}"
                             Width="150"
                             Height="150"
-                            CornerRadius="6">
+                            CornerRadius="6"
+                            Background="{StaticResource SurfaceContainerLowestBrush}">
                         <Image x:Name="imgPreview" Source="{Binding ImagePreview}" Stretch="Uniform"/>
                     </Border>
 
                     <Button Content="Chọn ảnh"
                             Width="120"
                             Margin="0,10,0,0"
+                            Style="{StaticResource SecondaryButtonStyle}"
                             Command="{Binding ChonAnhCommand}"/>
                 </StackPanel>
             </GroupBox>
@@ -104,10 +111,12 @@
             <Button Content="Lưu"
                     Width="90"
                     Margin="0,0,8,0"
+                    Style="{StaticResource SuccessButtonStyle}"
                     Command="{Binding LuuCommand}"
                     CommandParameter="{Binding ElementName=txtMatKhau}"/>
             <Button Content="Hủy"
                     Width="90"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Command="{Binding HuyCommand}"/>
         </StackPanel>
     </Grid>

@@ -25,19 +25,24 @@
         <!-- THÔNG TIN NHÂN VIÊN -->
         <TextBlock Grid.Row="0" 
                    Text="{Binding HoTen, StringFormat='Đổi mật khẩu cho: {0}'}"
+                   Foreground="{StaticResource OnSurfaceBrush}"
                    FontWeight="Bold"
                    Margin="0,0,0,15"/>
 
         <!-- MẬT KHẨU MỚI -->
         <StackPanel Grid.Row="1" Margin="0,0,0,10">
-            <TextBlock Text="Mật khẩu mới"/>
-            <PasswordBox x:Name="txtMatKhauMoi"/>
+            <TextBlock Text="Mật khẩu mới" Foreground="{StaticResource OnSurfaceBrush}"/>
+            <PasswordBox x:Name="txtMatKhauMoi" 
+                         Padding="12,10"
+                         Height="40"/>
         </StackPanel>
 
         <!-- XÁC NHẬN MẬT KHẨU -->
         <StackPanel Grid.Row="2" Margin="0,0,0,10">
-            <TextBlock Text="Xác nhận mật khẩu"/>
-            <PasswordBox x:Name="txtXacNhan"/>
+            <TextBlock Text="Xác nhận mật khẩu" Foreground="{StaticResource OnSurfaceBrush}"/>
+            <PasswordBox x:Name="txtXacNhan" 
+                         Padding="12,10"
+                         Height="40"/>
         </StackPanel>
 
         <!-- BUTTONS -->
@@ -47,7 +52,8 @@
                     Margin="0,15,0,0">
             <Button Content="Đổi mật khẩu"
                     Width="110"
-                    Margin="0,0,8,0">
+                    Margin="0,0,8,0"
+                    Style="{StaticResource PrimaryButtonStyle}">
                 <Button.Command>
                     <Binding Path="DoiMatKhauCommand"/>
                 </Button.Command>
@@ -60,6 +66,7 @@
             </Button>
             <Button Content="Hủy"
                     Width="90"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Command="{Binding HuyCommand}"/>
         </StackPanel>
     </Grid>

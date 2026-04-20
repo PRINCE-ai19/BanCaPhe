@@ -12,7 +12,7 @@
         AllowsTransparency="True"
         Background="Transparent">
     <Border CornerRadius="12"
-            Background="White"
+            Background="{StaticResource SurfaceContainerLowestBrush}"
             Padding="20"
             Width="320">
 
@@ -23,31 +23,35 @@
                        FontSize="18"
                        FontWeight="Bold"
                        Margin="0,0,0,15"
-                       TextAlignment="Center"/>
+                       TextAlignment="Center"
+                       Foreground="{StaticResource OnSurfaceBrush}"/>
 
             <!-- TIỀN MẶT -->
             <Button Content="💵 Tiền mặt"
                     Height="45"
                     Margin="0,5"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding TienMatCommand}"/>
 
             <!-- CHUYỂN KHOẢN -->
             <Button Content="💳 Chuyển khoản"
                     Height="45"
                     Margin="0,5"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding ChuyenKhoanCommand}"/>
 
             <!-- VNPAY -->
             <Button Content="📱 VNPay QR"
                     Height="45"
                     Margin="0,5"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding VnpayCommand}"/>
 
             <!-- HỦY -->
             <Button Content="Hủy"
                     Height="35"
                     Margin="0,15,0,0"
-                    Background="#EEE"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Command="{Binding DongCommand}"/>
 
         </StackPanel>

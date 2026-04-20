@@ -2,132 +2,132 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:BanCaPhe.ViewModel"
-        Title="Trang Quản lý"
-        Height="650"
-        Width="1100"
+        Title="Modtra - Quản lý"
+        Height="750"
+        Width="1400"
         WindowStartupLocation="CenterScreen"
-        Background="#F2F3F5">
+        Background="#FAFAF8">
 
     <Window.DataContext>
         <vm:AdminDashboardViewModel/>
     </Window.DataContext>
 
-    <Grid Margin="20">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <UniformGrid Columns="4" Margin="0,0,0,20">
-            <!-- Doanh thu -->
-            <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="DoanhThu"/>
-                </Border.InputBindings>
-                <StackPanel>
-                    <TextBlock Text="DOANH THU" FontWeight="Bold" Foreground="#666"/>
-                    <TextBlock Text="{Binding DoanhThuDisplay}" 
-                               FontSize="22" 
-                               FontWeight="Bold"
-                               Foreground="#2ECC71"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Sản phẩm -->
-            <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="SanPham"/>
-                </Border.InputBindings>
-                <StackPanel>
-                    <TextBlock Text="SẢN PHẨM" FontWeight="Bold" Foreground="#666"/>
-                    <TextBlock Text="{Binding SoLuongSanPham}" 
-                               FontSize="22" 
-                               FontWeight="Bold"
-                               Foreground="#3498DB"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Loại sản phẩm -->
-            <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="LoaiSanPham"/>
-                </Border.InputBindings>
-                <StackPanel>
-                    <TextBlock Text="LOẠI SẢN PHẨM" FontWeight="Bold" Foreground="#666"/>
-                    <TextBlock Text="{Binding SoLuongLoaiSanPham}" 
-                               FontSize="22" 
-                               FontWeight="Bold"
-                               Foreground="#9B59B6"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Topping -->
-            <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="Topping"/>
-                </Border.InputBindings>
-                <StackPanel>
-                    <TextBlock Text="TOPPING" FontWeight="Bold" Foreground="#666"/>
-                    <TextBlock Text="{Binding SoLuongTopping}" 
-                               FontSize="22" 
-                               FontWeight="Bold"
-                               Foreground="#E67E22"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Nhân viên -->
-            <Border Background="White" CornerRadius="12" Margin="10" Padding="15"
-                    Cursor="Hand">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="NhanVien"/>
-                </Border.InputBindings>
-                <StackPanel>
-                    <TextBlock Text="NHÂN VIÊN" FontWeight="Bold" Foreground="#666"/>
-                    <TextBlock Text="{Binding SoLuongNhanVien}" 
-                               FontSize="22" 
-                               FontWeight="Bold"
-                               Foreground="#E74C3C"/>
-                </StackPanel>
-            </Border>
-
-            <!-- Đăng xuất -->
-            <Border x:Name="LogoutCard"
-                    Background="#FFF5F5"
-                    CornerRadius="12"
-                    Margin="10"
-                    Padding="15"
-                    Cursor="Hand">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" Command="{Binding LogoutCommand}"/>
-                </Border.InputBindings>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <!-- Icon -->
-                    <TextBlock Text="⏻"
-                               FontSize="26"
-                               Foreground="#FF4D4F"
-                               Margin="0,0,10,0"/>
-                    <!-- Text -->
-                    <StackPanel>
-                        <TextBlock Text="ĐĂNG XUẤT"
-                                   FontWeight="Bold"
-                                   Foreground="#FF4D4F"/>
-                        <TextBlock Text="Thoát khỏi hệ thống"
-                                   FontSize="12"
-                                   Foreground="#888888"/>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
-        </UniformGrid>
-
-        <Border Grid.Row="1"
-                Background="White"
-                CornerRadius="12"
-                Padding="15">
-            <ContentControl Content="{Binding CurrentContent}"/>
+        <!-- ================= HEADER ================= -->
+        <Border Grid.Row="0" Background="#FFFFFF" Padding="30,15,30,15" BorderThickness="0,0,0,1" BorderBrush="#E8F0E8">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="🍵" FontSize="28" Margin="0,0,12,0"/>
+                <TextBlock Text="MODTRA" FontSize="24" FontWeight="Bold" Foreground="#2D5F3F" VerticalAlignment="Center"/>
+                <TextBlock Text="Trang Quản lý" FontSize="12" Foreground="#6B8B7E" VerticalAlignment="Center" Margin="12,0,0,0"/>
+            </StackPanel>
         </Border>
+
+        <!-- ================= MAIN CONTENT ================= -->
+        <Grid Grid.Row="1" Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ================= STAT CARDS ================= -->
+            <UniformGrid Grid.Row="0" Columns="6" Margin="0,0,0,20">
+                <!-- DOANH THU -->
+                <Border Background="#FFFFFF" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="DoanhThu"/>
+                    </Border.InputBindings>
+                    <StackPanel>
+                        <TextBlock Text="💰 DOANH THU" FontWeight="Bold" FontSize="11" Foreground="#6B8B7E" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding DoanhThuDisplay}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#A8D5BA"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- SẢN PHẨM -->
+                <Border Background="#FFFFFF" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="SanPham"/>
+                    </Border.InputBindings>
+                    <StackPanel>
+                        <TextBlock Text="☕ SẢN PHẨM" FontWeight="Bold" FontSize="11" Foreground="#6B8B7E" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding SoLuongSanPham}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#2D5F3F"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- LOẠI SẢN PHẨM -->
+                <Border Background="#FFFFFF" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="LoaiSanPham"/>
+                    </Border.InputBindings>
+                    <StackPanel>
+                        <TextBlock Text="📂 LOẠI" FontWeight="Bold" FontSize="11" Foreground="#6B8B7E" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding SoLuongLoaiSanPham}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#5A7A6A"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- TOPPING -->
+                <Border Background="#FFFFFF" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="Topping"/>
+                    </Border.InputBindings>
+                    <StackPanel>
+                        <TextBlock Text="🍯 TOPPING" FontWeight="Bold" FontSize="11" Foreground="#6B8B7E" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding SoLuongTopping}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#D4A574"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- NHÂN VIÊN -->
+                <Border Background="#FFFFFF" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="NhanVien"/>
+                    </Border.InputBindings>
+                    <StackPanel>
+                        <TextBlock Text="👥 NHÂN VIÊN" FontWeight="Bold" FontSize="11" Foreground="#6B8B7E" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding SoLuongNhanVien}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#2D5F3F"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- ĐĂNG XUẤT -->
+                <Border Background="#FFE8E8" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding LogoutCommand}"/>
+                    </Border.InputBindings>
+                    <StackPanel>
+                        <TextBlock Text="⏻ ĐĂNG XUẤT" FontWeight="Bold" FontSize="11" Foreground="#D32F2F" Margin="0,0,0,12"/>
+                        <TextBlock Text="Thoát" 
+                                   FontSize="14" 
+                                   FontWeight="Bold"
+                                   Foreground="#D32F2F"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>
+
+            <!-- ================= CONTENT AREA ================= -->
+            <Border Grid.Row="1"
+                    Background="#FFFFFF"
+                    CornerRadius="12"
+                    Padding="20">
+                <ContentControl Content="{Binding CurrentContent}"/>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

@@ -2,32 +2,93 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Ghi chú món"
-        SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterOwner">
+        Width="420"
+        Height="380"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#FAFAF8">
 
-    <StackPanel Margin="15" Width="300">
+    <StackPanel>
+        <!-- HEADER -->
+        <Border Background="#2D5F3F" Padding="20,15,20,15">
+            <TextBlock Text="Ghi chú món" FontSize="16" FontWeight="Bold" Foreground="#FFFFFF"/>
+        </Border>
 
+        <StackPanel Margin="20">
+            <!-- GHI CHÚ TEXT BOX -->
+            <StackPanel Margin="0,0,0,16">
+                <TextBlock Text="Ghi chú" FontWeight="Bold" Foreground="#1F4D3D" FontSize="12" Margin="0,0,0,8"/>
+                <TextBox Text="{Binding GhiChu}"
+                         AcceptsReturn="True"
+                         Height="80"
+                         Padding="12"
+                         FontSize="12"
+                         Background="#FFFFFF"
+                         Foreground="#1F4D3D"
+                         BorderBrush="#D0E8DC"
+                         BorderThickness="1"
+                         TextWrapping="Wrap"
+                         VerticalScrollBarVisibility="Auto"/>
+            </StackPanel>
 
-      
-        <TextBlock Text="Ghi chú" FontWeight="Bold" Margin="0,10,0,0"/>
-        <TextBox Text="{Binding GhiChu}"
-                 AcceptsReturn="True"
-                 Height="60"/>
+            <!-- GHI CHÚ NHANH -->
+            <StackPanel Margin="0,16,0,16">
+                <TextBlock Text="Ghi chú nhanh" FontWeight="Bold" Foreground="#1F4D3D" FontSize="12" Margin="0,0,0,8"/>
+                <WrapPanel>
+                    <Button Content="0% đường" 
+                            Background="#D0E8DC" 
+                            Foreground="#1F4D3D"
+                            FontWeight="Bold"
+                            FontSize="11"
+                            Padding="12,8"
+                            Margin="4"
+                            BorderThickness="0"
+                            Command="{Binding ChonNhanhCommand}" 
+                            CommandParameter="0% đường"/>
+                    <Button Content="Ít đường" 
+                            Background="#D0E8DC" 
+                            Foreground="#1F4D3D"
+                            FontWeight="Bold"
+                            FontSize="11"
+                            Padding="12,8"
+                            Margin="4"
+                            BorderThickness="0"
+                            Command="{Binding ChonNhanhCommand}" 
+                            CommandParameter="Ít đường"/>
+                    <Button Content="0% đá" 
+                            Background="#D0E8DC" 
+                            Foreground="#1F4D3D"
+                            FontWeight="Bold"
+                            FontSize="11"
+                            Padding="12,8"
+                            Margin="4"
+                            BorderThickness="0"
+                            Command="{Binding ChonNhanhCommand}" 
+                            CommandParameter="0% đá"/>
+                    <Button Content="Ít đá" 
+                            Background="#D0E8DC" 
+                            Foreground="#1F4D3D"
+                            FontWeight="Bold"
+                            FontSize="11"
+                            Padding="12,8"
+                            Margin="4"
+                            BorderThickness="0"
+                            Command="{Binding ChonNhanhCommand}" 
+                            CommandParameter="Ít đá"/>
+                </WrapPanel>
+            </StackPanel>
 
-        <!-- GHI CHÚ NHANH -->
-        <WrapPanel Margin="0,10,0,0">
-            <Button Content="0% đường" Command="{Binding ChonNhanhCommand}" CommandParameter="0% đường"/>
-            <Button Content="Ít đường" Command="{Binding ChonNhanhCommand}" CommandParameter="Ít đường"/>
-            <Button Content="0% đá" Command="{Binding ChonNhanhCommand}" CommandParameter="0% đá"/>
-            <Button Content="Ít đá" Command="{Binding ChonNhanhCommand}" CommandParameter="Ít đá"/>
-        </WrapPanel>
-
-        <Button Content="Xong"
-                Margin="0,15,0,0"
-                Height="35"
-                Background="#4CAF50"
-                Foreground="White"
-                Command="{Binding DongCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <!-- NÚT XONG -->
+            <Button Content="Xong"
+                    Margin="0,8,0,0"
+                    Height="42"
+                    Background="#2D7A5C"
+                    Foreground="#FFFFFF"
+                    FontWeight="Bold"
+                    FontSize="12"
+                    BorderThickness="0"
+                    Command="{Binding DongCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </StackPanel>
     </StackPanel>
 </Window>

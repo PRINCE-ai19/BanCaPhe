@@ -5,7 +5,8 @@
         Title="Sản phẩm"
         Height="520"
         Width="600"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{StaticResource BackgroundBrush}">
 
     <Window.Resources>
         <conv:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -25,7 +26,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- FORM -->
-            <GroupBox Header="Thông tin sản phẩm" Margin="0,0,10,0">
+            <GroupBox Header="Thông tin sản phẩm" Margin="0,0,10,0" Foreground="{StaticResource OnSurfaceBrush}">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -37,58 +38,63 @@
 
                     <!-- TÊN -->
                     <StackPanel Margin="0,0,0,10">
-                        <TextBlock Text="Tên đồ uống"/>
-                        <TextBox x:Name="txtTen" Text="{Binding TenDoUong, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Tên đồ uống" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <TextBox x:Name="txtTen" Text="{Binding TenDoUong, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <!-- GIÁ -->
                     <StackPanel Grid.Row="1" Margin="0,0,0,10">
-                        <TextBlock Text="Giá"/>
-                        <TextBox x:Name="txtGia" Text="{Binding Gia, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock Text="Giá" Foreground="{StaticResource OnSurfaceBrush}"/>
+                        <TextBox x:Name="txtGia" Text="{Binding Gia, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <!-- LOẠI -->
                     <StackPanel Grid.Row="2" Margin="0,0,0,10">
-                        <TextBlock Text="Loại đồ uống"/>
+                        <TextBlock Text="Loại đồ uống" Foreground="{StaticResource OnSurfaceBrush}"/>
                         <ComboBox x:Name="cbLoai"
                                   ItemsSource="{Binding DanhMucList}"
                                   SelectedItem="{Binding SelectedDanhMuc}"
                                   DisplayMemberPath="TenLoai"
-                                  SelectedValuePath="ID"/>
+                                  SelectedValuePath="ID"
+                                  Style="{StaticResource DefaultComboBoxStyle}"/>
                     </StackPanel>
 
                     <!-- MÔ TẢ -->
                     <StackPanel Grid.Row="3" Margin="0,0,0,10">
-                        <TextBlock Text="Mô tả"/>
+                        <TextBlock Text="Mô tả" Foreground="{StaticResource OnSurfaceBrush}"/>
                         <TextBox x:Name="txtMoTa"
                                  Text="{Binding Mota, UpdateSourceTrigger=PropertyChanged}"
                                  Height="80"
                                  TextWrapping="Wrap"
-                                 AcceptsReturn="True"/>
+                                 AcceptsReturn="True"
+                                 Style="{StaticResource DefaultTextBoxStyle}"/>
                     </StackPanel>
 
                     <!-- CÒN BÁN -->
                     <CheckBox x:Name="chkConBan"
                               Grid.Row="4"
                               IsChecked="{Binding ConBan}"
-                              Content="Còn bán"/>
+                              Content="Còn bán"
+                              Foreground="{StaticResource OnSurfaceBrush}"/>
                 </Grid>
             </GroupBox>
 
             <!-- IMAGE -->
-            <GroupBox Grid.Column="1" Header="Hình ảnh">
+            <GroupBox Grid.Column="1" Header="Hình ảnh" Foreground="{StaticResource OnSurfaceBrush}">
                 <StackPanel Margin="10" HorizontalAlignment="Center">
-                    <Border BorderBrush="Gray"
+                    <Border BorderBrush="{StaticResource OutlineBrush}"
                             BorderThickness="1"
                             CornerRadius="6"
                             Width="160"
-                            Height="160">
+                            Height="160"
+                            Background="{StaticResource SurfaceContainerLowestBrush}">
                         <Image x:Name="imgPreview" Source="{Binding ImagePreview}" Stretch="Uniform"/>
                     </Border>
 
                     <Button Content="Chọn hình"
                             Width="120"
                             Margin="0,10,0,0"
+                            Style="{StaticResource SecondaryButtonStyle}"
                             Command="{Binding ChonHinhCommand}"/>
                 </StackPanel>
             </GroupBox>
@@ -102,10 +108,12 @@
             <Button Content="Lưu"
                     Width="90"
                     Margin="0,0,8,0"
+                    Style="{StaticResource SuccessButtonStyle}"
                     Command="{Binding LuuCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
             <Button Content="Hủy"
                     Width="90"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Command="{Binding HuyCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
         </StackPanel>

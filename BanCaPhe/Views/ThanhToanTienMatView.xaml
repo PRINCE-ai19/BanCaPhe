@@ -4,7 +4,8 @@
         Title="Thanh toán tiền mặt"
         Height="650" Width="650"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        Background="{StaticResource BackgroundBrush}">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -25,16 +26,18 @@
             <!-- Tổng tiền -->
             <TextBlock Text="Tổng tiền"
                        FontSize="14"
+                       Foreground="{StaticResource OnSurfaceBrush}"
                        Margin="0,0,0,5"/>
             <TextBlock Text="{Binding TongTien, StringFormat={}{0:N0} đ}"
                        FontSize="24"
                        FontWeight="Bold"
-                       Foreground="Red"
+                       Foreground="{StaticResource ErrorBrush}"
                        Margin="0,0,0,20"/>
 
             <!-- Tiền khách đưa -->
             <TextBlock Text="Tiền khách đưa"
                        FontSize="14"
+                       Foreground="{StaticResource OnSurfaceBrush}"
                        Margin="0,0,0,5"/>
             <TextBox x:Name="txtTienKhachDua"
                      Height="50"
@@ -44,20 +47,22 @@
                      VerticalContentAlignment="Center"
                      Padding="10,0"
                      Text="{Binding TienKhachDua, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}"
-                     Margin="0,0,0,20"/>
+                     Margin="0,0,0,20"
+                     Style="{StaticResource DefaultTextBoxStyle}"/>
 
             <!-- Tiền thối -->
             <TextBlock Text="Tiền thối"
                        FontSize="14"
+                       Foreground="{StaticResource OnSurfaceBrush}"
                        Margin="0,0,0,5"/>
-            <Border Background="#E8F5E9"
+            <Border Background="{StaticResource TertiaryContainerBrush}"
                     CornerRadius="5"
                     Padding="15"
                     Margin="0,0,0,20">
                 <TextBlock Text="{Binding TienThoi, StringFormat={}{0:N0} đ}"
                            FontSize="28"
                            FontWeight="Bold"
-                           Foreground="#2E7D32"
+                           Foreground="{StaticResource TertiaryBrush}"
                            TextAlignment="Right"/>
             </Border>
 
@@ -79,58 +84,58 @@
                 <!-- Hàng 1 -->
                 <Button Content="7" Grid.Row="0" Grid.Column="0" 
                         Command="{Binding NhapSoCommand}" CommandParameter="7"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="8" Grid.Row="0" Grid.Column="1"
                         Command="{Binding NhapSoCommand}" CommandParameter="8"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="9" Grid.Row="0" Grid.Column="2"
                         Command="{Binding NhapSoCommand}" CommandParameter="9"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="←" Grid.Row="0" Grid.Column="3"
                         Command="{Binding XoaCommand}"
                         Margin="2" FontSize="20" FontWeight="Bold"
-                        Background="#FFE0E0"/>
+                        Style="{StaticResource ErrorButtonStyle}"/>
 
                 <!-- Hàng 2 -->
                 <Button Content="4" Grid.Row="1" Grid.Column="0"
                         Command="{Binding NhapSoCommand}" CommandParameter="4"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="5" Grid.Row="1" Grid.Column="1"
                         Command="{Binding NhapSoCommand}" CommandParameter="5"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="6" Grid.Row="1" Grid.Column="2"
                         Command="{Binding NhapSoCommand}" CommandParameter="6"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="000" Grid.Row="1" Grid.Column="3"
                         Command="{Binding NhapSoCommand}" CommandParameter="000"
-                        Margin="2" FontSize="18" FontWeight="Bold"/>
+                        Margin="2" FontSize="18" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
 
                 <!-- Hàng 3 -->
                 <Button Content="1" Grid.Row="2" Grid.Column="0"
                         Command="{Binding NhapSoCommand}" CommandParameter="1"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="2" Grid.Row="2" Grid.Column="1"
                         Command="{Binding NhapSoCommand}" CommandParameter="2"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="3" Grid.Row="2" Grid.Column="2"
                         Command="{Binding NhapSoCommand}" CommandParameter="3"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="00" Grid.Row="2" Grid.Column="3"
                         Command="{Binding NhapSoCommand}" CommandParameter="00"
-                        Margin="2" FontSize="18" FontWeight="Bold"/>
+                        Margin="2" FontSize="18" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
 
                 <!-- Hàng 4 -->
                 <Button Content="C" Grid.Row="3" Grid.Column="0"
                         Command="{Binding XoaHetCommand}"
                         Margin="2" FontSize="20" FontWeight="Bold"
-                        Background="#FFE0E0"/>
+                        Style="{StaticResource ErrorButtonStyle}"/>
                 <Button Content="0" Grid.Row="3" Grid.Column="1"
                         Command="{Binding NhapSoCommand}" CommandParameter="0"
-                        Margin="2" FontSize="20" FontWeight="Bold"/>
+                        Margin="2" FontSize="20" FontWeight="Bold" Style="{StaticResource SecondaryButtonStyle}"/>
                 <Button Content="Vừa đủ" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"
                         Command="{Binding VuaDuCommand}"
                         Margin="2" FontSize="16" FontWeight="Bold"
-                        Background="#E3F2FD"/>
+                        Style="{StaticResource PrimaryButtonStyle}"/>
             </Grid>
         </StackPanel>
 
@@ -139,6 +144,7 @@
             <TextBlock Text="Mệnh giá"
                        FontSize="14"
                        FontWeight="Bold"
+                       Foreground="{StaticResource OnSurfaceBrush}"
                        Margin="0,0,0,10"
                        HorizontalAlignment="Center"/>
 
@@ -147,8 +153,7 @@
                     Margin="0,0,0,8"
                     FontSize="16"
                     FontWeight="Bold"
-                    Background="#9C27B0"
-                    Foreground="White"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding ChonMenhGiaCommand}"
                     CommandParameter="500000"/>
 
@@ -157,8 +162,7 @@
                     Margin="0,0,0,8"
                     FontSize="16"
                     FontWeight="Bold"
-                    Background="#F44336"
-                    Foreground="White"
+                    Style="{StaticResource ErrorButtonStyle}"
                     Command="{Binding ChonMenhGiaCommand}"
                     CommandParameter="200000"/>
 
@@ -167,8 +171,7 @@
                     Margin="0,0,0,8"
                     FontSize="16"
                     FontWeight="Bold"
-                    Background="#2196F3"
-                    Foreground="White"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding ChonMenhGiaCommand}"
                     CommandParameter="100000"/>
 
@@ -177,8 +180,7 @@
                     Margin="0,0,0,8"
                     FontSize="16"
                     FontWeight="Bold"
-                    Background="#4CAF50"
-                    Foreground="White"
+                    Style="{StaticResource SuccessButtonStyle}"
                     Command="{Binding ChonMenhGiaCommand}"
                     CommandParameter="50000"/>
 
@@ -187,8 +189,7 @@
                     Margin="0,0,0,8"
                     FontSize="16"
                     FontWeight="Bold"
-                    Background="#FF9800"
-                    Foreground="White"
+                    Style="{StaticResource PrimaryButtonStyle}"
                     Command="{Binding ChonMenhGiaCommand}"
                     CommandParameter="20000"/>
 
@@ -197,8 +198,7 @@
                     Margin="0,0,0,8"
                     FontSize="16"
                     FontWeight="Bold"
-                    Background="#795548"
-                    Foreground="White"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Command="{Binding ChonMenhGiaCommand}"
                     CommandParameter="10000"/>
         </StackPanel>
@@ -213,14 +213,14 @@
                     Height="45"
                     Margin="0,0,10,0"
                     FontSize="16"
+                    Style="{StaticResource SecondaryButtonStyle}"
                     Command="{Binding HuyCommand}"/>
             <Button Content="Xác nhận thanh toán"
                     Width="180"
                     Height="45"
                     FontSize="16"
                     FontWeight="Bold"
-                    Background="#4CAF50"
-                    Foreground="White"
+                    Style="{StaticResource SuccessButtonStyle}"
                     Command="{Binding XacNhanCommand}"/>
         </StackPanel>
     </Grid>

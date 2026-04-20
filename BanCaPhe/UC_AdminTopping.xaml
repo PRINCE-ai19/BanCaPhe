@@ -8,24 +8,53 @@
         <vm:ToppingViewModel/>
     </UserControl.DataContext>
 
-    <Grid Margin="10">
+    <Grid Margin="0" Background="#FAFAF8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- HEADER -->
-        <DockPanel Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Text="Quản lý Topping"
-                       FontSize="20"
-                       FontWeight="Bold"
-                       DockPanel.Dock="Left"/>
+        <Border Grid.Row="0" Background="#2D5F3F" Padding="20,12,20,12" Margin="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Button Content="+ Thêm topping"
-                    Width="140"
-                    DockPanel.Dock="Right"
-                    Command="{Binding ThemCommand}"/>
-        </DockPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🍯 Quản lý topping"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="#FFFFFF"
+                               VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding DanhSachTopping.Count, StringFormat=({0} topping)}"
+                               FontSize="12"
+                               Foreground="#D0E8DC"
+                               VerticalAlignment="Center"
+                               Margin="12,0,0,0"/>
+                </StackPanel>
+
+                <!-- ADD BUTTON -->
+                <Button Grid.Column="1"
+                        Content="+ Thêm topping"
+                        Height="36"
+                        Padding="16,8"
+                        Background="#A8D5BA"
+                        Foreground="#1F4D3D"
+                        FontWeight="Bold"
+                        FontSize="12"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Command="{Binding ThemCommand}">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="18"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
 
         <!-- DATAGRID -->
         <DataGrid x:Name="dgTopping"
@@ -36,21 +65,41 @@
                   RowHeight="60"
                   SelectionMode="Single"
                   ItemsSource="{Binding DanhSachTopping}"
-                  SelectedItem="{Binding SelectedTopping}">
+                  SelectedItem="{Binding SelectedTopping}"
+                  Background="#FFFFFF"
+                  Foreground="#1F4D3D"
+                  BorderBrush="#D0E8DC"
+                  BorderThickness="1"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#E8F0E8"
+                  Margin="0">
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="#E8F0E8"/>
+                    <Setter Property="Foreground" Value="#2D5F3F"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="Padding" Value="12,8"/>
+                    <Setter Property="BorderBrush" Value="#D0E8DC"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
 
             <DataGrid.Columns>
 
                 <!-- ẢNH -->
-                <DataGridTemplateColumn Header="Ảnh" Width="80">
+                <DataGridTemplateColumn Header="Ảnh" Width="70">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Border Width="45"
                                     Height="45"
                                     CornerRadius="22.5"
-                                    BorderBrush="Gray"
-                                    BorderThickness="1"
+                                    BorderBrush="#D0E8DC"
+                                    BorderThickness="2"
                                     HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
+                                    VerticalAlignment="Center"
+                                    Background="#FFF9E6">
                                 <Image Source="{Binding HinhAnh}"
                                        Stretch="UniformToFill"/>
                             </Border>
@@ -65,7 +114,7 @@
 
                 <!-- GIÁ -->
                 <DataGridTextColumn Header="Giá"
-                                    Binding="{Binding Gia, StringFormat={}{0:N0}}"
+                                    Binding="{Binding Gia, StringFormat={}{0:N0} đ}"
                                     Width="120"/>
 
                 <!-- BÁN RIÊNG -->
@@ -78,23 +127,70 @@
                                         Binding="{Binding ConBan}"
                                         Width="90"/>
 
-                <!-- ACTION -->
-                <DataGridTemplateColumn Header="Thao tác" Width="180">
+                <!-- THAO TÁC -->
+                <DataGridTemplateColumn Header="Thao tác" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Center">
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Margin="4">
 
-                                <Button Content="Sửa"
+                                <!-- NÚT THÊM -->
+                                <Button Content="+ Thêm"
                                         Width="60"
-                                        Margin="0,0,5,0"
-                                        Command="{Binding DataContext.SuaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                                        Height="32"
+                                        Margin="0,0,4,0"
+                                        Background="#2D7A5C"
+                                        Foreground="#FFFFFF"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.ThemCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="16"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
 
-                                <Button Content="Xóa"
+                                <!-- NÚT SỬA -->
+                                <Button Content="✎ Sửa"
                                         Width="60"
-                                        Background="#E74C3C"
-                                        Foreground="White"
-                                        Command="{Binding DataContext.XoaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
+                                        Height="32"
+                                        Margin="0,0,4,0"
+                                        Background="#A8D5BA"
+                                        Foreground="#1F4D3D"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.SuaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="16"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
+
+                                <!-- NÚT XÓA -->
+                                <Button Content="✕ Xóa"
+                                        Width="60"
+                                        Height="32"
+                                        Background="#FFCDD2"
+                                        Foreground="#C62828"
+                                        FontWeight="Bold"
+                                        FontSize="11"
+                                        BorderThickness="0"
+                                        Cursor="Hand"
+                                        Command="{Binding DataContext.XoaCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}">
+                                    <Button.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="CornerRadius" Value="16"/>
+                                        </Style>
+                                    </Button.Resources>
+                                </Button>
 
                             </StackPanel>
                         </DataTemplate>
