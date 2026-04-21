@@ -360,11 +360,41 @@
 
                             <Separator Background="#E8F0E8" Margin="0,4"/>
 
+                            <Grid Margin="0,2,0,2" Visibility="{Binding HasAppliedVoucher, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="{Binding AppliedVoucherCode, StringFormat=Voucher ({0}):}" Foreground="#C62828" FontSize="10"/>
+                                <TextBlock Text="{Binding VoucherDiscount, StringFormat=-{0:N0} đ}" 
+                                           Foreground="#C62828" FontWeight="Bold" HorizontalAlignment="Right" FontSize="10"/>
+                            </Grid>
+
+                            <Separator Background="#E8F0E8" Margin="0,4"/>
+
                             <Grid Margin="0,2,0,8">
                                 <TextBlock Text="TỔNG:" FontWeight="Bold" Foreground="#1F4D3D" FontSize="11"/>
                                 <TextBlock Text="{Binding TongPhaiThanhToan, StringFormat={}{0:N0} đ}" 
                                            Foreground="#2D7A5C" FontWeight="Bold" HorizontalAlignment="Right" FontSize="13"/>
                             </Grid>
+
+                            <!-- Voucher Icon -->
+                            <Border Height="32" Background="#FFFFFF" CornerRadius="8" Cursor="Hand" 
+                                    Margin="0,0,0,4" BorderBrush="#D0E8DC" BorderThickness="1"
+                                    IsEnabled="{Binding HasOrderItems}">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#C8E6D7"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding MoVoucherModalCommand}"/>
+                                </Border.InputBindings>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="🎁" FontSize="16" Margin="0,0,6,0"/>
+                                    <TextBlock Text="Áp dụng mã giảm giá" FontSize="10" FontWeight="Bold" Foreground="#2D5F3F" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
 
                             <Button Content="IN HÓA ĐƠN" Height="30" Background="#D0E8DC" Foreground="#1F4D3D" 
                                     FontWeight="Bold" FontSize="10" Command="{Binding InHoaDonTamCommand}" Margin="0,0,0,4" BorderThickness="0"/>
