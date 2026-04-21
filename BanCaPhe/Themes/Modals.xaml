@@ -1,0 +1,65 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Brushes.xaml"/>
+        <ResourceDictionary Source="Typography.xaml"/>
+        <ResourceDictionary Source="Buttons.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- ==================== MODAL WINDOW STYLE ==================== -->
+    <Style x:Key="ModalWindowStyle" TargetType="Window">
+        <Setter Property="Background" Value="{StaticResource SurfaceContainerLowestBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource OnSurfaceBrush}"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="WindowStartupLocation" Value="CenterOwner"/>
+        <Setter Property="ShowInTaskbar" Value="False"/>
+    </Style>
+
+    <!-- ==================== MODAL HEADER BORDER ==================== -->
+    <Style x:Key="ModalHeaderBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+        <Setter Property="Height" Value="6"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <!-- ==================== MODAL CONTENT BORDER ==================== -->
+    <Style x:Key="ModalContentBorderStyle" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SurfaceContainerLowestBrush}"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="Padding" Value="24"/>
+    </Style>
+
+    <!-- ==================== MODAL OVERLAY ==================== -->
+    <SolidColorBrush x:Key="ModalOverlayBrush" Color="#000000" Opacity="0.4"/>
+
+    <!-- ==================== MODAL TITLE TEXTBLOCK ==================== -->
+    <Style x:Key="ModalTitleTextBlock" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource HeadlineFont}"/>
+        <Setter Property="FontSize" Value="28"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{StaticResource OnSurfaceBrush}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <!-- ==================== MODAL DESCRIPTION TEXTBLOCK ==================== -->
+    <Style x:Key="ModalDescriptionTextBlock" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource BodyFont}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="Foreground" Value="{StaticResource SecondaryBrush}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="LineHeight" Value="20"/>
+    </Style>
+
+    <!-- ==================== MODAL BUTTON PANEL ==================== -->
+    <Style x:Key="ModalButtonPanelStyle" TargetType="StackPanel">
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+
+</ResourceDictionary>
