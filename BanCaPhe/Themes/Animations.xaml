@@ -1,0 +1,47 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ==================== SNAP INTERACTION STORYBOARDS ==================== -->
+    <!-- 150ms cubic-bezier(0.4, 0, 0.2, 1) - Sharp, surgical response -->
+
+    <!-- Hover Scale Up (1.05) -->
+    <Storyboard x:Key="HoverScaleUpStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                         To="1.05"
+                         Duration="0:0:0.150"
+                         EasingFunction="{StaticResource SnapEasing}"/>
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                         To="1.05"
+                         Duration="0:0:0.150"
+                         EasingFunction="{StaticResource SnapEasing}"/>
+    </Storyboard>
+
+    <!-- Pressed Scale Down (0.95) -->
+    <Storyboard x:Key="PressedScaleDownStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                         To="0.95"
+                         Duration="0:0:0.150"
+                         EasingFunction="{StaticResource SnapEasing}"/>
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                         To="0.95"
+                         Duration="0:0:0.150"
+                         EasingFunction="{StaticResource SnapEasing}"/>
+    </Storyboard>
+
+    <!-- Reset Scale (1.0) -->
+    <Storyboard x:Key="ResetScaleStoryboard">
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                         To="1.0"
+                         Duration="0:0:0.150"
+                         EasingFunction="{StaticResource SnapEasing}"/>
+        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                         To="1.0"
+                         Duration="0:0:0.150"
+                         EasingFunction="{StaticResource SnapEasing}"/>
+    </Storyboard>
+
+    <!-- ==================== EASING FUNCTIONS ==================== -->
+    <!-- Cubic Bezier (0.4, 0, 0.2, 1) - Snap feel -->
+    <CubicEase x:Key="SnapEasing" EasingMode="EaseInOut"/>
+
+</ResourceDictionary>
