@@ -6,6 +6,9 @@
         WindowStartupLocation="CenterOwner"
         ResizeMode="NoResize"
         Background="{StaticResource BackgroundBrush}">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -23,16 +26,64 @@
 
         <!-- PHẦN BÊN TRÁI -->
         <StackPanel Grid.Column="0" Grid.RowSpan="4">
-            <!-- Tổng tiền -->
-            <TextBlock Text="Tổng tiền"
+            <!-- Khách hàng -->
+            <TextBlock Text="Số điện thoại khách hàng"
                        FontSize="14"
                        Foreground="{StaticResource OnSurfaceBrush}"
                        Margin="0,0,0,5"/>
-            <TextBlock Text="{Binding TongTien, StringFormat={}{0:N0} đ}"
-                       FontSize="24"
+            <Grid Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding SoDienThoai, UpdateSourceTrigger=PropertyChanged}"
+                         Height="40"
+                         FontSize="18"
+                         VerticalContentAlignment="Center"
+                         Padding="10,0"
+                         Style="{StaticResource DefaultTextBoxStyle}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding TimKhachHangCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <Button Grid.Column="1" 
+                        Content="Tìm" 
+                        Width="60" 
+                        Height="40" 
+                        Margin="5,0,0,0"
+                        Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding TimKhachHangCommand}"/>
+            </Grid>
+
+            <!-- Hiển thị tên khách hàng nếu tìm thấy -->
+            <TextBlock Text="{Binding KhachHang.HoTen}"
+                       FontSize="16"
                        FontWeight="Bold"
-                       Foreground="{StaticResource ErrorBrush}"
-                       Margin="0,0,0,20"/>
+                       Foreground="{StaticResource PrimaryBrush}"
+                       Visibility="{Binding HasKhachHang, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       Margin="0,-10,0,10"/>
+
+            <!-- Chi tiết tiền -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Tổng tiền gốc:" FontSize="14" Foreground="{StaticResource OnSurfaceBrush}"/>
+                <TextBlock Grid.Column="1" Text="{Binding TongTienGoc, StringFormat={}{0:N0} đ}" FontSize="14" Foreground="{StaticResource OnSurfaceBrush}"/>
+
+                <TextBlock Grid.Row="1" Text="Giảm giá (thành viên):" FontSize="14" Foreground="{StaticResource ErrorBrush}" Margin="0,5,0,0"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding GiamGia, StringFormat={}-{0:N0} đ}" FontSize="14" Foreground="{StaticResource ErrorBrush}" Margin="0,5,0,0"/>
+
+                <TextBlock Grid.Row="2" Text="Tổng thanh toán" FontSize="16" FontWeight="Bold" Foreground="{StaticResource OnSurfaceBrush}" Margin="0,10,0,0"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding TongTien, StringFormat={}{0:N0} đ}" FontSize="24" FontWeight="Bold" Foreground="{StaticResource ErrorBrush}" Margin="0,5,0,0"/>
+            </Grid>
 
             <!-- Tiền khách đưa -->
             <TextBlock Text="Tiền khách đưa"

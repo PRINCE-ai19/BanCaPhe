@@ -35,7 +35,7 @@
             </Grid.RowDefinitions>
 
             <!-- ================= STAT CARDS ================= -->
-            <UniformGrid Grid.Row="0" Columns="6" Margin="0,0,0,20">
+            <UniformGrid Grid.Row="0" Columns="7" Margin="0,0,0,20">
                 <!-- DOANH THU -->
                 <Border Background="#FFFFFF" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
                     <Border.InputBindings>
@@ -103,6 +103,20 @@
                                    FontSize="20" 
                                    FontWeight="Bold"
                                    Foreground="#2D5F3F"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- KHÁCH HÀNG -->
+                <Border Background="#FFFFFF" CornerRadius="12" Margin="8" Padding="20" Cursor="Hand">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding NavigateCommand}" CommandParameter="KhachHang"/>
+                    </Border.InputBindings>
+                    <StackPanel>
+                        <TextBlock Text="👤 KHÁCH HÀNG" FontWeight="Bold" FontSize="11" Foreground="#6B8B7E" Margin="0,0,0,12"/>
+                        <TextBlock Text="{Binding SoLuongKhachHang}" 
+                                   FontSize="20" 
+                                   FontWeight="Bold"
+                                   Foreground="#5A7A6A"/>
                     </StackPanel>
                 </Border>
 

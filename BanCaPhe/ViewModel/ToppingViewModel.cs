@@ -55,8 +55,23 @@ namespace BanCaPhe.ViewModel
 
         public void LoadData()
         {
-            var data = _service.GetAllAdmin();
-            DanhSachTopping = new ObservableCollection<Topping>(data);
+            try
+            {
+                var data = _service.GetAllAdmin();
+                if (data == null)
+                {
+                    DanhSachTopping = new ObservableCollection<Topping>();
+                }
+                else
+                {
+                    DanhSachTopping = new ObservableCollection<Topping>(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                DialogService.ShowError("Lỗi khi tải danh sách Topping: " + ex.Message);
+                DanhSachTopping = new ObservableCollection<Topping>();
+            }
         }
 
         private void ExecuteThem(object obj)
@@ -73,7 +88,8 @@ namespace BanCaPhe.ViewModel
 
         private void ExecuteSua(object obj)
         {
-            if (SelectedTopping == null)
+            var topping = obj as Topping ?? SelectedTopping;
+            if (topping == null)
             {
                 DialogService.ShowError("Vui lòng chọn Topping cần sửa");
                 return;
@@ -81,7 +97,12 @@ namespace BanCaPhe.ViewModel
 
             var win = new W_ToppingModal();
             // Lấy dữ liệu từ Service rồi mới gán vào ViewModel cho Modal
-            var toppingFromDb = _service.GetById(SelectedTopping.ID);
+            var toppingFromDb = _service.GetById(topping.ID);
+            if (toppingFromDb == null)
+            {
+                DialogService.ShowError("Không tìm thấy dữ liệu Topping này!");
+                return;
+            }
             win.DataContext = new ToppingDetailViewModel(toppingFromDb);
 
             if (win.ShowDialog() == true)
@@ -92,17 +113,18 @@ namespace BanCaPhe.ViewModel
 
         private void ExecuteXoa(object obj)
         {
-            if (SelectedTopping == null)
+            var topping = obj as Topping ?? SelectedTopping;
+            if (topping == null)
             {
                 DialogService.ShowError("Vui lòng chọn Topping cần xóa");
                 return;
             }
 
-            if (DialogService.ShowConfirm($"Bạn có chắc muốn xóa (ngừng bán) Topping '{SelectedTopping.TenTopping}'?"))
+            if (DialogService.ShowConfirm($"Bạn có chắc muốn xóa (ngừng bán) Topping '{topping.TenTopping}'?"))
             {
                 try
                 {
-                    if (_service.Delete(SelectedTopping.ID))
+                    if (_service.Delete(topping.ID))
                     {
                         LoadData();
                         DialogService.ShowMessage("Xóa Topping thành công!");

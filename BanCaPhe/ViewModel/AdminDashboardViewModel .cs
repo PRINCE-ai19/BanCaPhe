@@ -1,4 +1,5 @@
 using BanCaPhe.Services;
+using BanCaPhe.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace BanCaPhe.ViewModel
         private readonly LoaiDoUongService _loaiDoUongService;
         private readonly ToppingService _toppingService;
         private readonly NhanVienService _nhanVienService;
+        private readonly KhachHangService _khachHangService;
 
         private object _currentContent;
         public object CurrentContent
@@ -87,6 +89,18 @@ namespace BanCaPhe.ViewModel
             }
         }
 
+        // Số Khách Hàng
+        private int _soLuongKhachHang;
+        public int SoLuongKhachHang
+        {
+            get => _soLuongKhachHang;
+            set
+            {
+                _soLuongKhachHang = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand RefreshDataCommand { get; }
         public ICommand NavigateCommand { get; }
         public ICommand LogoutCommand { get; }
@@ -98,6 +112,7 @@ namespace BanCaPhe.ViewModel
             _loaiDoUongService = new LoaiDoUongService();
             _toppingService = new ToppingService();
             _nhanVienService = new NhanVienService();
+            _khachHangService = new KhachHangService();
 
             RefreshDataCommand = new RelayCommand(_ => LoadAllData());
             NavigateCommand = new RelayCommand(ExecuteNavigate);
@@ -120,6 +135,7 @@ namespace BanCaPhe.ViewModel
                 case "LoaiSanPham": CurrentContent = new W_LoaiSanPham(); break;
                 case "Topping": CurrentContent = new UC_AdminTopping(); break;
                 case "NhanVien": CurrentContent = new UC_NhanVien(); break;
+                case "KhachHang": CurrentContent = new UC_KhachHang(); break;
             }
             // Refresh stats whenever we switch views
             LoadAllData();
@@ -153,6 +169,9 @@ namespace BanCaPhe.ViewModel
 
                 // 5. Load Số Nhân Viên
                 LoadSoLuongNhanVien();
+
+                // 6. Load Số Khách Hàng
+                LoadSoLuongKhachHang();
             }
             catch (Exception ex)
             {
@@ -231,6 +250,20 @@ namespace BanCaPhe.ViewModel
             catch
             {
                 SoLuongNhanVien = 0;
+            }
+        }
+
+        private void LoadSoLuongKhachHang()
+        {
+            try
+            {
+                // Sử dụng phương thức tìm kiếm rỗng để lấy tất cả khách hàng
+                var danhSach = _khachHangService.SearchByPhone("");
+                SoLuongKhachHang = danhSach?.Count ?? 0;
+            }
+            catch
+            {
+                SoLuongKhachHang = 0;
             }
         }
     }

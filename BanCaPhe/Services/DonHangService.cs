@@ -15,7 +15,7 @@ namespace BanCaPhe.Services
     {
         public void ThanhToan(DonHang donHang, List<OrderItem> items)
         {
-            // CHI TIẾT ĐƠN HÀNG 
+         
             DataTable tbChiTiet = new DataTable();
             tbChiTiet.Columns.Add("SanPhamKichThuocID", typeof(int));
             tbChiTiet.Columns.Add("SoLuong", typeof(int));
@@ -30,7 +30,7 @@ namespace BanCaPhe.Services
                 );
             }
 
-            // CHI TIẾT TOPPING 
+
             DataTable tbTopping = new DataTable();
             tbTopping.Columns.Add("ChiTietDonHangIndex", typeof(int));
             tbTopping.Columns.Add("ToppingID", typeof(int));
@@ -50,18 +50,19 @@ namespace BanCaPhe.Services
                 }
             }
 
-            // Sử dụng DynamicParameters để truyền TVP
             var parameters = new DynamicParameters();
             parameters.Add("@NgayLap", donHang.NgayLap);
             parameters.Add("@NhanVienID", donHang.NhanVienID);
             parameters.Add("@TongTien", donHang.TongTien);
             parameters.Add("@HinhThucThanhToan", donHang.HinhThucThanhToan);
+            parameters.Add("@KhachHangID", donHang.KhachHangID);
+            parameters.Add("@DungVoucher", donHang.DungVoucher);
                 
-            // Truyền Table-Valued Parameters
+       
             parameters.Add("@ChiTietDonHang", tbChiTiet.AsTableValuedParameter("dbo.TVP_ChiTietDonHang"));
             parameters.Add("@ChiTietTopping", tbTopping.AsTableValuedParameter("dbo.TVP_ChiTietTopping"));
 
-            // Gọi qua StoreHelper
+   
             StoreHelper.Execute("sp_ThanhToan", parameters);
         }
     }

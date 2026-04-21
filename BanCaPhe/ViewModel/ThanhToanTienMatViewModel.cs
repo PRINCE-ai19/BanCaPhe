@@ -14,7 +14,56 @@ namespace BanCaPhe.ViewModel
     {
         private readonly DonHangService _donHangService;
 
-        public decimal TongTien { get; }
+        public decimal TongTienGoc { get; }
+        
+        private decimal _tongTien;
+        public decimal TongTien
+        {
+            get => _tongTien;
+            private set
+            {
+                _tongTien = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(TienThoi));
+            }
+        }
+
+        private string _soDienThoai;
+        public string SoDienThoai
+        {
+            get => _soDienThoai;
+            set
+            {
+                _soDienThoai = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private KhachHang _khachHang;
+        public KhachHang KhachHang
+        {
+            get => _khachHang;
+            set
+            {
+                _khachHang = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(HasKhachHang));
+                TinhToanGiamGia();
+            }
+        }
+
+        public bool HasKhachHang => KhachHang != null;
+
+        private decimal _giamGia;
+        public decimal GiamGia
+        {
+            get => _giamGia;
+            set
+            {
+                _giamGia = value;
+                OnPropertyChanged();
+            }
+        }
 
         private string _tienKhachDuaText = "0";
         public string TienKhachDuaText
@@ -64,12 +113,22 @@ namespace BanCaPhe.ViewModel
         public ICommand ChonMenhGiaCommand { get; }
         public ICommand XacNhanCommand { get; }
         public ICommand HuyCommand { get; }
+        public ICommand TimKhachHangCommand { get; }
 
         public ThanhToanTienMatViewModel(decimal tongTien)
         {
+            TongTienGoc = tongTien;
             TongTien = tongTien;
 
             _donHangService = new DonHangService();
+
+            // Tự động lấy khách hàng từ giỏ hàng nếu có
+            if (CartService.Instance.CurrentKhachHang != null)
+            {
+                KhachHang = CartService.Instance.CurrentKhachHang;
+                SoDienThoai = KhachHang.SoDienThoai;
+                // TinhToanGiamGia sẽ được gọi qua Setter của KhachHang
+            }
 
             // Khởi tạo commands
             NhapSoCommand = new RelayCommand(NhapSo);
@@ -79,6 +138,49 @@ namespace BanCaPhe.ViewModel
             ChonMenhGiaCommand = new RelayCommand(ChonMenhGia);
             XacNhanCommand = new RelayCommand(_ => XacNhan());
             HuyCommand = new RelayCommand(_ => Dong());
+            TimKhachHangCommand = new RelayCommand(_ => TimKhachHang());
+        }
+
+        private void TimKhachHang()
+        {
+            if (string.IsNullOrEmpty(SoDienThoai))
+            {
+                KhachHang = null;
+                return;
+            }
+
+            var service = new KhachHangService();
+            var kh = service.GetByPhone(SoDienThoai);
+
+            if (kh != null)
+            {
+                if (kh.ConDung == false)
+                {
+                    KhachHang = null;
+                    DialogService.ShowError("Số điện thoại này đã không còn được sử dụng nữa!");
+                    return;
+                }
+
+                KhachHang = kh;
+            }
+            else
+            {
+                KhachHang = null;
+                DialogService.ShowError("Không tìm thấy khách hàng!");
+            }
+        }
+
+        private void TinhToanGiamGia()
+        {
+            if (KhachHang != null)
+            {
+                GiamGia = (TongTienGoc * KhachHang.PhanTramGiamGia) / 100;
+            }
+            else
+            {
+                GiamGia = 0;
+            }
+            TongTien = TongTienGoc - GiamGia;
         }
 
         // Nhập số từ bàn phím
@@ -159,7 +261,8 @@ namespace BanCaPhe.ViewModel
                     NgayLap = DateTime.Now,
                     NhanVienID = currentUser.ID, // ✅ Lấy từ UserSession
                     TongTien = TongTien,
-                    HinhThucThanhToan = "Tien mat"
+                    HinhThucThanhToan = "Tien mat",
+                    KhachHangID = KhachHang?.ID
                 };
 
                 // 3️⃣ LẤY GIỎ HÀNG
@@ -207,7 +310,7 @@ namespace BanCaPhe.ViewModel
                 DialogService.ShowMessage($"Thanh toán thành công!\nTiền thối: {TienThoi:N0} đ");
 
                 // 7️⃣ CLEAR GIỎ
-                CartService.Instance.Items.Clear();
+                CartService.Instance.Clear();
                 CartService.Instance.NotifyTongTienChanged();
 
                 Dong();

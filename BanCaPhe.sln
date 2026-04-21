@@ -5,6 +5,8 @@ VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BanCaPhe", "BanCaPhe\BanCaPhe.csproj", "{DA5E48D0-C4C2-4A9B-8C97-DEAF5BC5AAB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaYos", "PaYos\PaYos.csproj", "{E0576B96-9E7A-4E0E-8D20-575F4665B6B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{DA5E48D0-C4C2-4A9B-8C97-DEAF5BC5AAB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA5E48D0-C4C2-4A9B-8C97-DEAF5BC5AAB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA5E48D0-C4C2-4A9B-8C97-DEAF5BC5AAB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0576B96-9E7A-4E0E-8D20-575F4665B6B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0576B96-9E7A-4E0E-8D20-575F4665B6B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0576B96-9E7A-4E0E-8D20-575F4665B6B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0576B96-9E7A-4E0E-8D20-575F4665B6B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

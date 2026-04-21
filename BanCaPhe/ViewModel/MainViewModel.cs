@@ -76,7 +76,19 @@ namespace BanCaPhe.ViewModel
         }
 
         public ObservableCollection<OrderItem> DonHang => CartService.Instance.Items;
-        public decimal TongTien => CartService.Instance.TongTien;
+        public decimal TongTienGoc => CartService.Instance.TongTien;
+        public decimal TongPhaiThanhToan => CartService.Instance.TongPhaiThanhToan;
+        public decimal GiamGia => CartService.Instance.GiamGia;
+        public int PhanTramGiamGia => CartService.Instance.PhanTramGiamGia;
+        public KhachHang KhachHangHienTai => CartService.Instance.CurrentKhachHang;
+        public bool HasKhachHang => KhachHangHienTai != null;
+
+        private string _soDienThoaiSearch;
+        public string SoDienThoaiSearch
+        {
+            get => _soDienThoaiSearch;
+            set { _soDienThoaiSearch = value; OnPropertyChanged(); }
+        }
 
         private OrderItem _selectedItem;
         public OrderItem SelectedItem
@@ -92,6 +104,9 @@ namespace BanCaPhe.ViewModel
         public ICommand ChonToppingCommand { get; }
         public ICommand HienThiToppingCommand { get; }
         public ICommand LogoutCommand { get; }
+        public ICommand HienThiDangKyThanhVienCommand { get; }
+        public ICommand TimKhachHangCommand { get; }
+        public ICommand HuyKhachHangCommand { get; }
 
         public MainViewModel()
         {
@@ -107,7 +122,16 @@ namespace BanCaPhe.ViewModel
             KieuHienThi = KieuHienThi.DoUong;
             DanhSachHienThi = new ObservableCollection<object>(TatCaSanPham);
 
-            DonHang.CollectionChanged += (s, e) => OnPropertyChanged(nameof(TongTien));
+            DonHang.CollectionChanged += (s, e) => NotifyPriceChanged();
+            CartService.Instance.PropertyChanged += (s, e) => {
+                if (e.PropertyName == nameof(CartService.CurrentKhachHang))
+                {
+                    OnPropertyChanged(nameof(KhachHangHienTai));
+                    OnPropertyChanged(nameof(HasKhachHang));
+                    OnPropertyChanged(nameof(PhanTramGiamGia));
+                }
+                NotifyPriceChanged();
+            };
 
             MoGhiChuCommand = new RelayCommand(OpenGhiChu);
             InHoaDonTamCommand = new RelayCommand(_ => MoHoaDonTam());
@@ -116,6 +140,34 @@ namespace BanCaPhe.ViewModel
             ChonToppingCommand = new RelayCommand<Topping>(OpenToppingDetail);
             HienThiToppingCommand = new RelayCommand(_ => HienThiTopping());
             LogoutCommand = new RelayCommand(_ => Logout());
+            HienThiDangKyThanhVienCommand = new RelayCommand(_ => HienThiDangKyThanhVien());
+            TimKhachHangCommand = new RelayCommand(_ => TimKhachHang());
+            HuyKhachHangCommand = new RelayCommand(_ => HuyKhachHang());
+        }
+
+        private void NotifyPriceChanged()
+        {
+            OnPropertyChanged(nameof(TongTienGoc));
+            OnPropertyChanged(nameof(TongPhaiThanhToan));
+            OnPropertyChanged(nameof(GiamGia));
+        }
+
+        private void TimKhachHang()
+        {
+            string error = CartService.Instance.ApDungKhachHang(SoDienThoaiSearch);
+            if (error != null)
+            {
+                DialogService.ShowError(error);
+            }
+            else if (HasKhachHang)
+            {
+                SoDienThoaiSearch = ""; // Clear search box on success
+            }
+        }
+
+        private void HuyKhachHang()
+        {
+            CartService.Instance.HuyBoKhachHang();
         }
 
         private void LocSanPhamTheoDanhMuc()
@@ -157,7 +209,12 @@ namespace BanCaPhe.ViewModel
 
         private void MoThanhToan()
         {
-            var vm = new ThanhToanViewModel(TongTien, DonHang);
+            if (DonHang.Count == 0)
+            {
+                DialogService.ShowError("Giỏ hàng đang trống!");
+                return;
+            }
+            var vm = new ThanhToanViewModel(TongPhaiThanhToan, DonHang);
             var view = new ThanhToanWindow { DataContext = vm, Owner = Application.Current.MainWindow };
             view.ShowDialog();
         }
@@ -185,6 +242,13 @@ namespace BanCaPhe.ViewModel
             W_DangNhap login = new W_DangNhap();
             login.Show();
             currentWindow?.Close();
+        }
+
+        private void HienThiDangKyThanhVien()
+        {
+            var view = new W_DangKyThanhVien();
+            view.Owner = Application.Current.MainWindow;
+            view.ShowDialog();
         }
     }
 }
