@@ -130,5 +130,25 @@ namespace BanCaPhe
             login.Show();
             this.Close();
         }
+
+        // ══════════════ GIFT ICON - ÁP MÃ GIẢM GIÁ ══════════════
+        private void GiftIcon_MouseEnter(object sender, MouseEventArgs e)
+        {
+            GiftIconBorder.Background = new SolidColorBrush(Color.FromRgb(255, 193, 7)); // vàng đậm
+        }
+
+        private void GiftIcon_MouseLeave(object sender, MouseEventArgs e)
+        {
+            GiftIconBorder.Background = new SolidColorBrush(Color.FromRgb(255, 248, 225)); // vàng nhạt
+        }
+
+        private void ApDungMaGiamGia_Click(object sender, MouseButtonEventArgs e)
+        {
+            var window = new ApDungMaGiamGiaWindow
+            {
+                Owner = this
+            };
+            window.ShowDialog();
+        }
     }
 }

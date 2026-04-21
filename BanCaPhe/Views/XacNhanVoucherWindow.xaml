@@ -1,0 +1,157 @@
+<Window x:Class="BanCaPhe.Views.XacNhanVoucherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border CornerRadius="18" Background="White" Padding="30" Width="420" Effect="{StaticResource CardShadow}">
+        <StackPanel>
+            <!-- Icon & Title -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                <TextBlock Text="🎉" FontSize="36" Margin="0,0,12,0"/>
+                <TextBlock Text="Xác nhận áp dụng"
+                           FontSize="20" FontWeight="Bold"
+                           Foreground="{StaticResource TextPrimaryBrush}"
+                           VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <!-- Voucher Info Card -->
+            <Border Background="{StaticResource SuccessLightBrush}"
+                    CornerRadius="14"
+                    Padding="20"
+                    Margin="0,0,0,20">
+                <StackPanel>
+                    <!-- Mã code -->
+                    <Border Background="{StaticResource SuccessBrush}"
+                            CornerRadius="8"
+                            Padding="12,6"
+                            HorizontalAlignment="Center"
+                            Margin="0,0,0,12">
+                        <TextBlock x:Name="txtMaCode"
+                                   Text="MODTRA10"
+                                   FontWeight="Bold"
+                                   FontSize="18"
+                                   Foreground="White"/>
+                    </Border>
+
+                    <!-- Tên chương trình -->
+                    <TextBlock x:Name="txtTenChuongTrinh"
+                               Text="Giảm 10% cho khách hàng thân thiết"
+                               FontWeight="SemiBold"
+                               FontSize="15"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               TextAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,10"/>
+
+                    <!-- Giá trị giảm -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock Text="Giảm: "
+                                   FontSize="14"
+                                   Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="txtGiaTriGiam"
+                                   Text="10%"
+                                   FontSize="16"
+                                   FontWeight="Bold"
+                                   Foreground="{StaticResource DangerBrush}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Thông tin đơn hàng -->
+            <Border Background="{StaticResource BgMutedBrush}"
+                    CornerRadius="12"
+                    Padding="16"
+                    Margin="0,0,0,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Tổng tiền gốc -->
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="Tổng tiền gốc:"
+                               FontSize="14"
+                               Foreground="{StaticResource TextSecondaryBrush}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1"
+                               x:Name="txtTongTienGoc"
+                               Text="150,000 đ"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"/>
+
+                    <!-- Giảm giá -->
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Giảm giá:"
+                               FontSize="14"
+                               Foreground="{StaticResource SuccessBrush}"
+                               Margin="0,6,0,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1"
+                               x:Name="txtSoTienGiam"
+                               Text="- 15,000 đ"
+                               FontSize="14"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource SuccessBrush}"
+                               Margin="0,6,0,0"/>
+
+                    <!-- Separator -->
+                    <Border Grid.Row="2" Grid.ColumnSpan="2"
+                            Height="1"
+                            Background="{StaticResource BorderBrush}"
+                            Margin="0,10,0,10"/>
+                </Grid>
+            </Border>
+
+            <!-- Tổng thanh toán -->
+            <Border Background="{StaticResource PrimaryLightBrush}"
+                    CornerRadius="12"
+                    Padding="16"
+                    Margin="0,0,0,24">
+                <Grid>
+                    <TextBlock Text="Tổng thanh toán:"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource PrimaryBrush}"/>
+                    <TextBlock x:Name="txtTongThanhToan"
+                               Text="135,000 đ"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource PrimaryBrush}"
+                               HorizontalAlignment="Right"/>
+                </Grid>
+            </Border>
+
+            <!-- Buttons -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0"
+                        Content="Hủy"
+                        Style="{StaticResource BtnSecondary}"
+                        Height="46"
+                        Margin="0,0,8,0"
+                        Click="BtnHuy_Click"/>
+
+                <Button Grid.Column="1"
+                        Content="✅  Xác nhận"
+                        Style="{StaticResource BtnPrimary}"
+                        Height="46"
+                        Margin="8,0,0,0"
+                        Click="BtnXacNhan_Click"/>
+            </Grid>
+        </StackPanel>
+    </Border>
+</Window>

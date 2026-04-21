@@ -373,6 +373,26 @@
                         </Grid>
                     </Border>
 
+                    <!-- Icon Quà Tặng - Áp Mã Giảm Giá -->
+                    <Border Background="{StaticResource WarningLightBrush}"
+                            CornerRadius="12"
+                            Padding="12,10"
+                            Margin="0,0,0,8"
+                            Cursor="Hand"
+                            x:Name="GiftIconBorder"
+                            MouseLeftButtonUp="ApDungMaGiamGia_Click"
+                            MouseEnter="GiftIcon_MouseEnter"
+                            MouseLeave="GiftIcon_MouseLeave">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <TextBlock Text="🎁" FontSize="20" Margin="0,0,8,0"/>
+                            <TextBlock Text="Áp dụng mã giảm giá"
+                                       FontWeight="SemiBold"
+                                       FontSize="14"
+                                       Foreground="{StaticResource WarningBrush}"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
                     <Button Content="🖨  In hóa đơn tạm"
                             Style="{StaticResource BtnSecondary}"
                             Height="42"
